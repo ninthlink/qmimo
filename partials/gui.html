@@ -1,0 +1,63 @@
+<div class="left">
+  <div class="dials">
+    <div class="dial mu" ng-class="mode == 'mu' ? 'active' : 'inactive'">
+      <strong>MU</strong>
+      <div><strong>MULTI</strong>-USER</div>
+      <div>
+        <div>{{mu_total}}</div>
+        <small>mb/s</small>
+      </div>
+    </div>
+    <div class="dial su" ng-class="mode == 'su' ? 'active' : 'inactive'">
+      <strong>SU</strong>
+      <div><strong>SINGLE</strong>-USER</div>
+      <div>
+        <div>{{su_total}}</div>
+        <small>mb/s</small>
+      </div>
+    </div>
+  </div>
+  <div class="switches">
+    <label class="control radio">
+      <input id="mumode" name="mode" type="radio" value="mu" ng-model="mode" ng-click="switchmodeto('mu')">
+      <span class="control-indicator"></span>
+      On
+    </label>
+    <button ng-click="switchmode()" ng-class="switchleft ? 'l' : 'r'">switch <small>left = {{switchleft}}</small></button>
+    <label class="control radio">
+      <input id="sumode" name="mode" type="radio" value="su" ng-model="mode" ng-click="switchmodeto('su')">
+      <span class="control-indicator"></span>
+      Off
+    </label>
+    <pre ng-hide="true">
+current mode : {{mode}}
+switching : {{switching}}
+    </pre>
+  </div>
+  <div class="devices">
+    <div class="devicerow" ng-repeat="device in devices">
+      <label class="control radio">
+        <input type="radio" ng-checked="mode == 'mu'">
+        <span class="control-indicator"></span>
+        MU
+      </label>
+      <div><strong>{{device[1]}}</strong><small>mb/s</small></div>
+      <div>{{device[0]}}</div>
+      <div><strong>{{device[2]}}</strong><small>mb/s</small></div>
+      <label class="control radio">
+        <input type="radio" ng-checked="mode == 'su'">
+        <span class="control-indicator"></span>
+        SU
+      </label>
+    </div>
+  </div>
+  <div class="logo">
+    <div class="mu">MU</div>
+    <div>Qualcomm<sup>&reg;</sup> MU | EFX</div>
+    <div>Experience the effects of ultimate 11ac</div>
+  </div>
+</div>
+<div class="main">
+	<p>house layout here</p>
+  <p>{{devicenum}} devices</p>
+</div>

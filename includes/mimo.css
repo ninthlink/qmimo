@@ -1,0 +1,29 @@
+/* q fonts */
+
+/* gui layout? */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+body {
+  background: #464646;
+}
+.left {
+  background: #fff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 20%;
+}
+.main {
+  position: absolute;
+  left: 20%;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 80%;
+}
