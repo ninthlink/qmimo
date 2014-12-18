@@ -17,61 +17,31 @@ angular
           url: '/',
           templateUrl: './partials/gui.html',
           controller: 'guiCtrl',
-          /*
           resolve: {
-            initialData: function( socialFactory ) {
-              return socialFactory.initHomeData();
+            initialData: function( tputFactory ) {
+              return tputFactory.initDeviceThroughputs();
             }
           }
-          */
         });
     }
   ])
   .controller('guiCtrl', guiCtrl);
 
 // inject dependencies
-guiCtrl.$inject = [ '$scope', '$rootScope', '$state', '$stateParams', '$window' ];
+guiCtrl.$inject = [ '$scope', '$rootScope', '$state', '$stateParams', '$window', 'tputFactory', 'initialData' ];
 
-function guiCtrl( $scope, $rootScope, $state, $stateParams, $window ) {
-  // initial setup..
-  $scope.mode = 'mu';
+function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory, initialData ) {
+  // some initial GUI setup
   $scope.switchleft = true;
   $scope.switching = false;
-  $scope.switchdelay = 1000;
-  // some hardcoded numbers for start
-  $scope.devices = [
-    [
-      1,
-      122,
-      33
-    ],
-    [
-      2,
-      105,
-      68
-    ],
-    [
-      3,
-      101,
-      22
-    ],
-    [
-      4,
-      118,
-      51
-    ],
-    [
-      5,
-      98,
-      24
-    ],
-    [
-      6,
-      92,
-      18
-    ]
-  ];
+  $scope.switchdelay = QMIMO_SWITCH_DELAY_MS;
+  // populate initialData from our tputFactory
+  console.log(': initialData :');
+  console.log(initialData);
+  $scope.mode = initialData.mode;
+  $scope.devices = initialData.tputs;
   $scope.devicenum = $scope.devices.length;
+  
   $scope.retotal = function() {
     var new_mu = 0,
         new_su = 0;
