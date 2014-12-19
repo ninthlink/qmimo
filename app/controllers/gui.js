@@ -7,7 +7,7 @@
  */
 angular
   .module('qmimo')
-  // app states for this Controller
+  // app state setup for this Controller
   .config([
     '$stateProvider',
     '$urlRouterProvider',
@@ -26,10 +26,11 @@ angular
     }
   ])
   .controller('guiCtrl', guiCtrl);
-
-// inject dependencies
+// inject Controller dependencies
 guiCtrl.$inject = [ '$scope', '$rootScope', '$state', '$stateParams', '$window', 'tputFactory', 'initialData' ];
-
+/**
+ * our main Controller
+ */
 function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory, initialData ) {
   // some initial GUI setup
   $scope.switchleft = true;
@@ -41,7 +42,7 @@ function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory
   $scope.mode = initialData.mode;
   $scope.devices = initialData.tputs;
   $scope.devicenum = $scope.devices.length;
-  
+  // recalculate our top MU & SU numbers based on all devices' tputs
   $scope.retotal = function() {
     var new_mu = 0,
         new_su = 0;
@@ -51,23 +52,35 @@ function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory
     });
     $scope.mu_total = new_mu;
     $scope.su_total = new_su;
-    // round gain to 2 dec?
-    $scope.mu_gain = new_su > 0 ? ( Math.round( new_mu * 100 / new_su ) / 100 ) : 0;
+    // round gain to set # of decimals?
+    var d = Math.pow( 10, QMIMO_MU_GAIN_DECIMAL_PLACES );
+    // also make sure we don't accidentally try to device by 0
+    if ( new_su > 0 ) {
+      $scope.mu_gain = Math.round( new_mu * d / new_su ) / d;
+    } else {
+      $scope.mu_gain = 0;
+    }
   };
   $scope.retotal();
-  
+  // action(s) to take when a button is pressed to switch between MU/SU mode
   $scope.switchmode = function() {
     if ( $scope.switching === false ) {
       $scope.switchleft = !$scope.switchleft;
       var prevmode = $scope.mode;
+      var newmode = ( prevmode === 'mu' ? 'su' : 'mu' );
       console.log( 'switching modes : from ' + prevmode );
-      console.log( 'with a switch delay of '+ $scope.switchdelay +'ms' );
+      console.log( '( after delay of '+ $scope.switchdelay +'ms )' );
       $scope.switching = true;
       $scope.mode = '';
+      // actually tell our tputFactory to switch modes ( & pause # getting? )
+      
+      // after our QMIMO_SWITCH_DELAY_MS, turn the GUI back on
       setTimeout(function() {
         $scope.$apply( function() {
-          $scope.mode = ( prevmode === 'mu' ? 'su' : 'mu' );
+          $scope.mode = newmode;
           $scope.switching = false;
+          // and after the delay, start getting the data again?
+          
           console.log( 'switched from '+ prevmode +' to '+ $scope.mode );
         });
       }, $scope.switchdelay );
@@ -75,7 +88,7 @@ function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory
       console.log( 'switch already in progress, please wait..' );
     }
   };
-  
+  // helper UI function to switch between modes to specified mode
   $scope.switchmodeto = function( m ) {
     if ( $scope.switching === false ) {
       if ( $scope.mode !== m ) {
