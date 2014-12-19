@@ -11,6 +11,7 @@ body {
 body {
   background: #464646;
 }
+/* left column */
 .left {
   background: #fff;
   position: absolute;
@@ -18,12 +19,130 @@ body {
   top: 0;
   bottom: 0;
   width: 20%;
+  /* height: 100%; */
 }
+/* top left dials & switches */
+.dials {
+  background: url(images/bg_topleft.png) repeat-x 0 0;
+  background-size: cover;
+  text-align: center;
+  width: 100%;
+  height: 22%;
+}
+.dial {
+  background: url(images/dial_mu_off.png) no-repeat 50% 50%;
+  background-size: contain;
+  float: left;
+  margin: 1.5% 3.5%;
+  width: 43%;
+  height: 77%;
+}
+.dial.su {
+  background-image: url(images/dial_su_off.png);
+  float: right;
+}
+.mu-mode .dial.mu {
+  background-image: url(images/dial_mu_on.png);
+}
+.su-mode .dial.su {
+  background-image: url(images/dial_su_on.png);
+}
+.switches {
+  float: left;
+  width: 100%;
+}
+/* mu gain row */
+.gain {
+  background: url(images/bg_gain.png) no-repeat 50% 50%;
+  background-size: cover;
+  position: relative;
+  width: 100%;
+  height: 6.4%;
+}
+/* device tput data # rows */
+.left .devices {
+  display: block;
+  overflow-y: auto;
+  width: 100%;
+  height: 55.6%; /* 100 - 6.4 - 16 - 22 */
+}
+.devicerow {
+  background: url(images/bg_row.png) repeat-x 0 0;
+  display: table;
+  width: 100%;
+  padding: 0.5em 0;
+}
+.devicerow .inner {
+  display: table-row;
+  width: 100%;
+  height: 3em;
+}
+@media screen and (min-height: 960px) {
+  .devicerow {
+    padding: 1.44em 0;
+  }
+  .devicerow .inner {
+    height: 3.4em;
+  }
+}
+.devicerow .control,
+.tput,
+.dnum {
+  display: table-cell;
+  width: 18%;
+  text-align: center;
+  vertical-align: middle;
+}
+.devicerow .control {
+  padding-left: 0;
+}
+.devicerow .control-indicator {
+  margin-left: -0.5rem;
+  left: 50%;
+  top: 0;
+}
+.dnum {
+  background: url(images/bg_circle.png) no-repeat 50% 50%;
+  background-size: contain;
+  text-align: center;
+  width: 28%;
+  height: inherit;
+}
+/* bottom left logo */
+.logo {
+  background: url(images/bg_bottom.png) repeat-x 0 0;
+  background-size: cover;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 16%;
+}
+.icn {
+  background: url(images/icon_mu.png) no-repeat 50% 50%;
+  background-size: contain;
+  float: left;
+  margin: 12% 2% 0 6%;
+  text-indent: -999em;
+  width: 20.5%;
+  height: 46%;
+}
+.title {
+  margin: 15% 0 0;
+}
+/* main right side */
 .main {
+  background: url(images/bg_room.jpg) no-repeat 50% 50%;
   position: absolute;
   left: 20%;
   right: 0;
   top: 0;
   bottom: 0;
   width: 80%;
+}
+.mu-mode .main {
+  background-image: url(images/bg_room_tmp_mu.jpg);
+}
+.su-mode .main {
+  background-image: url(images/bg_room_tmp_su.jpg);
 }

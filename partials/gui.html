@@ -16,48 +16,51 @@
         <small>mb/s</small>
       </div>
     </div>
-  </div>
-  <div class="switches">
-    <label class="control radio">
-      <input id="mumode" name="mode" type="radio" value="mu" ng-model="mode" ng-click="switchmodeto('mu')">
-      <span class="control-indicator"></span>
-      On
-    </label>
-    <button ng-click="switchmode()" ng-class="switchleft ? 'l' : 'r'">switch <small>left = {{switchleft}}</small></button>
-    <label class="control radio">
-      <input id="sumode" name="mode" type="radio" value="su" ng-model="mode" ng-click="switchmodeto('su')">
-      <span class="control-indicator"></span>
-      Off
-    </label>
-    <pre ng-hide="true">
-current mode : {{mode}}
-switching : {{switching}}
-    </pre>
-  </div>
-  <div class="devices">
-    <div class="devicerow" ng-repeat="device in devices">
+    <div class="switches">
       <label class="control radio">
-        <input type="radio" ng-checked="mode == 'mu'">
+        <input id="mumode" name="mode" type="radio" value="mu" ng-model="mode" ng-click="switchmodeto('mu')">
         <span class="control-indicator"></span>
-        MU
+        On
       </label>
-      <div><strong>{{device[1]}}</strong><small>mb/s</small></div>
-      <div>{{device[0]}}</div>
-      <div><strong>{{device[2]}}</strong><small>mb/s</small></div>
+      <button ng-click="switchmode()" ng-class="switchleft ? 'l' : 'r'">switch <small>left = {{switchleft}}</small></button>
       <label class="control radio">
-        <input type="radio" ng-checked="mode == 'su'">
+        <input id="sumode" name="mode" type="radio" value="su" ng-model="mode" ng-click="switchmodeto('su')">
         <span class="control-indicator"></span>
-        SU
+        Off
       </label>
     </div>
   </div>
+  <div class="gain">
+    <div class="lbl"><strong>MU</strong> Gain</div>
+    <div class="num">{{mu_gain}}</div>
+  </div>
+  <div class="devices">
+    <div class="devicerow" ng-repeat="device in devices">
+      <div class="inner">
+        <label class="control radio">
+          <input type="radio" ng-disabled="true" ng-checked="mode == 'mu'">
+          <span class="control-indicator"></span>
+          MU
+        </label>
+        <div class="tput mu"><strong>{{device[1]}}</strong><small>mb/s</small></div>
+        <div class="dnum">{{device[0]}}</div>
+        <div class="tput su"><strong>{{device[2]}}</strong><small>mb/s</small></div>
+        <label class="control radio">
+          <input type="radio" ng-disabled="true" ng-checked="mode == 'su'">
+          <span class="control-indicator"></span>
+          SU
+        </label>
+      </div>
+    </div>
+  </div>
   <div class="logo">
-    <div class="mu">MU</div>
-    <div>Qualcomm<sup>&reg;</sup> MU | EFX</div>
-    <div>Experience the effects of ultimate 11ac</div>
+    <div class="icn">MU</div>
+    <div class="title">Qualcomm<sup>&reg;</sup> MU | EFX</div>
+    <div class="byline">Experience the effects of ultimate 11ac</div>
   </div>
 </div>
 <div class="main">
-  <p>house layout here</p>
-  <p>{{devicenum}} devices</p>
+  <div class="devices"><!-- hardcoded 6 devices for quick now --></div>
+  <div class="lines"></div>
+  <div class="router"></div>
 </div>
