@@ -39,7 +39,7 @@ function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory
   // populate initialData from our tputFactory
   console.log(': initialData :');
   console.log(initialData);
-  $scope.mode = initialData.mode;
+  $rootScope.mode = initialData.mode;
   $scope.devices = initialData.tputs;
   $scope.devicenum = $scope.devices.length;
   // recalculate our top MU & SU numbers based on all devices' tputs
@@ -66,18 +66,18 @@ function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory
   $scope.switchmode = function() {
     if ( $scope.switching === false ) {
       $scope.switchleft = !$scope.switchleft;
-      var prevmode = $scope.mode;
+      var prevmode = $rootScope.mode;
       var newmode = ( prevmode === 'mu' ? 'su' : 'mu' );
       console.log( 'switching modes : from ' + prevmode );
       console.log( '( after delay of '+ $scope.switchdelay +'ms )' );
       $scope.switching = true;
-      $scope.mode = '';
+      $rootScope.mode = '';
       // actually tell our tputFactory to switch modes ( & pause # getting? )
       
       // after our QMIMO_SWITCH_DELAY_MS, turn the GUI back on
       setTimeout(function() {
         $scope.$apply( function() {
-          $scope.mode = newmode;
+          $rootScope.mode = newmode;
           $scope.switching = false;
           // and after the delay, start getting the data again?
           
@@ -91,7 +91,7 @@ function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory
   // helper UI function to switch between modes to specified mode
   $scope.switchmodeto = function( m ) {
     if ( $scope.switching === false ) {
-      if ( $scope.mode !== m ) {
+      if ( $rootScope.mode !== m ) {
         // init switch
         $scope.switchmode();
       }
