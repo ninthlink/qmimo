@@ -23,6 +23,16 @@
 		o.initDeviceThroughputs = function() {
       var tputPromises = [];
       for ( i = 0; i < numberOfDevices; i = i + 1 ) {
+        // init our tput data
+        tputs[i+1] = [
+          // the device ID
+          i+1,
+          // latest MU tput data
+          0,
+          // latest SU tput data
+          0
+        ];
+        // and set up our Promises array so we can use $q.all
         tputPromises[i] = o.initTput( i + 1 );
 			}
 			return $q.all( tputPromises ).then(function(results) {
@@ -44,30 +54,15 @@
 		 * gets response from getSampleFeed and does some parsing to conglomerate feeds together?
 		 */
 		o.initTput = function( n ) {
-      // init our cached tput data
-      tputs[n] = [
-        n,
-        0,
-        0
-      ];
       // set up the $q.defer Promise
 			var defer = $q.defer();
-			// alert("right now this doesnt do anything to the DOM.\nbut you can check your console.logs");
-			//console.log('getSampleFeed for [ '+ socialnetwork +' ][ '+ type +' ][ '+ sample +' ] ?');
+      // call our getTputData & process result after it returns
 			o.getTputData( n ).then(function(result) {
-				var tput = '123';
-        var data = result.data;
-        
-				console.log('throughput #'+ n +' loaded : ');
-				console.log(data);
-        
-        // data like 'eth0: 123 0'
-        tput = data.substr(6);
-        var spaceat = tput.indexOf(' ');
-        tput = tput.substr( 0, spaceat );
-        
+        console.log( 'throughput #'+ n +' loaded : ' );
+        console.log( result.data );
+        // extract number from data like 'eth0: 123 0'
         var i = ( mode === 'mu' ? 1 : 2 );
-        tputs[n][i] = tput;
+        tputs[n][i] = o.parseTputData( result.data );
         
 				// pass the data back upstream
 				defer.resolve( tputs[n] );
@@ -77,6 +72,17 @@
 			});
 			return defer.promise;
 		};
+    /**
+     * extracts tput # from data like "eth0: 123 0"
+     */
+    o.parseTputData = function( data ) {
+      var tput = 0;
+      data = data.split(" ");
+      if ( data.length > 1 ) {
+        tput = parseFloat( data[1] );
+      }
+      return tput;
+    };
 		// return our factory
 		return o;
 	}
