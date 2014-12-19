@@ -19,6 +19,10 @@ var QMIMO_SWITCH_DELAY_MS = 1000;
  */
 var QMIMO_TPUT_DATA_DIR = 'fake-demo-contents';
 /**
+ * How many decimals we should show for our MU Gain number
+ */
+var QMIMO_MU_GAIN_DECIMAL_PLACES = 2;
+/**
  * Optionally, we can control the actual file name format for our tput .txt
  * 
  * the # gets replaced by the actual numbers, so "tput#.txt" = "tput1.txt"...
