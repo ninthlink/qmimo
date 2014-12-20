@@ -2,17 +2,17 @@
  * qmimo.config.js 
  */
 /**
- * Specify the # of devices we can expect tput from
+ * Specify the # of devices we should expect tput from
  */
 var QMIMO_NUMBER_OF_DEVICES = 6;
 /**
  * Set the # of ms to wait to refresh tput data
  */
-var QMIMO_REFRESH_TPUT_MS = 1000;
+var QMIMO_REFRESH_TPUT_MS = 2000;
 /**
  * Set the # of ms delay when switching MU / SU modes
  */
-var QMIMO_SWITCH_DELAY_MS = 1000;
+var QMIMO_SWITCH_DELAY_MS = 3000;
 /**
  * Specify which directory (inside the overall qmimo GUI folder)
  * we should expect to find our tput .txt files in
@@ -35,9 +35,20 @@ var QMIMO_TPUT_FILE_NAME_FORMAT = 'tput#.txt';
  */
 var QMIMO_INITIAL_MODE = 'mu';
 /**
- * If we will have actual data coming in, set this to 0, 
- * but if we should just use our fake-demo-contents/qgen.php script
- * for generating demo numbers, then set this to some # > 0.
- * Preferably <= QMIMO_REFRESH_TPUT_MS / QMIMO_NUMBER_OF_DEVICES
+ * Specify whether we'll have actual data in coming in or if we should fake it.
+ * If true, then use our fake-demo-contents/qgen.php script
+ * to generate demo throughput tput data at the intervals specified below...
+ */
+var QMIMO_FAKE_DEMO = true;
+/**
+ * Define how many ms to tick through pinging our fake script,
+ * preferably <= QMIMO_REFRESH_TPUT_MS / QMIMO_NUMBER_OF_DEVICES
  */
 var QMIMO_FAKE_DEMO_NUM_GEN_MS = 150;
+/**
+ * How many ms to wait before re-looping through above.. should probably be..
+ *
+ * > QMIMO_FAKE_DEMO_NUM_GEN_MS * QMIMO_NUMBER_OF_DEVICES
+ * and <= QMIMO_REFRESH_TPUT_MS
+ */
+var QMIMO_FAKE_DEMO_LOOP_MS = 1000;
