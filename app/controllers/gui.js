@@ -34,7 +34,7 @@ guiCtrl.$inject = [ '$scope', '$rootScope', '$state', '$stateParams', '$window',
 function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory, initialData ) {
   // some initial GUI setup
   $scope.switchleft = true;
-  $scope.switching = false;
+  $rootScope.loading = false;
   $scope.switchdelay = QMIMO_SWITCH_DELAY_MS;
   // populate initialData from our tputFactory
   console.log(': initialData :');
@@ -64,13 +64,13 @@ function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory
   $scope.retotal();
   // action(s) to take when a button is pressed to switch between MU/SU mode
   $scope.switchmode = function() {
-    if ( $scope.switching === false ) {
+    if ( $rootScope.loading === false ) {
       $scope.switchleft = !$scope.switchleft;
       var prevmode = $rootScope.mode;
       var newmode = ( prevmode === 'mu' ? 'su' : 'mu' );
       console.log( 'switching modes : from ' + prevmode );
       console.log( '( after delay of '+ $scope.switchdelay +'ms )' );
-      $scope.switching = true;
+      $rootScope.loading = true;
       $rootScope.mode = '';
       // actually tell our tputFactory to switch modes ( & pause # getting? )
       
@@ -78,7 +78,7 @@ function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory
       setTimeout(function() {
         $scope.$apply( function() {
           $rootScope.mode = newmode;
-          $scope.switching = false;
+          $rootScope.loading = false;
           // and after the delay, start getting the data again?
           
           console.log( 'switched from '+ prevmode +' to '+ $scope.mode );
@@ -90,7 +90,7 @@ function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory
   };
   // helper UI function to switch between modes to specified mode
   $scope.switchmodeto = function( m ) {
-    if ( $scope.switching === false ) {
+    if ( $rootScope.loading === false ) {
       if ( $rootScope.mode !== m ) {
         // init switch
         $scope.switchmode();

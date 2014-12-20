@@ -39,6 +39,64 @@
     font-weight: normal;
     font-style: normal;
 }
+
+body {
+  font-family: "Qualcomm-Regular", sans-serif;
+}
+.dial .mode,
+.gain .lbl strong {
+  font-family: "Qualcomm-Bold", sans serif;
+}
+.dial .desc {
+  font-family: "Qualcomm-Light", sans-serif;
+}
+.dial .desc strong,
+.dial .tot,
+.gain .num,
+.devices .control,
+.dnum,
+.title {
+  font-family: "Qualcomm-Semibold", sans-serif;
+}
+.dial .desc strong,
+.gain .lbl strong {
+  font-weight: normal;
+}
+/* colors */
+body {
+  color: #333;
+}
+.dial .tot {
+  color: #474747;
+}
+body.mu-mode .tput.su,
+body.mu-mode .control.su,
+body.su-mode .tput.mu,
+body.su-mode .control.mu,
+body.loading .tput,
+body.loading .control {
+  color: #999;
+}
+.dial.mu .mode,
+body.mu-mode .devices .control.mu,
+.gain .num {
+  color: #92278f;
+}
+.dial.su .mode,
+body.su-mode .devices .control.su {
+  color: #f8991d;
+}
+.gain .lbl {
+  color: #fff;
+}
+body.mu-mode .switches .control.mu,
+body.su-mode .switches .control.su {
+  color: #000;
+}
+.title,
+.byline {
+  color: #414344;
+}
 /* gui layout? */
 html,
 body {
@@ -72,7 +130,8 @@ body {
   background: url(images/dial_mu_off.png) no-repeat 50% 50%;
   background-size: contain;
   float: left;
-  margin: 1.5% 3.5%;
+  margin: 1.5% 3.5% 0;
+  position: relative;
   width: 43%;
   height: 77%;
 }
@@ -86,12 +145,61 @@ body {
 .su-mode .dial.su {
   background-image: url(images/dial_su_on.png);
 }
+.dial .mode,
+.dial .desc,
+.dial .tot {
+  position: absolute;
+  left: 0;
+  width: 100%;
+}
+.dial .mode {
+  font-size: 19px;
+  line-height: 1;
+  top: 20%;
+}
+.dial .desc {
+  top: 35%;
+}
+.dial .tot {
+  top: 45%;
+}
+.dial .tot div {
+  font-size: 26px;
+  line-height: 1;
+  position: relative;
+  top: 0.22em;
+}
+.dial .tot small {
+  position: relative;
+  top: -0.2em;
+}
+.dial .desc,
+.dial .tot small {
+  font-size: 12px;
+  line-height: 1;
+}
 .switches {
   float: left;
   width: 100%;
 }
+.switches .control {
+  font-size: 14px;
+  line-height: 31px;
+  vertical-align: middle;
+}
 .switch {
+  background: url(images/switch.png) no-repeat 0 0;
+  border: none;
   cursor: pointer;
+  display: inline-block;
+  margin: 0 10px;
+  padding: 0;
+  width: 61px;
+  height: 31px;
+  vertical-align: middle;
+}
+.switch.l {
+  background-position: 0 -31px;
 }
 /* mu gain row */
 .gain {
@@ -100,6 +208,24 @@ body {
   position: relative;
   width: 100%;
   height: 6.4%;
+}
+.gain .lbl {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 43%;
+  text-align: right;
+  line-height: 1;
+  margin: -0.5em 0 0;
+}
+.gain .num {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20%;
+  text-align: center;
+  line-height: 1;
+  margin: -0.5em 0 0 1em;
 }
 /* device tput data # rows */
 .left .devices {
@@ -119,14 +245,6 @@ body {
   width: 100%;
   height: 3em;
 }
-@media screen and (min-height: 960px) {
-  .devicerow {
-    padding: 1.44em 0;
-  }
-  .devicerow .inner {
-    height: 3.4em;
-  }
-}
 .devicerow .control,
 .tput,
 .dnum {
@@ -137,6 +255,7 @@ body {
 }
 .devicerow .control {
   padding-left: 0;
+  font-size: 15px;
 }
 .devicerow .control-indicator {
   margin-left: -0.5rem;
@@ -146,9 +265,16 @@ body {
 .dnum {
   background: url(images/bg_circle.png) no-repeat 50% 50%;
   background-size: contain;
+  font-size: 18px;
   text-align: center;
   width: 28%;
   height: inherit;
+}
+.tput {
+  font-size: 17px;
+}
+.tput small {
+  font-size: 13px;
 }
 /* bottom left logo */
 .logo {
@@ -170,7 +296,8 @@ body {
   height: 46%;
 }
 .title {
-  margin: 15% 0 0;
+  font-size: 20px;
+  margin: 12% 0 0;
 }
 /* main right side */
 .main {
@@ -189,6 +316,24 @@ body {
 }
 .su-mode .main {
   background-image: url(images/bg_room_tmp_su.jpg);
+}
+/* responsive tweaking */
+@media screen and (min-height: 960px) {
+  .dial .mode {
+    font-size: 27px;
+  }
+  .devicerow {
+    padding: 1.44em 0;
+  }
+  .devicerow .inner {
+    height: 3.4em;
+  }
+  .tput {
+    font-size: 24px;
+  }
+  .tput small {
+    font-size: 14px;
+  }
 }
 /* animations? */
 .blink .control-indicator {
