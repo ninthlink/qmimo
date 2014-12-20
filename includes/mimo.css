@@ -127,8 +127,6 @@ body {
   height: 22%;
 }
 .dial {
-  background: url(images/dial_mu_off.png) no-repeat 50% 50%;
-  background-size: contain;
   float: left;
   margin: 1.5% 3.5% 0;
   position: relative;
@@ -136,14 +134,34 @@ body {
   height: 77%;
 }
 .dial.su {
-  background-image: url(images/dial_su_off.png);
   float: right;
 }
-.mu-mode .dial.mu {
-  background-image: url(images/dial_mu_on.png);
+.dial .bg,
+.dial .ring {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
 }
-.su-mode .dial.su {
-  background-image: url(images/dial_su_on.png);
+.dial .bg {
+  background: url(images/dial_mu.png) no-repeat 50% 50%;
+  background-size: contain;
+  z-index: 2;
+}
+.dial.su .bg {
+  background-image: url(images/dial_su.png);
+}
+.dial .ring {
+  background: url(images/ring_off.png) no-repeat 50% 50%;
+  background-size: contain;
+  z-index: 1;
+}
+.mu-mode .dial.mu .ring {
+  background-image: url(images/ring_mu.png);
+}
+.su-mode .dial.su .ring {
+  background-image: url(images/ring_su.png);
 }
 .dial .mode,
 .dial .desc,
@@ -151,6 +169,7 @@ body {
   position: absolute;
   left: 0;
   width: 100%;
+  z-index: 3;
 }
 .dial .mode {
   font-size: 19px;
@@ -335,7 +354,20 @@ body {
     font-size: 14px;
   }
 }
-/* animations? */
+/* animations */
+.dial .ring {
+  -webkit-animation: spin 8s linear infinite;
+  -moz-animation: spin 8s linear infinite;
+  animation: spin 8s linear infinite;
+  -webkit-animation-play-state: paused;
+  -moz-animation-play-state: paused;
+  animation-play-state: paused;
+}
+.dial .ring.spin {
+  -webkit-animation-play-state: running;
+  -moz-animation-play-state: running;
+  animation-play-state: running;
+}
 .blink .control-indicator {
   -webkit-animation: blink 1.3s linear infinite alternate;
   -moz-animation: blink 1.3s linear infinite alternate;
@@ -372,6 +404,25 @@ body {
   animation-delay: 600ms;
 }
 /* animation keyframes */
+@-moz-keyframes spin {
+  0% { -moz-transform: rotate(0deg); }
+  50% { -moz-transform: rotate(180deg); }
+  100% { -moz-transform: rotate(360deg); }
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  50% { -webkit-transform: rotate(180deg); }
+  100% { -webkit-transform: rotate(360deg); }  
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@-moz-keyframes unspin { 100% { -moz-transform: rotate(0deg); } }
+@-webkit-keyframes unspin { 100% { -webkit-transform: rotate(0deg); } }
+@keyframes unspin { 100% { transform: rotate(0deg); } }
 /* blink : fade in for 0.5, on for 2, out for 0.5, off for  */
 @-webkit-keyframes blink {
   0%  { opacity: 1; }

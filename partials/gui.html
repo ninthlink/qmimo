@@ -1,6 +1,8 @@
 <div class="left">
   <div class="dials">
     <div class="dial mu">
+      <div class="ring" ng-class="{ 'spin' : mode === 'mu' }"></div>
+      <div class="bg"></div>
       <div class="mode">MU</div>
       <div class="desc"><strong>MULTI</strong>-USER</div>
       <div class="tot">
@@ -9,6 +11,8 @@
       </div>
     </div>
     <div class="dial su">
+      <div class="ring" ng-class="{ 'spin' : mode === 'su' }"></div>
+      <div class="bg"></div>
       <div class="mode">SU</div>
       <div class="desc"><strong>SINGLE</strong>-USER</div>
       <div class="tot">
@@ -17,7 +21,7 @@
       </div>
     </div>
     <div class="switches">
-      <label class="control radio mu" ng-class="mode === 'mu' ? 'blink' : ''">
+      <label class="control radio mu" ng-class="{ 'blink' : mode === 'mu' }">
         <input id="mumode" name="mode" type="radio" value="mu" ng-model="mode" ng-click="switchmodeto('mu')">
         <span class="control-indicator"></span>
         On
