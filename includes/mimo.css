@@ -1,5 +1,44 @@
 /* q fonts */
-
+@font-face {
+    font-family: 'Qualcomm-Bold';
+    src: url('fonts/QualcommWeb-Bold.eot');
+    src: url('fonts/QualcommWeb-Bold.eot?#iefix') format('embedded-opentype'),
+         url('fonts/QualcommWeb-Bold.woff') format('woff'),
+         url('fonts/QualcommWeb-Bold.ttf') format('truetype'),
+         url('fonts/QualcommWeb-Bold.svg#QualcommWeb-Bold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Qualcomm-Light';
+    src: url('fonts/QualcommWeb-Light.eot');
+    src: url('fonts/QualcommWeb-Light.eot?#iefix') format('embedded-opentype'),
+         url('fonts/QualcommWeb-Light.woff') format('woff'),
+         url('fonts/QualcommWeb-Light.ttf') format('truetype'),
+         url('fonts/QualcommWeb-Light.svg#QualcommWeb-Light') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Qualcomm-Regular';
+    src: url('fonts/QualcommWeb-Regular.eot');
+    src: url('fonts/QualcommWeb-Regular.eot?#iefix') format('embedded-opentype'),
+         url('fonts/QualcommWeb-Regular.woff') format('woff'),
+         url('fonts/QualcommWeb-Regular.ttf') format('truetype'),
+         url('fonts/QualcommWeb-Regular.svg#QualcommWeb-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Qualcomm-Semibold';
+    src: url('fonts/QualcommWeb-Semibold.eot');
+    src: url('fonts/QualcommWeb-Semibold.eot?#iefix') format('embedded-opentype'),
+         url('fonts/QualcommWeb-Semibold.woff') format('woff'),
+         url('fonts/QualcommWeb-Semibold.ttf') format('truetype'),
+         url('fonts/QualcommWeb-Semibold.svg#QualcommWeb-Semibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 /* gui layout? */
 html,
 body {
@@ -50,6 +89,9 @@ body {
 .switches {
   float: left;
   width: 100%;
+}
+.switch {
+  cursor: pointer;
 }
 /* mu gain row */
 .gain {
@@ -133,6 +175,7 @@ body {
 /* main right side */
 .main {
   background: url(images/bg_room.jpg) no-repeat 50% 50%;
+  background-size: cover;
   position: absolute;
   left: 20%;
   right: 0;
@@ -140,9 +183,66 @@ body {
   bottom: 0;
   width: 80%;
 }
+/* fake right image switch quick */
 .mu-mode .main {
   background-image: url(images/bg_room_tmp_mu.jpg);
 }
 .su-mode .main {
   background-image: url(images/bg_room_tmp_su.jpg);
+}
+/* animations? */
+.blink .control-indicator {
+  -webkit-animation: blink 1.3s linear infinite alternate;
+  -moz-animation: blink 1.3s linear infinite alternate;
+  animation: blink 1.3s linear infinite alternate;
+}
+.d0 .blink .control-indicator {
+  -webkit-animation-delay: 100ms;
+  -moz-animation-delay: 100ms;
+  animation-delay: 100ms;
+}
+.d1 .blink .control-indicator {
+  -webkit-animation-delay: 200ms;
+  -moz-animation-delay: 200ms;
+  animation-delay: 200ms;
+}
+.d2 .blink .control-indicator {
+  -webkit-animation-delay: 300ms;
+  -moz-animation-delay: 300ms;
+  animation-delay: 300ms;
+}
+.d3 .blink .control-indicator {
+  -webkit-animation-delay: 400ms;
+  -moz-animation-delay: 400ms;
+  animation-delay: 400ms;
+}
+.d4 .blink .control-indicator {
+  -webkit-animation-delay: 500ms;
+  -moz-animation-delay: 500ms;
+  animation-delay: 500ms;
+}
+.d5 .blink .control-indicator {
+  -webkit-animation-delay: 600ms;
+  -moz-animation-delay: 600ms;
+  animation-delay: 600ms;
+}
+/* animation keyframes */
+/* blink : fade in for 0.5, on for 2, out for 0.5, off for  */
+@-webkit-keyframes blink {
+  0%  { opacity: 1; }
+  60%  { opacity: 1; }
+  75%   { opacity: 0.4; }
+  100%   { opacity: 0.4; }
+}
+@-moz-keyframes blink {
+  0%  { opacity: 1; }
+  60%  { opacity: 1; }
+  75%   { opacity: 0.4; }
+  100%   { opacity: 0.4; }
+}
+@keyframes blink {
+  0%  { opacity: 1; }
+  60%  { opacity: 1; }
+  75%   { opacity: 0.4; }
+  100%   { opacity: 0.4; }
 }

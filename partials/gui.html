@@ -17,13 +17,13 @@
       </div>
     </div>
     <div class="switches">
-      <label class="control radio">
+      <label class="control radio" ng-class="mode === 'mu' ? 'blink' : ''">
         <input id="mumode" name="mode" type="radio" value="mu" ng-model="mode" ng-click="switchmodeto('mu')">
         <span class="control-indicator"></span>
         On
       </label>
-      <button ng-click="switchmode()" ng-class="switchleft ? 'l' : 'r'">switch <small>left = {{switchleft}}</small></button>
-      <label class="control radio">
+      <button class="switch" ng-click="switchmode()" ng-class="switchleft ? 'l' : 'r'">switch <small>left = {{switchleft}}</small></button>
+      <label class="control radio" ng-class="mode === 'su' ? 'blink' : ''">
         <input id="sumode" name="mode" type="radio" value="su" ng-model="mode" ng-click="switchmodeto('su')">
         <span class="control-indicator"></span>
         Off
@@ -35,17 +35,17 @@
     <div class="num">{{mu_gain}}</div>
   </div>
   <div class="devices">
-    <div class="devicerow" ng-repeat="device in devices">
+    <div class="devicerow" ng-repeat="device in devices" ng-class="'d'+ $index">
       <div class="inner">
-        <label class="control radio">
-          <input type="radio" ng-disabled="true" ng-checked="mode == 'mu'">
+        <label class="control radio" ng-class="mode === 'mu' ? 'blink' : ''">
+          <input type="radio" ng-disabled="true" ng-checked="mode === 'mu'">
           <span class="control-indicator"></span>
           MU
         </label>
         <div class="tput mu"><strong>{{device[1]}}</strong><small>mb/s</small></div>
         <div class="dnum">{{device[0]}}</div>
         <div class="tput su"><strong>{{device[2]}}</strong><small>mb/s</small></div>
-        <label class="control radio">
+        <label class="control radio" ng-class="mode === 'su' ? 'blink' : ''">
           <input type="radio" ng-disabled="true" ng-checked="mode == 'su'">
           <span class="control-indicator"></span>
           SU
