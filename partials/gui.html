@@ -22,13 +22,13 @@
     </div>
     <div class="switches">
       <label class="control radio mu" ng-class="{ 'blink' : mode === 'mu' }">
-        <input id="mumode" name="mode" type="radio" value="mu" ng-model="mode" ng-click="switchmodeto('mu')">
+        <input id="mumode" name="mode" type="radio" value="mu" ng-model="mode" ng-click="switchModeTo('mu')">
         <span class="control-indicator"></span>
         On
       </label>
-      <button class="switch" ng-click="switchmode()" ng-class="{ 'l' : switchleft }"></button>
+      <button class="switch" ng-click="switchMode()" ng-class="{ 'l' : switchleft }"></button>
       <label class="control radio su" ng-class="mode === 'su' ? 'blink' : ''">
-        <input id="sumode" name="mode" type="radio" value="su" ng-model="mode" ng-click="switchmodeto('su')">
+        <input id="sumode" name="mode" type="radio" value="su" ng-model="mode" ng-click="switchModeTo('su')">
         <span class="control-indicator"></span>
         Off
       </label>
@@ -67,7 +67,7 @@
   <div class="devices"><!-- hardcoded 6 devices for quick now --></div>
   <div class="lines"></div>
   <div class="router">
-    <div class="bg">
+    <div class="bg" ng-click="switchMode()">
       <div class="circle"</div>
       <div class="icon"></div>
     </div>

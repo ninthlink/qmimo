@@ -63,7 +63,7 @@ function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory
   };
   $scope.retotal();
   // action(s) to take when a button is pressed to switch between MU/SU mode
-  $scope.switchmode = function() {
+  $scope.switchMode = function() {
     if ( $rootScope.loading === false ) {
       $scope.switchleft = !$scope.switchleft;
       var prevmode = $rootScope.mode;
@@ -89,11 +89,11 @@ function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory
     }
   };
   // helper UI function to switch between modes to specified mode
-  $scope.switchmodeto = function( m ) {
+  $scope.switchModeTo = function( m ) {
     if ( $rootScope.loading === false ) {
       if ( $rootScope.mode !== m ) {
         // init switch
-        $scope.switchmode();
+        $scope.switchMode();
       }
     }
   };
