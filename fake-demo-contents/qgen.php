@@ -8,9 +8,14 @@
  * eth0: 123 0
  */
 $maxnum = 6;
-$m = isset( $_GET['m'] ) ? ( $_GET['m'] ? 1 : 0 ) : 1; // MU Mode = 1, or 0 for SU ?
+$m = 0;
+if ( isset( $_GET['m'] ) ) {
+  if ( intval( $_GET['m'] ) === 1 ) {
+    $m = 1;
+  }  
+}
 $range = array(
-  array( 1, 70 ),
+  array( 10, 70 ),
   array( 90, 125 )
 );
 
@@ -33,12 +38,15 @@ $contents = 'eth0: '. $r .' 0' ."\n";
 // actually write to the file then
 file_put_contents( $file, $contents );
 
-$e = isset( $_GET['e'] ) ? ( $_GET['e'] ? 1 : 0 ) : 1;
-if ( $e === 0 ) exit(0);
+$q = isset( $_GET['q'] ) ? ( $_GET['q'] ? 1 : 0 ) : 0;
+if ( $q === 1 ) exit(0);
 ?>
 <!DOCTYPE html>
 <html>
 <body>
+<pre>
+<?php print_r($_GET); ?>
+</pre>
 <h1>MU Mode <?php echo ( $m === 1 ? 'ON' : 'OFF' ); ?></h1>
 <p><?php echo $file ?> ( <?php echo $range[$m][0] .' - '. $range[$m][1] ?> )</p>
 <pre><?php print $contents ?></pre>
