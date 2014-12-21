@@ -41,14 +41,7 @@ var QMIMO_INITIAL_MODE = 'mu';
  */
 var QMIMO_FAKE_DEMO = true;
 /**
- * Define how many ms to tick through pinging our fake script,
- * preferably <= QMIMO_REFRESH_TPUT_MS / QMIMO_NUMBER_OF_DEVICES
- */
-var QMIMO_FAKE_DEMO_NUM_GEN_MS = 150;
-/**
- * How many ms to wait before re-looping through above.. should probably be..
- *
- * > QMIMO_FAKE_DEMO_NUM_GEN_MS * QMIMO_NUMBER_OF_DEVICES
- * and <= QMIMO_REFRESH_TPUT_MS
+ * How many ms to wait before re-looping through above..
+ * should probably be <= QMIMO_REFRESH_TPUT_MS
  */
 var QMIMO_FAKE_DEMO_LOOP_MS = 1000;
