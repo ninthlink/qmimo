@@ -355,6 +355,56 @@ body {
 .loading .lines {
   display: none;
 }
+/* router icon itself */
+.router {
+  position: relative;
+  left: 44%;
+  top: 0;
+  margin-top: 54%;
+  z-index: 5;
+}
+.router .bg {
+  background: url(images/router_bg.png) no-repeat 50% 50%;
+  background-size: contain;
+  position: relative;
+  width: 5%;
+}
+.router .bg:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+.circle {
+  background-color: #999;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 86%;
+  height: 86%;
+  margin: -43% 0 0 -43%;
+  z-index: 6;
+  
+  -webkit-transition: background-color 300ms linear;
+  -moz-transition: background-color 300ms linear;
+  transition: background-color 300ms linear;
+}
+.mu-mode .circle {
+  background-color: #92278f;
+}
+.su-mode .circle {
+  background-color: #f8991d;
+}
+.router .icon {
+  background: url(images/router.png) no-repeat 0 0;
+  background-size: contain;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 7;
+}
 /* responsive tweaking */
 @media screen and (min-height: 960px) {
   .dial .mode {
@@ -480,4 +530,11 @@ body {
   0%  { opacity: 1; }
   75%  { opacity: 1; }
   100%   { opacity: 0.1; }
+}
+
+*:focus {
+	outline: none;
+}
+*::-moz-focus-inner {
+	border: none;
 }
