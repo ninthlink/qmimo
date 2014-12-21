@@ -19,7 +19,7 @@ angular
           controller: 'guiCtrl',
           resolve: {
             initialData: function( tputFactory ) {
-              return tputFactory.initDeviceThroughputs();
+              return tputFactory.getDevicesTput( true );
             }
           }
         });
@@ -27,11 +27,11 @@ angular
   ])
   .controller('guiCtrl', guiCtrl);
 // inject Controller dependencies
-guiCtrl.$inject = [ '$scope', '$rootScope', '$state', '$stateParams', '$window', 'tputFactory', 'initialData' ];
+guiCtrl.$inject = [ '$scope', '$rootScope', '$state', '$stateParams', '$window', 'tputFactory', 'fakeTputGeneratorFactory', 'initialData', '$timeout' ];
 /**
  * our main Controller
  */
-function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory, initialData ) {
+function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory, fakeTputGeneratorFactory, initialData, $timeout ) {
   // some initial GUI setup
   $scope.switchleft = true;
   $rootScope.loading = false;
@@ -62,6 +62,39 @@ function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory
     }
   };
   $scope.retotal();
+  // set timeout to re pull tput datas?
+  var tputTimer;
+  $scope.reloadTput = function() {
+    $timeout.cancel( tputTimer );
+    tputTimer = $timeout( function() {
+      //console.log( '*** re-get devices tputs ***' );
+      tputFactory.getDevicesTput().then(function(results) {
+        //console.log(' mode = '+ $rootScope.mode);
+        //console.log(results);
+        $scope.devices = results.tputs;
+        $scope.retotal();
+      });
+      // and no matter how long that takes, trigger this loop again?
+      $scope.reloadTput();
+    }, QMIMO_REFRESH_TPUT_MS );
+  };
+  $scope.reloadTput();
+  // similar call for fake generating numbers via our fakeTputGeneratorFactory
+  var tputGenTimer;
+  $scope.kickGenerator = function() {
+    $timeout.cancel( tputGenTimer );
+    tputGenTimer = $timeout( function() {
+      fakeTputGeneratorFactory.genDeviceTput().then(function(results) {
+        //console.log('finished re-generating demo numbers?');
+        //console.log(results);
+        $scope.kickGenerator();
+      });
+    }, QMIMO_FAKE_DEMO_LOOP_MS );
+  };
+  // if we actually want to actually fake the numbers?
+  if ( QMIMO_FAKE_DEMO === true ) {
+    $scope.kickGenerator();
+  }
   // action(s) to take when a button is pressed to switch between MU/SU mode
   $scope.switchMode = function() {
     if ( $rootScope.loading === false ) {
@@ -72,15 +105,15 @@ function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory
       console.log( '( after delay of '+ $scope.switchdelay +'ms )' );
       $rootScope.loading = true;
       $rootScope.mode = '';
-      // actually tell our tputFactory to switch modes ( & pause # getting? )
-      
+      // pause tput # getting..
+      $timeout.cancel( tputTimer );
       // after our QMIMO_SWITCH_DELAY_MS, turn the GUI back on
-      setTimeout(function() {
+      $timeout(function() {
         $scope.$apply( function() {
           $rootScope.mode = newmode;
           $rootScope.loading = false;
           // and after the delay, start getting the data again?
-          
+          $scope.reloadTput();
           console.log( 'switched from '+ prevmode +' to '+ $scope.mode );
         });
       }, $scope.switchdelay );
@@ -97,4 +130,10 @@ function guiCtrl( $scope, $rootScope, $state, $stateParams, $window, tputFactory
       }
     }
   };
+  $scope.$on( '$destroy', function( event ) {
+    // be polite : cancel timeout(s)
+    $timeout.cancel( tputTimer );
+    // and then?
+    console.log( 'ok thank you' );
+  });
 }

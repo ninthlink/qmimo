@@ -8,37 +8,46 @@
 		.module('qmimo')
 		.factory('tputFactory', tputFactory);
 	
-	tputFactory.$inject = ['$http', '$q']; // $resource?
+	tputFactory.$inject = [ '$rootScope', '$http', '$q' ]; // $resource?
 	
-	function tputFactory( $http, $q ) {
+	function tputFactory( $rootScope, $http, $q ) {
     var mode = QMIMO_INITIAL_MODE,
         numberOfDevices = QMIMO_NUMBER_OF_DEVICES, // # of connected devices aka files to loop
         tputLocation = QMIMO_TPUT_DATA_DIR, // relative path
         fileName = QMIMO_TPUT_FILE_NAME_FORMAT, // # replaced by actual #s
-        tputs = [],
-        fake_su_numbers = [ 33, 68, 22, 51, 24, 18 ];
-        o = {};
+        tputs = [], // array for caching previous results
+        fake_su_numbers = [ 33, 68, 22, 51, 24, 18 ], // fake numbers for now
+        o = {}; // and finally our actual instance object that we will return
 		/**
 		 * initial Promises for data to populate Devices tput data?
 		 */
-		o.initDeviceThroughputs = function() {
+		o.getDevicesTput = function( initialize ) {
+      if ( $rootScope.hasOwnProperty('mode') ) {
+        //console.log( 'getDevicesTput : rootScope.mode = '+ $rootScope.mode );
+        mode = $rootScope.mode;
+      } else {
+        //console.log( 'getDevicesTput : SETTING rootScope.mode to '+ mode );
+        $rootScope.mode = mode;
+      }
       var tputPromises = [];
       for ( i = 0; i < numberOfDevices; i = i + 1 ) {
-        // init our tput data
-        tputs[i+1] = [
-          // the device ID
-          i+1,
-          // latest MU tput data
-          0,
-          // latest SU tput data
-          //0
-          fake_su_numbers[i]
-        ];
+        if ( initialize === true ) {
+          // init our tput data
+          tputs[i+1] = [
+            // the device ID
+            i+1,
+            // latest MU tput data
+            0,
+            // latest SU tput data
+            //0
+            fake_su_numbers[i]
+          ];
+        }
         // and set up our Promises array so we can use $q.all
-        tputPromises[i] = o.initTput( i + 1 );
+        tputPromises[i] = o.loadTput( i + 1 );
 			}
 			return $q.all( tputPromises ).then(function(results) {
-        // don't know if we need pre processing?
+        // return our data to the Controller
 				return {
           mode: mode,
           tputs: results
@@ -55,13 +64,13 @@
 		/**
 		 * gets response from getSampleFeed and does some parsing to conglomerate feeds together?
 		 */
-		o.initTput = function( n ) {
+		o.loadTput = function( n ) {
       // set up the $q.defer Promise
 			var defer = $q.defer();
       // call our getTputData & process result after it returns
 			o.getTputData( n ).then(function(result) {
-        console.log( 'throughput #'+ n +' loaded : ' );
-        console.log( result.data );
+        //console.log( 'throughput #'+ n +' loaded : ' );
+        //console.log( result.data );
         // extract number from data like 'eth0: 123 0'
         var i = ( mode === 'mu' ? 1 : 2 );
         tputs[n][i] = o.parseTputData( result.data );
