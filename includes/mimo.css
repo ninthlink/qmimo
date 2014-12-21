@@ -273,6 +273,7 @@ body {
   vertical-align: middle;
 }
 .devicerow .control {
+  cursor: default;
   padding-left: 0;
   font-size: 15px;
 }
@@ -366,6 +367,7 @@ body {
 .router .bg {
   background: url(images/router_bg.png) no-repeat 50% 50%;
   background-size: contain;
+  cursor: pointer;
   position: relative;
   width: 5%;
 }
@@ -373,6 +375,11 @@ body {
   content: "";
   display: block;
   padding-top: 100%;
+}
+.loading .switch,
+.loading .switches .control,
+.loading .router .bg {
+  cursor: wait;
 }
 .circle {
   background-color: #999;
