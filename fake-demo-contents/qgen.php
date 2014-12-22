@@ -32,7 +32,7 @@ if ( isset( $_GET['i'] ) ) {
 $file = 'tput'. $i .'.txt';
 $j = ( $i === $maxnum ? 1 : $i + 1 );
 
-$r = rand( $range[$m][0], $range[$m][1] );
+$r = rand( $range[$m][0], $range[$m][1] ); // + ( 0.09 * $i );
 $contents = 'eth0: '. $r .' 0' ."\n";
 
 // actually write to the file then
