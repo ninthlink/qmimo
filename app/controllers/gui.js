@@ -1,40 +1,36 @@
 'use strict'
 /**
- * guiCtrl Controller
- *
- * for states (in app.js config) :
- * / with /partials/gui.html
+ * gui.js
+ * 
+ * Defines main guiCtrl Controller + which route & HTML partial template to use
  */
 angular
   .module('qmimo')
   // app state setup for this Controller
   .config([
     '$stateProvider',
-    function($stateProvider) {
-      $stateProvider
-        .state('gui', {
-          url: '/',
-          templateUrl: './partials/gui.html',
-          controller: 'guiCtrl',
-          resolve: {
-            initialData: function( tputFactory ) {
-              return tputFactory.getDevicesTput( true );
-            }
+    function( $stateProvider ) {
+      $stateProvider.state('gui', {
+        url: '/',
+        templateUrl: './partials/gui.html',
+        controller: 'guiCtrl',
+        resolve: {
+          // "resolve" polls initial tput data before the UI loads
+          initialData: function( tputFactory ) {
+            return tputFactory.getDevicesTput( true );
           }
-        });
+        }
+      });
     }
   ])
   .controller('guiCtrl', guiCtrl);
-// inject Controller dependencies
+// inject any Angular dependencies in to our Controller, like our Factories
 guiCtrl.$inject = [ '$scope', '$rootScope', '$timeout', 'tputFactory', 'fakeTputGeneratorFactory', 'initialData' ];
 /**
- * our main Controller
+ * We are in the GUI Controller's control from here out
  */
 function guiCtrl( $scope, $rootScope, $timeout, tputFactory, fakeTputGeneratorFactory, initialData ) {
-  // populate initialData from our tputFactory
-  console.log(': initialData :');
-  console.log(initialData);
-  // some initial GUI setup
+  // initial GUI setup & map initialData from our tputFactory
   $rootScope.loading = false;
   $rootScope.mode = initialData.mode;
   $scope.switchleft = ( $rootScope.mode === 'mu' );
@@ -52,11 +48,11 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, fakeTputGeneratorFa
     });
     $scope.mu_total = mu_total;
     $scope.su_total = su_total;
-    // also make sure we don't accidentally try to divide by 0
+    // Divide gain, but no divide by 0. Rounding handled by ng "number" filter
     $scope.mu_gain = ( su_total > 0 ) ? mu_total / su_total : 0;
   };
   $scope.retotal();
-  // set timeout to re pull tput datas?
+  // Set timeout to (re) poll tput datas
   var tputTimer;
   $scope.reloadTputNow = function( newmode ) {
     tputFactory.getDevicesTput( false, newmode ).then(function(results) {
@@ -98,7 +94,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, fakeTputGeneratorFa
       var qprev = $rootScope.mode;
       var qwait = QMIMO_SWITCH_DELAY_MS;
       var newmode = ( qprev === 'mu' ? 'su' : 'mu' );
-      console.log( 'switching modes after '+ qwait +'ms : from ' + qprev );
+      //console.log( 'mode '+ qprev +' to '+ newmode +' in '+ qwait +'ms'  );
       // $scope.switchleft boolean controls actual position of UI switch
       $scope.switchleft = !$scope.switchleft;
       // show "loading" mode rather than 'mu' or 'su'
