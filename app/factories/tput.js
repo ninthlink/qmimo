@@ -16,7 +16,7 @@
         tputLocation = QMIMO_TPUT_DATA_DIR, // relative path
         fileName = QMIMO_TPUT_FILE_NAME_FORMAT, // # replaced by actual #s
         tputs = [], // array for caching previous results
-        fake_su_numbers = [ 33, 68, 22, 51, 24, 18 ], // fake numbers for now
+        //fake_su_numbers = [ 33, 68, 22, 51, 24, 18 ], // fake numbers for now
         o = {}; // and finally our actual instance object that we will return
 		/**
 		 * initial Promises for data to populate Devices tput data?
@@ -39,8 +39,8 @@
             // latest MU tput data
             0,
             // latest SU tput data
-            //0
-            fake_su_numbers[i]
+            0
+            //fake_su_numbers[i]
           ];
         }
         // and set up our Promises array so we can use $q.all
