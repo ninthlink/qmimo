@@ -6,7 +6,7 @@
       <div class="mode">MU</div>
       <div class="desc"><strong>MULTI</strong>-USER</div>
       <div class="tot">
-        <div>{{mu_total}}</div>
+        <div>{{ mu_total | number: roundtotals }}</div>
         <small>mb/s</small>
       </div>
     </div>
@@ -16,7 +16,7 @@
       <div class="mode">SU</div>
       <div class="desc"><strong>SINGLE</strong>-USER</div>
       <div class="tot">
-        <div>{{su_total}}</div>
+        <div>{{ su_total | number: roundtotals }}</div>
         <small>mb/s</small>
       </div>
     </div>
@@ -36,7 +36,7 @@
   </div>
   <div class="gain">
     <div class="lbl"><strong>MU</strong> Gain</div>
-    <div class="num">{{mu_gain}}</div>
+    <div class="num">{{ mu_gain | number: roundgain }}</div>
   </div>
   <div class="devices">
     <div class="devicerow" ng-repeat="device in devices" ng-class="'d'+ $index">
