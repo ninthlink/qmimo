@@ -83,7 +83,9 @@
 				defer.resolve( tputs[n] );
 			},
 			function(err) {
-				defer.reject(err);
+				//defer.reject(err);
+        tputs[n][i] = 0;
+        defer.resolve( tputs[n] );
 			});
 			return defer.promise;
 		};
