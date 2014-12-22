@@ -23,6 +23,9 @@ var QMIMO_INITIAL_MODE = 'mu';
 // How many decimals to show for the "MU Gain" number, in case we want to tweak
 var QMIMO_MU_GAIN_DECIMAL_PLACES = 2;
 
+// How many decimals to show for the 'MU' & 'SU' totals
+var QMIMO_TPUT_TOTALS_DECIMAL_PLACES = 0;
+
 // Optional control actual file name format for tput .txt : '#' is replaced
 var QMIMO_TPUT_FILE_NAME_FORMAT = 'tput#.txt';
 
