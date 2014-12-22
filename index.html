@@ -3,10 +3,10 @@
 	<head>
 		<title>Mu-Mimo</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="includes/mimo.css" rel="stylesheet">
+		<link href="includes/gui.css" rel="stylesheet">
 	</head>
-	<body qmimo-key-listen class="gui" ng-class="{ 'mu-mode' : mode === 'mu', 'su-mode' : mode === 'su', 'loading' : loading }">
-		<div ui-view></div>
+	<body ng-class="{ 'mu-mode' : mode === 'mu', 'su-mode' : mode === 'su', 'loading' : loading }">
+		<ui-view></ui-view>
 		<!-- javascripts -->
 		<script src="includes/angular.min.js"></script>
 		<script src="includes/angular-ui-router.min.js"></script>
@@ -17,6 +17,5 @@
 		<script src="./app/factories/fake-tput-generator.js"></script>
 		<script src="./app/factories/tput.js"></script>
 		<script src="./app/controllers/gui.js"></script>
-		<script src="./app/directives/key-listen.js"></script>
 	</body>
 </html>
