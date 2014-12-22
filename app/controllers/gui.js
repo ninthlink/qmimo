@@ -82,7 +82,8 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, fakeTputGeneratorFa
   $scope.kickGenerator = function() {
     $timeout.cancel( tputGenTimer );
     tputGenTimer = $timeout( function() {
-      fakeTputGeneratorFactory.genDeviceTput().then(function(results) {
+      var mode = $rootScope.mode;
+      fakeTputGeneratorFactory.genDeviceTput( mode ).then(function(results) {
         $scope.kickGenerator();
       });
     }, QMIMO_FAKE_DEMO_LOOP_MS );
@@ -105,10 +106,26 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, fakeTputGeneratorFa
       $rootScope.mode = '';
       // pause tput # getting..
       $timeout.cancel( tputTimer );
+      if ( QMIMO_FAKE_DEMO === true ) {
+        $timeout.cancel( tputGenTimer );
+      }
       // after QMIMO_SWITCH_DELAY_MS delay, poll new tput data & reactivate GUI
       $timeout(function() {
-        // after delay, start getting the data again in new mode
-        $scope.reloadTputNow( newmode );
+        if ( QMIMO_FAKE_DEMO === true ) {
+          /**
+           * If we are using our throughput data faking Factory too,
+           * reset that first, and Then start GUI back up
+           */
+          fakeTputGeneratorFactory.genDeviceTput(newmode).then(function() {
+            // NOW we should be able to reloadTputNow with fresh new mode #s
+            $scope.reloadTputNow( newmode );
+            // and continue faking
+            $scope.kickGenerator();
+          });
+        } else {
+          // after delay, start getting the data again in new mode
+          $scope.reloadTputNow( newmode );
+        }
       }, qwait );
     } else {
       console.log( 'Switch already in progress, please wait..' );

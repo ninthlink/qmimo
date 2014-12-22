@@ -9,25 +9,17 @@
 		.module('qmimo')
 		.factory('fakeTputGeneratorFactory', fakeTputGeneratorFactory);
 	
-	fakeTputGeneratorFactory.$inject = [ '$rootScope', '$http', '$q' ]; // $resource?
+	fakeTputGeneratorFactory.$inject = [ '$http', '$q' ]; // $resource?
 	
-	function fakeTputGeneratorFactory( $rootScope, $http, $q ) {
-    var mode = QMIMO_INITIAL_MODE,
-        numberOfDevices = QMIMO_NUMBER_OF_DEVICES, // # of calls we need per
+	function fakeTputGeneratorFactory( $http, $q ) {
+    var numberOfDevices = QMIMO_NUMBER_OF_DEVICES, // # of calls we need per
         fakeLocation = QMIMO_TPUT_DATA_DIR, // relative path?
         fakeGenerator = 'qgen.php', // PHP script inside QMIMO_TPUT_DATA_DIR
-        o = {}; // & our actual instance object that we will return
+        o = {}; // actual instance obj that instantiates?
 		/**
 		 * initial Promises for data to populate Devices tput data?
 		 */
-		o.genDeviceTput = function() {
-      if ( $rootScope.hasOwnProperty('mode') ) {
-        //console.log( 'getDevicesTput : rootScope.mode = '+ $rootScope.mode );
-        mode = $rootScope.mode;
-      } else {
-        //console.log( 'getDevicesTput : SETTING rootScope.mode to '+ mode );
-        $rootScope.mode = mode;
-      }
+		o.genDeviceTput = function( mode ) {
       // set up array of Promises so we can use $q.all([...]).then(...
       var genPromises = [];
       var m = ( mode === 'mu' ? '1' : '0' );
