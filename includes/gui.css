@@ -539,6 +539,14 @@ body.loading {
     font-size: 33px;
     margin-left: 0.7em;
   }
+  .title {
+    font-size: 29px;
+    margin: 15% 0 0;
+  }
+  .byline {
+    position: relative;
+    top: -4px;
+  }
 }
 @media screen and (min-width:1600px) and (min-height:960px) {
   .dial .mode {
