@@ -58,18 +58,22 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, fakeTputGeneratorFa
   $scope.retotal();
   // set timeout to re pull tput datas?
   var tputTimer;
+  $scope.reloadTputNow = function( newmode ) {
+    tputFactory.getDevicesTput( false, newmode ).then(function(results) {
+      //console.log(' mode = '+ $rootScope.mode);
+      //console.log(results);
+      $rootScope.loading = false;
+      $rootScope.mode = results.mode;
+      $scope.devices = results.tputs;
+      $scope.retotal();
+    });
+    // and no matter how long that takes, trigger this again
+    $scope.reloadTput();
+  };
   $scope.reloadTput = function() {
     $timeout.cancel( tputTimer );
     tputTimer = $timeout( function() {
-      //console.log( '*** re-get devices tputs ***' );
-      tputFactory.getDevicesTput().then(function(results) {
-        //console.log(' mode = '+ $rootScope.mode);
-        //console.log(results);
-        $scope.devices = results.tputs;
-        $scope.retotal();
-      });
-      // and no matter how long that takes, trigger this loop again?
-      $scope.reloadTput();
+      $scope.reloadTputNow();
     }, QMIMO_REFRESH_TPUT_MS );
   };
   $scope.reloadTput();
@@ -90,10 +94,10 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, fakeTputGeneratorFa
   // action(s) to take when a button is pressed to switch between MU/SU mode
   $scope.switchMode = function() {
     if ( $rootScope.loading === false ) {
-      var prev = $rootScope.mode;
-      var wait = QMIMO_SWITCH_DELAY_MS;
-      var newmode = ( prev === 'mu' ? 'su' : 'mu' );
-      console.log( 'switching modes after '+ wait +'ms : from ' + prev );
+      var qprev = $rootScope.mode;
+      var qwait = QMIMO_SWITCH_DELAY_MS;
+      var newmode = ( qprev === 'mu' ? 'su' : 'mu' );
+      console.log( 'switching modes after '+ qwait +'ms : from ' + qprev );
       // $scope.switchleft boolean controls actual position of UI switch
       $scope.switchleft = !$scope.switchleft;
       // show "loading" mode rather than 'mu' or 'su'
@@ -101,18 +105,13 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, fakeTputGeneratorFa
       $rootScope.mode = '';
       // pause tput # getting..
       $timeout.cancel( tputTimer );
-      // after QMIMO_SWITCH_DELAY_MS, poll new tput data & turn GUI back on?
+      // after QMIMO_SWITCH_DELAY_MS delay, poll new tput data & reactivate GUI
       $timeout(function() {
-        $scope.$apply( function() {
-          $rootScope.mode = newmode;
-          $rootScope.loading = false;
-          // and after the delay, start getting the data again?
-          $scope.reloadTput();
-          console.log( 'switched from '+ prev +' to '+ $scope.mode );
-        });
-      }, wait );
+        // after delay, start getting the data again in new mode
+        $scope.reloadTputNow( newmode );
+      }, qwait );
     } else {
-      console.log( 'switch already in progress, please wait..' );
+      console.log( 'Switch already in progress, please wait..' );
     }
   };
   // helper UI function to switch between modes to specified mode

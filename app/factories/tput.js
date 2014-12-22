@@ -21,13 +21,17 @@
 		/**
 		 * initial Promises for data to populate Devices tput data?
 		 */
-		o.getDevicesTput = function( initialize ) {
-      if ( $rootScope.hasOwnProperty('mode') ) {
-        //console.log( 'getDevicesTput : rootScope.mode = '+ $rootScope.mode );
-        mode = $rootScope.mode;
+		o.getDevicesTput = function( initialize, newmode ) {
+      if ( newmode ) {
+        mode = newmode;
       } else {
-        //console.log( 'getDevicesTput : SETTING rootScope.mode to '+ mode );
-        $rootScope.mode = mode;
+        if ( $rootScope.hasOwnProperty('mode') ) {
+          //console.log( 'getDevicesTput : rootScope.mode = '+ $rootScope.mode );
+          mode = $rootScope.mode;
+        } else {
+          //console.log( 'getDevicesTput : SETTING rootScope.mode to '+ mode );
+          $rootScope.mode = mode;
+        }
       }
       var tputPromises = [];
       for ( i = 0; i < numberOfDevices; i = i + 1 ) {
