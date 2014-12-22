@@ -272,14 +272,39 @@ body {
   line-height: 1.3rem;
   background-image: url(images/dots_big.png);
 }
-
 .switches .control input:checked ~ .control-indicator {
   background-position: 0 -21px;
 }
 .switches .control.su input:checked ~ .control-indicator {
   background-position: 0 -42px;
 }
-
+@media screen and (min-width:1600px) {
+  
+  .dial .mode {
+    font-size: 27px;
+  }
+  .dial .desc,
+  .dial .tot small {
+    font-size: 13px;
+  }
+  .dial .tot div {
+    font-size: 32px;
+  }
+  .switches .control {
+    padding-left: 3em;
+  }
+  .switches .control-indicator {
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+  }
+  .switches .control input:checked ~ .control-indicator {
+    background-position: 0 -26px;
+  }
+  .switches .control.su input:checked ~ .control-indicator {
+    background-position: 0 -52px;
+  }
+}
 .switch {
   background: url(images/switch.png) no-repeat 0 0;
   border: none;
@@ -319,6 +344,14 @@ body {
   text-align: center;
   line-height: 1;
   margin: -0.5em 0 0 1em;
+}
+@media screen and (min-width:1600px) {
+  .gain {
+    font-size: 33px;
+  }
+  .gain .num {
+    margin-left: 0.7em;
+  }
 }
 /* device tput data # rows */
 .left .devices {
@@ -553,14 +586,6 @@ body {
   -moz-animation-delay: 600ms;
   animation-delay: 600ms;
 }
-/*
-.mu-mode .lines,
-.su-mode .lines {
-  -webkit-animation: blinkeven 400ms linear infinite alternate;
-  -moz-animation: blinkeven 400ms linear infinite alternate;
-  animation: blinkeven 400ms linear infinite alternate;
-}
-*/
 /* animation keyframes */
 @-moz-keyframes spin {
   0% { -moz-transform: rotate(0deg); }
@@ -580,37 +605,21 @@ body {
 /* blink : fade in for 0.5, on for 2, out for 0.5, off for  */
 @-webkit-keyframes blink {
   0%  { opacity: 1; }
-  70%  { opacity: 1; }
-  85%   { opacity: 0.5; }
-  100%   { opacity: 0.5; }
+  80%  { opacity: 1; }
+  90%   { opacity: 0.6; }
+  100%   { opacity: 0.6; }
 }
 @-moz-keyframes blink {
   0%  { opacity: 1; }
-  70%  { opacity: 1; }
-  85%   { opacity: 0.5; }
-  100%   { opacity: 0.5; }
+  80%  { opacity: 1; }
+  90%   { opacity: 0.6; }
+  100%   { opacity: 0.6; }
 }
 @keyframes blink {
   0%  { opacity: 1; }
-  70%  { opacity: 1; }
-  85%   { opacity: 0.5; }
-  100%   { opacity: 0.5; }
-}
-/* blinkeven : fade evenly  */
-@-webkit-keyframes blinkeven {
-  0%  { opacity: 1; }
-  75%  { opacity: 1; }
-  100%   { opacity: 0.1; }
-}
-@-moz-keyframes blinkeven {
-  0%  { opacity: 1; }
-  75%  { opacity: 1; }
-  100%   { opacity: 0.1; }
-}
-@keyframes blinkeven {
-  0%  { opacity: 1; }
-  75%  { opacity: 1; }
-  100%   { opacity: 0.1; }
+  80%  { opacity: 1; }
+  90%   { opacity: 0.6; }
+  100%   { opacity: 0.6; }
 }
 
 *:focus {
