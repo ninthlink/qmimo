@@ -1,5 +1,5 @@
 /**
- * fakeTputGeneratorFactory
+ * mimoGen
  *
  * provides methods for triggering regenerating our fake tput data
  * with the /fake-demo-contents/qgen.php
@@ -7,11 +7,11 @@
 (function() {
 	angular
 		.module('qmimo')
-		.factory('fakeTputGeneratorFactory', fakeTputGeneratorFactory);
+		.factory('mimoGen', mimoGen);
 	
-	fakeTputGeneratorFactory.$inject = [ '$http', '$q' ]; // $resource?
+	mimoGen.$inject = [ '$http', '$q' ]; // $resource?
 	
-	function fakeTputGeneratorFactory( $http, $q ) {
+	function mimoGen( $http, $q ) {
     var numberOfDevices = QMIMO_NUMBER_OF_DEVICES, // # of calls we need per
         fakeLocation = QMIMO_TPUT_DATA_DIR, // relative path?
         fakeGenerator = 'qgen.php', // PHP script inside QMIMO_TPUT_DATA_DIR

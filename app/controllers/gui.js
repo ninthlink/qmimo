@@ -16,7 +16,7 @@ angular
         controller: 'guiCtrl',
         resolve: {
           // "resolve" polls initial tput data before the UI loads
-          initialData: function( tputFactory ) {
+          tputs: function( tputFactory ) {
             return tputFactory.getDevicesTput( true );
           }
         }
@@ -25,16 +25,16 @@ angular
   ])
   .controller('guiCtrl', guiCtrl);
 // inject any Angular dependencies in to our Controller, like our Factories
-guiCtrl.$inject = [ '$scope', '$rootScope', '$timeout', 'tputFactory', 'fakeTputGeneratorFactory', 'initialData' ];
+guiCtrl.$inject = [ '$scope', '$rootScope', '$timeout', 'tputFactory', 'mimoGen', 'tputs' ];
 /**
  * We are in the GUI Controller's control from here out
  */
-function guiCtrl( $scope, $rootScope, $timeout, tputFactory, fakeTputGeneratorFactory, initialData ) {
-  // initial GUI setup & map initialData from our tputFactory
+function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, tputs ) {
+  // initial GUI setup & map initial data from our tputFactory
   $rootScope.loading = false;
-  $rootScope.mode = initialData.mode;
+  //$rootScope.mode = tputs.mode;
   $scope.switchleft = ( $rootScope.mode === 'mu' );
-  $scope.devices = initialData.tputs;
+  $scope.devices = tputs.tputs;
   $scope.devicenum = $scope.devices.length;
   $scope.roundtotals = QMIMO_TPUT_TOTALS_DECIMAL_PLACES;
   $scope.roundgain = QMIMO_MU_GAIN_DECIMAL_PLACES;
@@ -73,13 +73,13 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, fakeTputGeneratorFa
     }, QMIMO_REFRESH_TPUT_MS );
   };
   $scope.reloadTput();
-  // similar idea to fake generating numbers via fakeTputGeneratorFactory
+  // similar idea to fake generating numbers via mimoGen
   var tputGenTimer;
   $scope.kickGenerator = function() {
     $timeout.cancel( tputGenTimer );
     tputGenTimer = $timeout( function() {
       var mode = $rootScope.mode;
-      fakeTputGeneratorFactory.genDeviceTput( mode ).then(function(results) {
+      mimoGen.genDeviceTput( mode ).then(function(results) {
         $scope.kickGenerator();
       });
     }, QMIMO_FAKE_DEMO_LOOP_MS );
@@ -112,7 +112,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, fakeTputGeneratorFa
            * If we are using our throughput data faking Factory too,
            * reset that first, and Then start GUI back up
            */
-          fakeTputGeneratorFactory.genDeviceTput(newmode).then(function() {
+          mimoGen.genDeviceTput(newmode).then(function() {
             // NOW we should be able to reloadTputNow with fresh new mode #s
             $scope.reloadTputNow( newmode );
             // and continue faking
