@@ -40,6 +40,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, tputs ) {
   $scope.roundgain = QMIMO_MU_GAIN_DECIMAL_PLACES;
   // recalculate our top MU & SU numbers based on all devices' tputs
   $scope.retotal = function() {
+    // #todo : actually just need to recalc for the active mode..
     var mu_total = 0,
         su_total = 0;
     angular.forEach( $scope.devices, function( d, k ) {
@@ -50,6 +51,32 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, tputs ) {
     $scope.su_total = su_total;
     // Divide gain, but no divide by 0. Rounding handled by ng "number" filter
     $scope.mu_gain = ( su_total > 0 ) ? mu_total / su_total : 0;
+    // calculate border lines too
+    $scope.mu_deg = Math.round( mu_total * 4 / 9 );
+    // make sure # between 0 & 360
+    if ( $scope.mu_deg < 0 ) {
+      $scope.mu_deg = 0;
+    }
+    if ( $scope.mu_deg > 360 ) {
+      $scope.mu_deg = 360;
+    }
+    $scope.mu_b1 = ( $scope.mu_deg < 180 ) ? $scope.mu_deg : 180;
+    $scope.mu_b1s = { 'transform': 'rotate('+ $scope.mu_b1 +'deg)' };
+    $scope.mu_b2 = ( $scope.mu_deg > 180 ) ? ( $scope.mu_deg - 180 ) : 0;
+    $scope.mu_b2s = { 'transform': 'rotate('+ $scope.mu_b2 +'deg)' };
+    $scope.su_deg = Math.round( su_total * 4 / 9 );
+    // make sure # between 0 & 360
+    if ( $scope.su_deg < 0 ) {
+      $scope.su_deg = 0;
+    }
+    if ( $scope.su_deg > 360 ) {
+      $scope.su_deg = 360;
+    }
+    $scope.su_b1 = ( $scope.su_deg < 180 ) ? $scope.su_deg : 180;
+    $scope.su_b1s = { 'transform': 'rotate('+ $scope.su_b1 +'deg)' };
+    $scope.su_b2 = ( $scope.su_deg > 180 ) ? ( $scope.su_deg - 180 ) : 0;
+    $scope.su_b2s = { 'transform': 'rotate('+ $scope.su_b2 +'deg)' };
+    
   };
   $scope.retotal();
   // Set timeout to (re) poll tput datas

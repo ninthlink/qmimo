@@ -1,23 +1,29 @@
 <div class="left">
   <div class="dials">
-    <div class="dial mu">
-      <div class="ring" ng-class="{ 'spin' : mode === 'mu' }"></div>
-      <div class="bg"></div>
-      <div class="mode">MU</div>
-      <div class="desc"><strong>MULTI</strong>-USER</div>
-      <div class="tot">
-        <div>{{ mu_total | number: roundtotals }}</div>
-        <small>mb/s</small>
+    <div class="drap mu">
+      <div class="dial mu">
+        <div class="ring" ng-class="{ 'spin' : mode === 'mu' }"></div>
+        <div class="bg"></div>
+        <div class="pie" qmimo-border-fill="mu"></div>
+        <div class="mode">MU</div>
+        <div class="desc"><strong>MULTI</strong>-USER</div>
+        <div class="tot">
+          <div>{{ mu_total | number: roundtotals }}</div>
+          <small>mb/s</small>
+        </div>
       </div>
     </div>
-    <div class="dial su">
-      <div class="ring" ng-class="{ 'spin' : mode === 'su' }"></div>
-      <div class="bg"></div>
-      <div class="mode">SU</div>
-      <div class="desc"><strong>SINGLE</strong>-USER</div>
-      <div class="tot">
-        <div>{{ su_total | number: roundtotals }}</div>
-        <small>mb/s</small>
+    <div class="drap su">
+      <div class="dial su">
+        <div class="ring" ng-class="{ 'spin' : mode === 'su' }"></div>
+        <div class="bg"></div>
+        <div class="pie" qmimo-border-fill="su"></div>
+        <div class="mode">SU</div>
+        <div class="desc"><strong>SINGLE</strong>-USER</div>
+        <div class="tot">
+          <div>{{ su_total | number: roundtotals }}</div>
+          <small>mb/s</small>
+        </div>
       </div>
     </div>
     <div class="switches">
