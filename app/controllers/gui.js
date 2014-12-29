@@ -39,46 +39,58 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, tputs ) {
   $scope.roundtotals = QMIMO_TPUT_TOTALS_DECIMAL_PLACES;
   $scope.roundgain = QMIMO_MU_GAIN_DECIMAL_PLACES;
   // recalculate our top MU & SU numbers based on all devices' tputs
+  $scope.mu_total = $scope.su_total = 0;
+  $scope.mu_b1s = $scope.mu_b2s = { 'transform': 'rotate(0deg)' };
+  $scope.su_b1s = $scope.su_b2s = { 'transform': 'rotate(0deg)' };
   $scope.retotal = function() {
-    // #todo : actually just need to recalc for the active mode..
-    var mu_total = 0,
-        su_total = 0;
+    // only sum active mode : figure that other mode was/will be retotalled
+    var active_index = $rootScope.mode === 'mu' ? 1 : 2;
+    var tput_sum = 0;
     angular.forEach( $scope.devices, function( d, k ) {
-      mu_total += d[1];
-      su_total += d[2];
+      tput_sum += d[ active_index ];
     });
-    $scope.mu_total = mu_total;
-    $scope.su_total = su_total;
-    // Divide gain, but no divide by 0. Rounding handled by ng "number" filter
-    $scope.mu_gain = ( su_total > 0 ) ? mu_total / su_total : 0;
+    if ( $rootScope.mode === 'mu' ) {
+      $scope.mu_total = tput_sum;
+    } else {
+      $scope.su_total = tput_sum;
+    }
+    // Divide gain, but no divide by 0. 
+    if ( $scope.su_total === 0 ) {
+      $scope.mu_gain = 0;
+    } else {
+      // Rounding is handled by the ng "number" filter
+      $scope.mu_gain = $scope.mu_total / $scope.su_total;
+    }
     // calculate border lines too
-    $scope.mu_deg = Math.round( mu_total * 4 / 9 );
-    // make sure # between 0 & 360
-    if ( $scope.mu_deg < 0 ) {
-      $scope.mu_deg = 0;
+    if ( $rootScope.mode === 'mu' ) {
+      $scope.mu_deg = Math.round( $scope.mu_total * 4 / 9 );
+      // make sure # between 0 & 360
+      if ( $scope.mu_deg < 0 ) {
+        $scope.mu_deg = 0;
+      }
+      if ( $scope.mu_deg > 360 ) {
+        $scope.mu_deg = 360;
+      }
+      $scope.mu_b1 = ( $scope.mu_deg < 180 ) ? $scope.mu_deg : 180;
+      $scope.mu_b1s = { 'transform': 'rotate('+ $scope.mu_b1 +'deg)' };
+      $scope.mu_b2 = ( $scope.mu_deg > 180 ) ? ( $scope.mu_deg - 180 ) : 0;
+      $scope.mu_b2s = { 'transform': 'rotate('+ $scope.mu_b2 +'deg)' };
+    } else { //if ( $rootScope.mode === 'su' ) {
+      $scope.su_deg = Math.round( $scope.su_total * 4 / 9 );
+      // make sure # between 0 & 360
+      if ( $scope.su_deg < 0 ) {
+        $scope.su_deg = 0;
+      }
+      if ( $scope.su_deg > 360 ) {
+        $scope.su_deg = 360;
+      }
+      $scope.su_b1 = ( $scope.su_deg < 180 ) ? $scope.su_deg : 180;
+      $scope.su_b1s = { 'transform': 'rotate('+ $scope.su_b1 +'deg)' };
+      $scope.su_b2 = ( $scope.su_deg > 180 ) ? ( $scope.su_deg - 180 ) : 0;
+      $scope.su_b2s = { 'transform': 'rotate('+ $scope.su_b2 +'deg)' };
     }
-    if ( $scope.mu_deg > 360 ) {
-      $scope.mu_deg = 360;
-    }
-    $scope.mu_b1 = ( $scope.mu_deg < 180 ) ? $scope.mu_deg : 180;
-    $scope.mu_b1s = { 'transform': 'rotate('+ $scope.mu_b1 +'deg)' };
-    $scope.mu_b2 = ( $scope.mu_deg > 180 ) ? ( $scope.mu_deg - 180 ) : 0;
-    $scope.mu_b2s = { 'transform': 'rotate('+ $scope.mu_b2 +'deg)' };
-    $scope.su_deg = Math.round( su_total * 4 / 9 );
-    // make sure # between 0 & 360
-    if ( $scope.su_deg < 0 ) {
-      $scope.su_deg = 0;
-    }
-    if ( $scope.su_deg > 360 ) {
-      $scope.su_deg = 360;
-    }
-    $scope.su_b1 = ( $scope.su_deg < 180 ) ? $scope.su_deg : 180;
-    $scope.su_b1s = { 'transform': 'rotate('+ $scope.su_b1 +'deg)' };
-    $scope.su_b2 = ( $scope.su_deg > 180 ) ? ( $scope.su_deg - 180 ) : 0;
-    $scope.su_b2s = { 'transform': 'rotate('+ $scope.su_b2 +'deg)' };
-    
   };
-  $scope.retotal();
+  
   // Set timeout to (re) poll tput datas
   var tputTimer;
   $scope.reloadTputNow = function( newmode ) {
