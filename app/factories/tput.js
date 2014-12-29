@@ -16,7 +16,8 @@
         tputLocation = QMIMO_TPUT_DATA_DIR, // relative path?
         switchScriptLocation = QMIMO_PERL_SCRIPT_DIR, // relative path?
         fileName = QMIMO_TPUT_FILE_NAME_FORMAT, // # replaced by actual #s
-        tputs = [], // array for caching previous results
+        tputs = [], // array for caching previous results,
+        stored_totals = { mu: 0, su: 0, gain: 0 },
         //fake_su_numbers = [ 33, 68, 22, 51, 24, 18 ], // fake numbers for now
         o = {}; // and finally our actual instance object that we will return
 		/**
@@ -52,10 +53,26 @@
         tputPromises[i] = o.loadTput( i + 1 );
 			}
 			return $q.all( tputPromises ).then(function(results) {
-        // return our data to the Controller
+        //console.log('returning total tputs results');
+        // recalculate totals for the new numbers here
+        var i = ( mode === 'mu' ? 1 : 2 );
+        stored_totals[ mode ] = 0;
+        angular.forEach( results, function( d, k ) {
+          stored_totals[ mode ]  += d[i];
+        });
+        // recalculate MU Gain too?
+        if ( ( stored_totals.mu === 0 ) || ( stored_totals.su === 0 ) ) {
+          // in this case, don't divide by 0, just say 0
+          stored_totals.gain = 0;
+        } else {
+          // Rounding is handled by the ng "number" filter
+          stored_totals.gain = stored_totals.mu / stored_totals.su;
+        }
+        // return our conglomerated data
 				return {
           mode: mode,
-          tputs: results
+          tputs: results,
+          totals: stored_totals
         };
 			});
 		};
@@ -81,11 +98,13 @@
         tputs[n][i] = o.parseTputData( result.data );
         
 				// pass the data back upstream
+        //console.log('returning tput '+ n);
 				defer.resolve( tputs[n] );
 			},
 			function(err) {
 				//defer.reject(err);
         tputs[n][i] = 0;
+        // instead of rejecting, send anyways
         defer.resolve( tputs[n] );
 			});
 			return defer.promise;
