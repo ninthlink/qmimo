@@ -14,6 +14,15 @@ var QMIMO_REFRESH_TPUT_MS = 2000;
 // # of ms downtime delay when switching MU / SU modes
 var QMIMO_SWITCH_DELAY_MS = 3000;
 
+// Directory (inside the overall qmimo GUI folder?) to find .pl scripts to call
+var QMIMO_PERL_SCRIPT_DIR = 'perl-scripts';
+
+// script to call when switching to MU mode, inside QMIMO_PERL_SCRIPT_DIR
+var QMIMO_MU_SWITCH_SCRIPT = 'iperf_start_set_mu.pl';
+
+// script to call when switching to MU mode, inside QMIMO_PERL_SCRIPT_DIR
+var QMIMO_SU_SWITCH_SCRIPT = 'iperf_start_set_su.pl';
+
 // Directory (inside the overall qmimo GUI folder?) to find tput files
 var QMIMO_TPUT_DATA_DIR = 'fake-demo-contents';
 
