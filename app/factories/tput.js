@@ -13,7 +13,8 @@
 	function tputFactory( $rootScope, $http, $q ) {
     var mode = QMIMO_INITIAL_MODE,
         numberOfDevices = QMIMO_NUMBER_OF_DEVICES, // # of connected devices aka files to loop
-        tputLocation = QMIMO_TPUT_DATA_DIR, // relative path
+        tputLocation = QMIMO_TPUT_DATA_DIR, // relative path?
+        switchScriptLocation = QMIMO_PERL_SCRIPT_DIR, // relative path?
         fileName = QMIMO_TPUT_FILE_NAME_FORMAT, // # replaced by actual #s
         tputs = [], // array for caching previous results
         //fake_su_numbers = [ 33, 68, 22, 51, 24, 18 ], // fake numbers for now
@@ -100,6 +101,14 @@
       }
       return tput;
     };
+		/**
+		 * obscures $http.get requests?
+		 */
+		o.switchTputScript = function( newmode ) {
+      var fname = newmode === 'mu' ? QMIMO_MU_SWITCH_SCRIPT : QMIMO_SU_SWITCH_SCRIPT;
+      console.log('calling '+ switchScriptLocation +'/'+ fname );
+			return $http.get( switchScriptLocation +'/'+ fname );
+		};
 		// return our factory
 		return o;
 	}

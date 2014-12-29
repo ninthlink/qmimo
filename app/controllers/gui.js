@@ -129,7 +129,9 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, tputs ) {
   }
   // action(s) to take when a button is pressed to switch between MU/SU mode
   $scope.switchMode = function() {
+    // make sure we are not already in the process of switching modes..
     if ( $rootScope.loading === false ) {
+      // and then
       var qprev = $rootScope.mode;
       var qwait = QMIMO_SWITCH_DELAY_MS;
       var newmode = ( qprev === 'mu' ? 'su' : 'mu' );
@@ -144,6 +146,10 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, tputs ) {
       if ( QMIMO_FAKE_DEMO === true ) {
         $timeout.cancel( tputGenTimer );
       }
+      // call our scripts?
+      tputFactory.switchTputScript( newmode ).then(function(results) {
+        //console.log('pl script triggered?');
+      });
       // after QMIMO_SWITCH_DELAY_MS delay, poll new tput data & reactivate GUI
       $timeout(function() {
         if ( QMIMO_FAKE_DEMO === true ) {
