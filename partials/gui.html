@@ -69,8 +69,8 @@
     <div class="byline">Experience the effects of ultimate 11ac</div>
   </div>
 </div>
-<div class="main">
-  <div class="devices"><!-- hardcoded 6 devices for quick now --></div>
+<div class="main" ng-class="'devices-' + devicenum">
+  <div class="devices"><!-- hardcoded 4 or 6 devices for quick now --></div>
   <div class="lines"></div>
   <div class="router">
     <div class="bg" ng-click="switchMode()">

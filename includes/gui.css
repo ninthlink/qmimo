@@ -483,8 +483,17 @@ body {
 .mu-mode .lines {
   background-image: url(images/mu_lines.png);
 }
+.main.devices-4 .devices {
+  background-image: url(images/devices4.png);
+}
+.mu-mode .devices-4 .lines {
+  background-image: url(images/mu_lines4.png);
+}
 .su-mode .lines {
   background-image: url(images/su_line.png);
+}
+.su-mode .devices-4 .lines {
+  background-image: url(images/su_line1.png);
 }
 .loading .lines {
   display: none;

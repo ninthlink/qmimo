@@ -6,7 +6,7 @@
  * and whether or not to generate fake Throughputs data.
  */
 // The # of devices we can expect tput from
-var QMIMO_NUMBER_OF_DEVICES = 6;
+var QMIMO_NUMBER_OF_DEVICES = 4;
 
 // # of ms to wait to refresh device tput data
 var QMIMO_REFRESH_TPUT_MS = 2000;
@@ -27,7 +27,7 @@ var QMIMO_SU_SWITCH_SCRIPT = 'iperf_start_set_su.pl';
 var QMIMO_TPUT_DATA_DIR = 'fake-demo-contents';
 
 // Which Mode to start in : 'mu' = Multi User, 'su' = Single User
-var QMIMO_INITIAL_MODE = 'mu';
+var QMIMO_INITIAL_MODE = 'su';
 
 // How many decimals to show for the "MU Gain" number, in case we want to tweak
 var QMIMO_MU_GAIN_DECIMAL_PLACES = 2;
