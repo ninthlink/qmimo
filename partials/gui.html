@@ -9,7 +9,7 @@
         <div class="desc"><strong>MULTI</strong>-USER</div>
         <div class="tot">
           <div>{{ mu_total | number: roundtotals }}</div>
-          <small>mb/s</small>
+          <small>Mbps</small>
         </div>
       </div>
     </div>
@@ -22,7 +22,7 @@
         <div class="desc"><strong>SINGLE</strong>-USER</div>
         <div class="tot">
           <div>{{ su_total | number: roundtotals }}</div>
-          <small>mb/s</small>
+          <small>Mbps</small>
         </div>
       </div>
     </div>
@@ -52,9 +52,9 @@
           <span class="control-indicator"></span>
           MU
         </label>
-        <div class="tput mu"><strong>{{device[1]}}</strong><small>mb/s</small></div>
+        <div class="tput mu"><strong>{{device[1]}}</strong>&nbsp;<small>Mbps</small></div>
         <div class="dnum">{{device[0]}}</div>
-        <div class="tput su"><strong>{{device[2]}}</strong><small>mb/s</small></div>
+        <div class="tput su"><strong>{{device[2]}}</strong>&nbsp;<small>Mbps</small></div>
         <label class="control radio su" ng-class="mode === 'su' ? 'blink' : ''">
           <input type="radio" ng-disabled="true" ng-checked="mode == 'su'">
           <span class="control-indicator"></span>
