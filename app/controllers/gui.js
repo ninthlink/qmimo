@@ -38,8 +38,9 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, tputs ) {
   $scope.devicenum = $scope.devices.length;
   $scope.roundtotals = QMIMO_TPUT_TOTALS_DECIMAL_PLACES;
   $scope.roundgain = QMIMO_MU_GAIN_DECIMAL_PLACES;
+  var total_multiplier = 24 / $scope.devicenum;
   // recalculate our top MU & SU numbers based on all devices' tputs
-  $scope.mu_total = $scope.su_total = 0;
+  $scope.mu_total = $scope.su_total = $scope.mu_gain = 0;
   $scope.mu_b1s = $scope.mu_b2s = { 'transform': 'rotate(0deg)' };
   $scope.su_b1s = $scope.su_b2s = { 'transform': 'rotate(0deg)' };
   $scope.retotal = function() {
@@ -63,7 +64,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, tputs ) {
     }
     // calculate border lines too
     if ( $rootScope.mode === 'mu' ) {
-      $scope.mu_deg = Math.round( $scope.mu_total * 4 / 9 );
+      $scope.mu_deg = Math.round( $scope.mu_total * total_multiplier / 9 );
       // make sure # between 0 & 360
       if ( $scope.mu_deg < 0 ) {
         $scope.mu_deg = 0;
@@ -76,7 +77,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, tputs ) {
       $scope.mu_b2 = ( $scope.mu_deg > 180 ) ? ( $scope.mu_deg - 180 ) : 0;
       $scope.mu_b2s = { 'transform': 'rotate('+ $scope.mu_b2 +'deg)' };
     } else { //if ( $rootScope.mode === 'su' ) {
-      $scope.su_deg = Math.round( $scope.su_total * 4 / 9 );
+      $scope.su_deg = Math.round( $scope.su_total * total_multiplier / 9 );
       // make sure # between 0 & 360
       if ( $scope.su_deg < 0 ) {
         $scope.su_deg = 0;
@@ -148,7 +149,9 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, tputs ) {
       }
       // call our scripts?
       tputFactory.switchTputScript( newmode ).then(function(results) {
-        //console.log('pl script triggered?');
+        console.log('pl script triggered?');
+      }, function() {
+        console.log('switch script call failed?');
       });
       // after QMIMO_SWITCH_DELAY_MS delay, poll new tput data & reactivate GUI
       $timeout(function() {
