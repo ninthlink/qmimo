@@ -8,11 +8,21 @@
  * eth0: 123 0
  */
 $maxnum = 6;
+
+$w = false;
+if ( isset( $_GET['w'] ) ) {
+  $w = ( intval( $_GET['w'] ) == 1 );
+}
+
 $m = 0;
 if ( isset( $_GET['m'] ) ) {
-  if ( intval( $_GET['m'] ) === 1 ) {
-    $m = 1;
-  }  
+  if ( $w ) {
+    $m = intval( $_GET['m'] );
+  } else {
+    if ( intval( $_GET['m'] ) === 1 ) {
+      $m = 1;
+    }
+  }
 }
 $range = array(
   array( 10, 70 ),
@@ -29,15 +39,26 @@ if ( isset( $_GET['i'] ) ) {
   }
 }
 
-$file = 'tput'. $i .'.txt';
 $j = ( $i === $maxnum ? 1 : $i + 1 );
 
-$r = rand( $range[$m][0], $range[$m][1] ); // + ( 0.09 * $i );
+if ( $w ) {
+  $r = 0;
+} else {
+  $r = rand( $range[$m][0], $range[$m][1] ); // + ( 0.09 * $i );
+}
 $contents = 'eth0: '. $r .' 0' ."\n";
 
-// actually write to the file then
-file_put_contents( $file, $contents );
-
+if ( $w ) {
+  // loop from $i to $m
+  for( $k = 0; $k < $m; $k++ ) {
+    $file = 'tput'. ( $j + $k ) .'.txt';
+    file_put_contents( $file, $contents );
+  }
+} else {
+  // actually write to the file then
+  $file = 'tput'. $i .'.txt';
+  file_put_contents( $file, $contents );
+}
 $q = isset( $_GET['q'] ) ? ( $_GET['q'] ? 1 : 0 ) : 0;
 if ( $q === 1 ) exit(0);
 ?>
