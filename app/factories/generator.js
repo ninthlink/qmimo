@@ -12,7 +12,7 @@
 	mimoGen.$inject = [ '$http', '$q' ]; // $resource?
 	
 	function mimoGen( $http, $q ) {
-    var numberOfDevices = QMIMO_NUMBER_OF_DEVICES, // # of calls we need per
+    var numberOfDevices = QMIMO_NUMBER_OF_MU_DEVICES, // # of calls we need per
         fakeLocation = QMIMO_TPUT_DATA_DIR, // relative path?
         fakeGenerator = 'qgen.php', // PHP script inside QMIMO_TPUT_DATA_DIR
         o = {}; // actual instance obj that instantiates?
