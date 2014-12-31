@@ -13,6 +13,7 @@
 	
 	function mimoGen( $http, $q ) {
     var numberOfDevices = QMIMO_NUMBER_OF_MU_DEVICES, // # of calls we need per
+        legacyDevices = QMIMO_NUMBER_OF_LEGACY_DEVICES,
         txtsLocation = QMIMO_TPUT_DATA_DIR, // relative path?
         generatorScript = 'qgen.php', // PHP script inside QMIMO_TPUT_DATA_DIR
         o = {}; // actual instance obj that instantiates?
@@ -39,7 +40,12 @@
 		/**
 		 * obscures $http.get requests?
 		 */
-		o.triggerTputGen = function( n, m ) {
+		o.triggerTputGen = function( n, m, w ) {
+      if ( w ) {
+        // i = m = start tput#, n = # of file(s) to wipe, w = 1 yes, quietly
+        return $http.get( txtsLocation +'/'+ generatorScript +'?i='+ m +'&m='+ n +'&w=1&q=1' );
+      } // else
+      // i = n = index to generate, m = 1 for MU or 0 for SU, &q = quietly
 			return $http.get( txtsLocation +'/'+ generatorScript +'?i='+ n +'&m='+ m +'&q=1' );
 		};
 		/**
@@ -49,7 +55,7 @@
       // set up the $q.defer Promise
 			var defer = $q.defer();
       // call our getTputData & process result after it returns
-			o.triggerTputGen( n, m ).then(function(result) {
+			o.triggerTputGen( n, m, false ).then(function(result) {
         //console.log( 'generated for i='+ n +'&m='+ m );
         //console.log( result );
 				// pass result.status (hopefully 200) back upstream
