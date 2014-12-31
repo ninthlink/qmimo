@@ -52,9 +52,9 @@
           <span class="control-indicator"></span>
           MU
         </label>
-        <div class="tput mu"><strong>{{device[1]}}</strong>&nbsp;<small>Mbps</small></div>
+        <div class="tput mu"><span ng-show="shownumbers"><strong>{{device[1]}}</strong>&nbsp;<small>Mbps</small></span></div>
         <div class="dnum">{{device[0]}}</div>
-        <div class="tput su"><strong>{{device[2]}}</strong>&nbsp;<small>Mbps</small></div>
+        <div class="tput su"><span ng-show="shownumbers"><strong>{{device[2]}}</strong>&nbsp;<small>Mbps</small></span></div>
         <label class="control radio su" ng-class="mode === 'su' ? 'blink' : ''">
           <input type="radio" ng-disabled="true" ng-checked="mode == 'su'">
           <span class="control-indicator"></span>
@@ -62,6 +62,40 @@
         </label>
       </div>
     </div>
+    <div class="devicerow" ng-repeat="device in legacy" ng-class="'d'+ $index">
+      <div class="inner">
+        <label class="control radio mu" ng-class="( demo === 'lb' ) && ( mode === 'mu' ) ? 'blink' : ''">
+          <input type="radio" ng-disabled="true" ng-checked="( demo === 'lb' ) && ( mode == 'mu' )">
+          <span class="control-indicator"></span>
+          MU
+        </label>
+        <div class="tput mu"><span ng-show="shownumbers"><strong>{{device[1]}}</strong>&nbsp;<small>s</small></span></div>
+        <div class="dnum">{{device[0]}}</div>
+        <div class="tput su"><span ng-show="shownumbers"><strong>{{device[2]}}</strong>&nbsp;<small>s</small></span></div>
+        <label class="control radio su" ng-class="( demo === 'lb' ) && ( mode === 'su' ) ? 'blink' : ''">
+          <input type="radio" ng-disabled="true" ng-checked="( demo === 'lb' ) && ( mode == 'su' )">
+          <span class="control-indicator"></span>
+          SU
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="gain">
+    <div class="lbl">Legacy Benefit</div>
+    <div class="num">{{ mu_gain | number: 1 }} s</div>
+  </div>
+  <div class="demo switches">
+    <label class="control radio mu blink" ng-class="{ 'active' : demo === 'mg' }">
+      <input id="mgdemo" name="demo" type="radio" value="mg" ng-model="demo" ng-click="switchDemoTo('mg')">
+      <span class="control-indicator"></span>
+      MG
+    </label>
+    <button class="switch" ng-click="switchDemo()" ng-class="{ 'l' : demoleft }"></button>
+    <label class="control radio su blink" ng-class="{ 'active' : demo === 'lb' }">
+      <input id="lbdemo" name="demo" type="radio" value="lb" ng-model="demo" ng-click="switchDemoTo('lb')">
+      <span class="control-indicator"></span>
+      LB
+    </label>
   </div>
   <div class="logo">
     <div class="icn">MU</div>
@@ -69,13 +103,14 @@
     <div class="byline">Experience the effects of ultimate 11ac</div>
   </div>
 </div>
-<div class="main" ng-class="'devices-' + devicenum">
-  <div class="devices"><!-- hardcoded 4 or 6 devices for quick now --></div>
+<div class="main">
+  <div class="devices"><!-- hardcoded # of devices for now --></div>
   <div class="lines"></div>
   <div class="router">
     <div class="bg" ng-click="switchMode()">
-      <div class="circle"</div>
+      <div class="circle"></div>
       <div class="icon"></div>
     </div>
   </div>
+  <a class="numtog" ng-click="toggleNumbers();"></a>
 </div>

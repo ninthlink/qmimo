@@ -95,8 +95,9 @@ body.su-mode .devices .control.su {
 .gain .lbl {
   color: #fff;
 }
-body.mu-mode .switches .control.mu,
-body.su-mode .switches .control.su {
+body.mu-mode .dials .switches .control.mu,
+body.su-mode .dials .switches .control.su,
+.demo.switches .control.active {
   color: #000;
 }
 .title,
@@ -310,9 +311,15 @@ body {
   font-size: 12px;
   line-height: 1;
 }
-.switches {
+.dials .switches {
   float: left;
   width: 100%;
+}
+.demo.switches {
+  background: #fbfbfb; /* gradient? */
+  height: 6.4%;
+  padding: 0.7em 0 0;
+  text-align: center;
 }
 .switches .control {
   font-size: 14px;
@@ -384,7 +391,7 @@ body {
   display: block;
   overflow-y: auto;
   width: 100%;
-  height: 55.6%; /* 100 - 6.4 - 16 - 22 */
+  height: 42%;
 }
 .devicerow {
   background: url(images/bg_row.png) repeat-x 0 0;
@@ -466,7 +473,7 @@ body {
 /* just single images for rough now */
 .lines,
 .main .devices {
-  background: url(images/devices.png) no-repeat 50% 50%;
+  background: url(images/devices5.png) no-repeat 50% 50%;
   background-size: cover;
   position: absolute;
   top: 0;
@@ -480,21 +487,25 @@ body {
   z-index: 1;
 }
 /* static line image switch quick */
-.mu-mode .lines {
-  background-image: url(images/mu_lines.png);
+.mg-demo.mu-mode .lines {
+  background-image: url(images/mu_lines4.png);
 }
+/*
 .main.devices-4 .devices {
   background-image: url(images/devices4.png);
 }
 .mu-mode .devices-4 .lines {
   background-image: url(images/mu_lines4.png);
 }
+*/
 .su-mode .lines {
-  background-image: url(images/su_line.png);
+  background-image: url(images/su_line1.png);
 }
+/*
 .su-mode .devices-4 .lines {
   background-image: url(images/su_line1.png);
 }
+*/
 .loading .lines {
   display: none;
 }
@@ -632,6 +643,19 @@ body.loading {
     margin: 5px 0 3px;
   }
 }
+
+.numtog {
+  background: url(images/fx.gif) repeat 0 0;
+  cursor: default;
+  display: block;
+  width: 41px;
+  height: 41px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 99;
+}
+
 /* animations */
 .dial .ring {
   -webkit-animation: spin 8s linear infinite;
