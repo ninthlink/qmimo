@@ -13,8 +13,8 @@
 	
 	function mimoGen( $http, $q ) {
     var numberOfDevices = QMIMO_NUMBER_OF_MU_DEVICES, // # of calls we need per
-        fakeLocation = QMIMO_TPUT_DATA_DIR, // relative path?
-        fakeGenerator = 'qgen.php', // PHP script inside QMIMO_TPUT_DATA_DIR
+        txtsLocation = QMIMO_TPUT_DATA_DIR, // relative path?
+        generatorScript = 'qgen.php', // PHP script inside QMIMO_TPUT_DATA_DIR
         o = {}; // actual instance obj that instantiates?
 		/**
 		 * initial Promises for data to populate Devices tput data?
@@ -40,10 +40,10 @@
 		 * obscures $http.get requests?
 		 */
 		o.triggerTputGen = function( n, m ) {
-			return $http.get( fakeLocation +'/'+ fakeGenerator +'?i='+ n +'&m='+ m +'&q=1' );
+			return $http.get( txtsLocation +'/'+ generatorScript +'?i='+ n +'&m='+ m +'&q=1' );
 		};
 		/**
-		 * gets response from getSampleFeed and does some parsing to conglomerate feeds together?
+		 * gets response from triggerTputGen and then resolves our Promise?
 		 */
 		o.genTput = function( n, m ) {
       // set up the $q.defer Promise
