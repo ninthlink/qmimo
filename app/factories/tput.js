@@ -12,13 +12,12 @@
 	
 	function tputFactory( $rootScope, $http, $q ) {
     var mode = QMIMO_INITIAL_MODE,
-        numberOfDevices = QMIMO_NUMBER_OF_DEVICES, // # of connected devices aka files to loop
+        numberOfDevices = QMIMO_NUMBER_OF_MU_DEVICES, // # of connected devices aka files to loop
         tputLocation = QMIMO_TPUT_DATA_DIR, // relative path?
         switchScriptLocation = QMIMO_PERL_SCRIPT_DIR, // relative path?
         fileName = QMIMO_TPUT_FILE_NAME_FORMAT, // # replaced by actual #s
         tputs = [], // array for caching previous results,
         stored_totals = { mu: 0, su: 0, gain: 0 },
-        //fake_su_numbers = [ 33, 68, 22, 51, 24, 18 ], // fake numbers for now
         o = {}; // and finally our actual instance object that we will return
 		/**
 		 * initial Promises for data to populate Devices tput data?
@@ -121,10 +120,18 @@
       return tput;
     };
 		/**
-		 * obscures $http.get requests?
+		 * trigger our QMIMO_MU_SWITCH_SCRIPT / QMIMO_SU_SWITCH_SCRIPT via a GET?
 		 */
 		o.switchTputScript = function( newmode ) {
       var fname = newmode === 'mu' ? QMIMO_MU_SWITCH_SCRIPT : QMIMO_SU_SWITCH_SCRIPT;
+      console.log('calling '+ switchScriptLocation +'/'+ fname );
+			return $http.get( switchScriptLocation +'/'+ fname );
+		};
+		/**
+		 * trigger our QMIMO_MG_SWITCH_SCRIPT / QMIMO_LB_SWITCH_SCRIPT via a GET?
+		 */
+		o.switchDemoScript = function( newmode ) {
+      var fname = newmode === 'mg' ? QMIMO_MG_SWITCH_SCRIPT : QMIMO_LB_SWITCH_SCRIPT;
       console.log('calling '+ switchScriptLocation +'/'+ fname );
 			return $http.get( switchScriptLocation +'/'+ fname );
 		};
