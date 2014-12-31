@@ -49,6 +49,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $scope.roundgain = QMIMO_MU_GAIN_DECIMAL_PLACES;
   // "LB" mode variable(s) too
   $scope.legacy = [];
+  $scope.legacy_diff = 0;
   var legacycount = QMIMO_NUMBER_OF_LEGACY_DEVICES;
   $scope.totalnum = $scope.devicenum + legacycount;
   for ( i = 0; i < legacycount; i += 1 ) {
@@ -114,16 +115,62 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
       $scope.reloadTputNow();
     }, QMIMO_REFRESH_TPUT_MS );
   };
+  // similar idea for LB Demo polling
+  $scope.pollLBNow = function() {
+    tputFactory.getLegacyData().then(function(results) {
+      console.log('LEGACY DATAS');
+      console.log(results);
+      $rootScope.loading = false;
+      var m = $rootScope.mode === 'mu' ? 1 : 2;
+      var o = $rootScope.mode === 'mu' ? 2 : 1;
+      var tot = 0;
+      var allback = true;
+      angular.forEach( results, function( d, k ) {
+        $scope.legacy[k][m] = d;
+        if ( d === 0 ) {
+          allback = false;
+        } else {
+          // if we also have the other mode value already, then
+          if ( $scope.legacy[k][o] !== 0 ) {
+            tot += $scope.legacy[k][2] - $scope.legacy[k][1];
+          }
+        }
+      });
+      if ( !allback ) {
+        // trigger this again
+        $scope.pollLB();
+      } else {
+        console.log('all Legacy have returned some # != 0');
+        $scope.legacy_diff = tot;
+      }
+    });
+  };
+  $scope.pollLB = function() {
+    $timeout.cancel( tputTimer );
+    tputTimer = $timeout( function() {
+      $scope.pollLBNow();
+    }, QMIMO_REFRESH_TPUT_MS );
+  };
   // similar idea to fake generating numbers via mimoGen
   var tputGenTimer;
-  $scope.kickGenerator = function() {
+  $scope.kickGenerator = function( wait ) {
     $timeout.cancel( tputGenTimer );
+    var waitms = QMIMO_FAKE_DEMO_LOOP_MS;
+    if ( wait ) {
+      waitms = wait * 1000;
+    }
     tputGenTimer = $timeout( function() {
-      var mode = $rootScope.mode;
-      mimoGen.genDeviceTput( mode ).then(function(results) {
-        $scope.kickGenerator();
-      });
-    }, QMIMO_FAKE_DEMO_LOOP_MS );
+      if ( $rootScope.demo === 'mg' ) {
+        mimoGen.genDeviceTput( $rootScope.mode ).then(function(results) {
+          $scope.kickGenerator();
+        });
+      } else {
+        // LB mode, so
+        mimoGen.triggerTputGen( QMIMO_NUMBER_OF_MU_DEVICES +'&r='+ wait, QMIMO_NUMBER_OF_LEGACY_DEVICES, true ).then(function(result) {
+          // all set, just hang out
+        });
+      }
+    }, waitms );
   };
   
   // action(s) to take when a button is pressed to switch between MU/SU mode
@@ -172,10 +219,12 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
           }
         }, qwait );
       } else {
-        // LB Demo
+        // LB Demo : for now, just switch first
+        $rootScope.mode = newmode;
+        // right away no delay
+        $scope.wipeLegacyData();
+        
         $timeout(function() {
-          // for now, just switch first
-          $rootScope.mode = newmode;
           $rootScope.loading = false;
           //console.log('LB mode switched to '+ newmode);
         }, qwait );
@@ -239,12 +288,13 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
             // after delay, start Throughput loading data again
             $scope.reloadTputNow( $rootScope.mode );
           }
-        } else {
-          // "lb" mode things
-          $rootScope.loading = false;
-          console.log('and then?');
         }
       }, qwait );
+      
+      if ( newmode === 'lb' ) {
+        // right away no delay
+        $scope.wipeLegacyData();
+      }
     } else {
       console.log( 'Switch already in progress, please wait..' );
     }
@@ -266,6 +316,30 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   if ( QMIMO_FAKE_DEMO === true ) {
     $scope.kickGenerator();
   }
+  
+  $scope.wipeLegacyData = function() {
+    console.log('and then? wiping initial/previous Legacy tputs');
+    // (re)wipe initial stored value(s)
+    $scope.legacy_diff = 0;
+    var wait = $rootScope.mode === 'mu' ? QMIMO_FAKE_LB_MU_TIME : QMIMO_FAKE_LB_SU_TIME;
+    
+    mimoGen.triggerTputGen( QMIMO_NUMBER_OF_MU_DEVICES, QMIMO_NUMBER_OF_LEGACY_DEVICES, true ).then(function(result) {
+      console.log( 'wiped for i='+ QMIMO_NUMBER_OF_MU_DEVICES +'&m='+ QMIMO_NUMBER_OF_LEGACY_DEVICES );
+      console.log( result );
+      if ( QMIMO_FAKE_DEMO === true ) {
+        $scope.kickGenerator( wait );
+      }
+      
+      // and start polling
+      $scope.pollLB();
+    },
+    function(err) {
+      console.log('wipe failed');
+      if ( QMIMO_FAKE_DEMO === true ) {
+        $scope.kickGenerator( wait );
+      }
+    });
+  };
   
   $scope.toggleNumbers = function() {
     $rootScope.shownumbers = !$rootScope.shownumbers;

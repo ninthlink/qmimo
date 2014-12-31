@@ -43,6 +43,9 @@ $j = ( $i === $maxnum ? 1 : $i + 1 );
 
 if ( $w ) {
   $r = 0;
+  if ( isset( $_GET['r'] ) ) {
+    $r = intval( $_GET['r'] );
+  }
 } else {
   $r = rand( $range[$m][0], $range[$m][1] ); // + ( 0.09 * $i );
 }

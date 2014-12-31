@@ -12,9 +12,11 @@ tputFactory.$inject = [ '$rootScope', '$http', '$q' ]; // $resource?
 function tputFactory( $rootScope, $http, $q ) {
   var mode = QMIMO_INITIAL_MODE,
       numberOfDevices = QMIMO_NUMBER_OF_MU_DEVICES, // # of connected devices aka files to loop
+      legacyDevices = QMIMO_NUMBER_OF_LEGACY_DEVICES,
       tputLocation = QMIMO_TPUT_DATA_DIR, // relative path?
       fileName = QMIMO_TPUT_FILE_NAME_FORMAT, // # replaced by actual #s
-      tputs = [], // array for caching previous results,
+      tputs = [], // array for caching (previous) tput results,
+      legacy_totals = { mu: 0, su: 0, diff: 0 },
       stored_totals = { mu: 0, su: 0, gain: 0 },
       o = {}; // and finally our actual instance object that we will return
   /**
@@ -43,7 +45,6 @@ function tputFactory( $rootScope, $http, $q ) {
           0,
           // latest SU tput data
           0
-          //fake_su_numbers[i]
         ];
       }
       // and set up our Promises array so we can use $q.all
@@ -55,7 +56,7 @@ function tputFactory( $rootScope, $http, $q ) {
       var i = ( mode === 'mu' ? 1 : 2 );
       stored_totals[ mode ] = 0;
       angular.forEach( results, function( d, k ) {
-        stored_totals[ mode ]  += d[i];
+        stored_totals[ mode ] += d[i];
       });
       // recalculate MU Gain too?
       if ( ( stored_totals.mu === 0 ) || ( stored_totals.su === 0 ) ) {
@@ -81,7 +82,7 @@ function tputFactory( $rootScope, $http, $q ) {
     return $http.get( tputLocation +'/'+ fname );
   };
   /**
-   * gets response from getSampleFeed and does some parsing to conglomerate feeds together?
+   * gets response from getTputData and does some parsing to conglomerate feeds together?
    */
   o.loadTput = function( n ) {
     // set up the $q.defer Promise
@@ -107,6 +108,24 @@ function tputFactory( $rootScope, $http, $q ) {
     return defer.promise;
   };
   /**
+   * similar to loadTput, gets response from getTputData and does some parsing
+   */
+  o.loadLegacyData = function( n ) {
+    // set up the $q.defer Promise
+    var defer = $q.defer();
+    // call our getTputData & process result after it returns
+    o.getTputData( n ).then(function(result) {
+      //console.log( 'throughput #'+ n +' loaded : ' );
+      //console.log( result.data );
+      // extract number from data like 'eth0: 123 0'
+      defer.resolve( o.parseTputData( result.data ) );
+    },
+    function(err) {
+      defer.resolve( 0 );
+    });
+    return defer.promise;
+  };
+  /**
    * extracts tput # from data like "eth0: 123 0"
    */
   o.parseTputData = function( data ) {
@@ -117,6 +136,30 @@ function tputFactory( $rootScope, $http, $q ) {
     }
     return tput;
   };
-  // return our factory
+  /**
+   * similar to getDevicesTput Promises for data for LB demo
+   */
+  o.getLegacyData = function() {
+    if ( $rootScope.hasOwnProperty('mode') ) {
+      //console.log( 'getDevicesTput : rootScope.mode = '+ $rootScope.mode );
+      mode = $rootScope.mode;
+    } else {
+      //console.log( 'getDevicesTput : SETTING rootScope.mode to '+ mode );
+      $rootScope.mode = mode;
+    }
+    var legPromises = [];
+    for ( i = 0; i < legacyDevices; i = i + 1 ) {
+      // set up our Promises array so we can use $q.all
+      legPromises[i] = o.loadLegacyData( i + numberOfDevices + 1 );
+    }
+    return $q.all( legPromises ).then(function(results) {
+      //console.log('returning total legPromises');
+      //console.log(results);
+      // return our data
+      return results;
+    });
+  };
+  
+  // and return our factory
   return o;
 }
