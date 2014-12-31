@@ -61,3 +61,9 @@ var QMIMO_FAKE_DEMO = true;
 
 // Time to wait before re-generating demo #s. probably <= QMIMO_REFRESH_TPUT_MS
 var QMIMO_FAKE_DEMO_LOOP_MS = 1000;
+
+// Time value / wait for LB Demo in MU mode
+var QMIMO_FAKE_LB_MU_TIME = 40;
+
+// Time value / wait for LB Demo in SU mode : should be different than MU above
+var QMIMO_FAKE_LB_SU_TIME = 46;
