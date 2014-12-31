@@ -29,11 +29,11 @@ angular
   ])
   .controller('guiCtrl', guiCtrl);
 // inject any Angular dependencies in to our Controller, like our Factories
-guiCtrl.$inject = [ '$scope', '$rootScope', '$timeout', 'tputFactory', 'mimoGen', 'tputs' ];
+guiCtrl.$inject = [ '$scope', '$rootScope', '$timeout', 'tputFactory', 'mimoGen', 'mimoScripts', 'tputs' ];
 /**
  * We are in the GUI Controller's control from here out
  */
-function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, tputs ) {
+function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScripts, tputs ) {
   // initial GUI setup & map initial data from our tputFactory
   $rootScope.demo = QMIMO_INITIAL_DEMO;
   $rootScope.loading = false;
@@ -148,7 +148,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, tputs ) {
           $timeout.cancel( tputGenTimer );
         }
         // call our scripts?
-        tputFactory.switchTputScript( newmode ).then(function(results) {
+        mimoScripts.modeChange( newmode ).then(function(results) {
           console.log('pl script triggered?');
         }, function() {
           console.log('switch script call failed?');
@@ -216,7 +216,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, tputs ) {
         $timeout.cancel( tputGenTimer );
       }
       // call our scripts?
-      tputFactory.switchDemoScript( newmode ).then(function(results) {
+      mimoScripts.demoChange( newmode ).then(function(results) {
         console.log('demo mode switch pl script triggered?');
       }, function() {
         console.log('switch script call failed?');
