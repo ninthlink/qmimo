@@ -606,10 +606,10 @@ body.loading {
   }
 }
 @media screen and (min-width:1600px) {
-  .switches .control.mu {
+  .dials .switches .control.mu {
     padding-left: 3em;
   }
-  .switches .control.su {
+  .dials .switches .control.su {
     padding-right: 3em;
   }
   .switches .control-indicator {
@@ -623,6 +623,16 @@ body.loading {
   .switches .control.su input:checked ~ .control-indicator {
     background-position: 0 -52px;
   }
+  .demo.switches .control {
+    font-size: 20px;
+  }
+  .demo.switches .control.mu {
+    padding-left: 2em;
+  }
+  .demo.switches .control.su {
+    padding-right: 2em;
+  }
+  
   .gain.mg .lbl {
     font-size: 31px;
   }
@@ -744,6 +754,59 @@ body.loading {
   -moz-animation-delay: 300ms;
   animation-delay: 300ms;
 }
+.lines.alt {
+  -webkit-animation: alt 1.6s linear infinite backwards;
+  -moz-animation: alt 1.6s linear infinite backwards;
+  animation: alt 1.6s linear infinite backwards;
+}
+.lb-demo .lines.alt {
+  -webkit-animation-duration: 2s;
+  -moz-animation-duration: 2s;
+  animation-duration: 2s;
+}
+/*
+.mg-demo .lines.alt.su-line-2 {
+  -webkit-animation-delay: 525ms;
+  -moz-animation-delay: 525ms;
+  animation-delay: 525ms;
+}
+.mg-demo .lines.alt.su-line-3 {
+  -webkit-animation-delay: 1050ms;
+  -moz-animation-delay: 1050ms;
+  animation-delay: 1050ms;
+}
+.mg-demo .lines.alt.su-line-4 {
+  -webkit-animation-delay: 1575ms;
+  -moz-animation-delay: 1575ms;
+  animation-delay: 1575ms;
+}
+*/
+.lines.alt.su-line-2 {
+  -webkit-animation-delay: 400ms;
+  -moz-animation-delay: 400ms;
+  animation-delay: 400ms;
+}
+.lines.alt.su-line-3 {
+  -webkit-animation-delay: 800ms;
+  -moz-animation-delay: 800ms;
+  animation-delay: 800ms;
+}
+.lines.alt.su-line-4 {
+  -webkit-animation-delay: 1200ms;
+  -moz-animation-delay: 1200ms;
+  animation-delay: 1200ms;
+}
+.lines.alt.su-line-5 {
+  -webkit-animation-delay: 1600ms;
+  -moz-animation-delay: 1600ms;
+  animation-delay: 1600ms;
+}
+/*
+.lines.blink.su-line-5 {
+  -webkit-animation-delay: 300ms;
+  -moz-animation-delay: 300ms;
+  animation-delay: 300ms;
+}
 /* animation keyframes */
 @-moz-keyframes spin {
   0% { -moz-transform: rotate(0deg); }
@@ -760,7 +823,7 @@ body.loading {
   50% { transform: rotate(180deg); }
   100% { transform: rotate(360deg); }
 }
-/* blink : fade in for 0.5, on for 2, out for 0.5, off for  */
+/* blink : partial fade in & out  */
 @-webkit-keyframes blink {
   0%  { opacity: 1; }
   80%  { opacity: 1; }
@@ -794,6 +857,28 @@ body.loading {
   0%  { opacity: 1; }
   30%   { opacity: 1; }
   100%   { opacity: 0.85; }
+}
+/* alt : fade in for 0.5, on for 2, out for 0.5, off for  */
+@-webkit-keyframes alt {
+  0%  { opacity: 0; }
+  5%  { opacity: 1; }
+  25%   { opacity: 1; }
+  30%   { opacity: 0; }
+  100%   { opacity: 0; }
+}
+@-moz-keyframes alt {
+  0%  { opacity: 0; }
+  5%  { opacity: 1; }
+  25%   { opacity: 1; }
+  30%   { opacity: 0; }
+  100%   { opacity: 0; }
+}
+@keyframes alt {
+  0%  { opacity: 0; }
+  5%  { opacity: 1; }
+  25%   { opacity: 1; }
+  30%   { opacity: 0; }
+  100%   { opacity: 0; }
 }
 
 *:focus {
