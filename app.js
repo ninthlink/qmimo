@@ -2,15 +2,6 @@
 /**
  * app.js
  *
- * defines AngularJS "qmimo" module & initial config
+ * Define our AngularJS "qmimo" module & a few module dependencies
  */
-angular
-  .module('qmimo', ['ui.router', 'ngSanitize'])
-  // state handling done in individual Controllers, so just set default here
-  .config([
-    '$stateProvider',
-    '$urlRouterProvider',
-    function($stateProvider, $urlRouterProvider) {
-      $urlRouterProvider.otherwise('/');
-    }
-  ]);
+angular.module('qmimo', ['ui.router', 'ngSanitize']);
