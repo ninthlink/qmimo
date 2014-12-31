@@ -40,7 +40,7 @@
       </label>
     </div>
   </div>
-  <div class="gain">
+  <div class="gain mg">
     <div class="lbl"><strong>MU</strong> Gain</div>
     <div class="num">{{ mu_gain | number: roundgain }}</div>
   </div>
@@ -80,7 +80,7 @@
       </div>
     </div>
   </div>
-  <div class="gain">
+  <div class="gain lb">
     <div class="lbl">Legacy Benefit</div>
     <div class="num">{{ legacy_diff | number: 1 }} s</div>
   </div>
@@ -104,8 +104,10 @@
   </div>
 </div>
 <div class="main">
-  <div class="devices"><!-- hardcoded # of devices for now --></div>
-  <div class="lines"></div>
+  <div class="devices"><!-- hardcoded # of devices for now? --></div>
+  <div class="lines mu-lines" ng-class="{ 'blink' : mode === 'mu' }" ng-show="( mode === 'mu' ) && !loading"></div>
+  <div class="lines" ng-repeat="device in devices" ng-class="lineClasses(device[0])" ng-show="( mode === 'su' ) && !loading"></div>
+  <div class="lines" ng-repeat="device in legacy" ng-class="lineClasses(device[0])" ng-show="( demo === 'lb' ) && !loading"></div>
   <div class="router">
     <div class="bg" ng-click="switchMode()">
       <div class="circle"></div>

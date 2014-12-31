@@ -340,6 +340,19 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     });
   };
   
+  $scope.lineClasses = function( devicenum ) {
+    var classes = 'su-line-'+ devicenum;
+    switch ( $scope.mode ) {
+      case 'mu':
+        classes += ' blink';
+        break;
+      case 'su':
+        classes += ' alt';
+        break;
+    }
+    return classes;
+  };
+  
   $scope.toggleNumbers = function() {
     $rootScope.shownumbers = !$rootScope.shownumbers;
   };

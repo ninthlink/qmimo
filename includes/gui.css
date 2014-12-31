@@ -55,7 +55,8 @@ body {
 .gain .num,
 .devices .control,
 .dnum,
-.title {
+.title,
+.demo.switches {
   font-family: "Qualcomm-Semibold", sans-serif;
 }
 .dial .desc strong,
@@ -322,9 +323,14 @@ body {
   text-align: center;
 }
 .switches .control {
-  font-size: 14px;
   line-height: 31px;
   vertical-align: middle;
+}
+.dials .switches .control {
+  font-size: 14px;
+}
+.demo.switches .control {
+  font-size: 16px;
 }
 .switches .control-indicator {
   width: 1.3rem;
@@ -487,28 +493,29 @@ body {
   z-index: 1;
 }
 /* static line image switch quick */
-.mg-demo.mu-mode .lines {
-  background-image: url(images/mu_lines4.png);
+.mu-lines {
+  background-image: url(images/lines/mu1-4.png);
+}
+.su-line-1 {
+  background-image: url(images/lines/mu1.png);
+}
+.su-line-2 {
+  background-image: url(images/lines/mu2.png);
+}
+.su-line-3 {
+  background-image: url(images/lines/mu3.png);
+}
+.su-line-4 {
+  background-image: url(images/lines/mu4.png);
+}
+.su-line-5 {
+  background-image: url(images/lines/su5.png);
 }
 /*
-.main.devices-4 .devices {
-  background-image: url(images/devices4.png);
-}
-.mu-mode .devices-4 .lines {
-  background-image: url(images/mu_lines4.png);
-}
-*/
-.su-mode .lines {
-  background-image: url(images/su_line1.png);
-}
-/*
-.su-mode .devices-4 .lines {
-  background-image: url(images/su_line1.png);
-}
-*/
 .loading .lines {
   display: none;
 }
+*/
 /* router icon itself */
 .router {
   position: relative;
@@ -579,8 +586,11 @@ body.loading {
   .dial .mode {
     font-size: 27px;
   }
+  .left .devices {
+    height: 44%;
+  }
   .devicerow {
-    padding: 1.44em 0;
+    padding: 1.25em 0;
   }
   .devicerow .inner {
     height: 3.4em;
@@ -590,6 +600,9 @@ body.loading {
   }
   .tput small {
     font-size: 14px;
+  }
+  .demo.switches {
+    height: 5%;
   }
 }
 @media screen and (min-width:1600px) {
@@ -610,8 +623,11 @@ body.loading {
   .switches .control.su input:checked ~ .control-indicator {
     background-position: 0 -52px;
   }
-  .gain .lbl {
+  .gain.mg .lbl {
     font-size: 31px;
+  }
+  .gain.lb .lbl {
+    font-size: 28px;
   }
   .gain .num {
     font-size: 33px;
@@ -717,6 +733,16 @@ body.loading {
   -webkit-animation-play-state: paused;
   -moz-animation-play-state: paused;
   animation-play-state: paused;
+}
+.lines.blink {
+  -webkit-animation: blink 800ms linear infinite alternate;
+  -moz-animation: blink 800ms linear infinite alternate;
+  animation: blink 800ms linear infinite alternate;
+}
+.lines.blink.su-line-5 {
+  -webkit-animation-delay: 300ms;
+  -moz-animation-delay: 300ms;
+  animation-delay: 300ms;
 }
 /* animation keyframes */
 @-moz-keyframes spin {
