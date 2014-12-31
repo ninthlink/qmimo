@@ -118,8 +118,8 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   // similar idea for LB Demo polling
   $scope.pollLBNow = function() {
     tputFactory.getLegacyData().then(function(results) {
-      console.log('LEGACY DATAS');
-      console.log(results);
+      //console.log('LEGACY DATAS');
+      //console.log(results);
       $rootScope.loading = false;
       var m = $rootScope.mode === 'mu' ? 1 : 2;
       var o = $rootScope.mode === 'mu' ? 2 : 1;
@@ -140,7 +140,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
         // trigger this again
         $scope.pollLB();
       } else {
-        console.log('all Legacy have returned some # != 0');
+        //console.log('all Legacy have returned some # != 0');
         $scope.legacy_diff = tot;
       }
     });
@@ -318,18 +318,17 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   }
   
   $scope.wipeLegacyData = function() {
-    console.log('and then? wiping initial/previous Legacy tputs');
+    //console.log('and then? wiping initial/previous Legacy tputs');
     // (re)wipe initial stored value(s)
     $scope.legacy_diff = 0;
     var wait = $rootScope.mode === 'mu' ? QMIMO_FAKE_LB_MU_TIME : QMIMO_FAKE_LB_SU_TIME;
     
     mimoGen.triggerTputGen( QMIMO_NUMBER_OF_MU_DEVICES, QMIMO_NUMBER_OF_LEGACY_DEVICES, true ).then(function(result) {
-      console.log( 'wiped for i='+ QMIMO_NUMBER_OF_MU_DEVICES +'&m='+ QMIMO_NUMBER_OF_LEGACY_DEVICES );
-      console.log( result );
+      //console.log( 'wiped for i='+ QMIMO_NUMBER_OF_MU_DEVICES +'&m='+ QMIMO_NUMBER_OF_LEGACY_DEVICES );
+      //console.log( result );
       if ( QMIMO_FAKE_DEMO === true ) {
         $scope.kickGenerator( wait );
       }
-      
       // and start polling
       $scope.pollLB();
     },
