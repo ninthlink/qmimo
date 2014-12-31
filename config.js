@@ -5,8 +5,11 @@
  * including # of connected devices, time before refreshing pieces,
  * and whether or not to generate fake Throughputs data.
  */
-// The # of devices we can expect tput from
-var QMIMO_NUMBER_OF_DEVICES = 4;
+// # of devices we can expect tput from
+var QMIMO_NUMBER_OF_MU_DEVICES = 4;
+
+// # of "legacy" / non-MU-capable devices, for "LB" mode
+var QMIMO_NUMBER_OF_LEGACY_DEVICES = 1;
 
 // # of ms to wait to refresh device tput data
 var QMIMO_REFRESH_TPUT_MS = 2000;
@@ -17,17 +20,26 @@ var QMIMO_SWITCH_DELAY_MS = 3000;
 // Directory (inside the overall qmimo GUI folder?) to find .pl scripts to call
 var QMIMO_PERL_SCRIPT_DIR = 'perl-scripts';
 
-// script to call when switching to MU mode, inside QMIMO_PERL_SCRIPT_DIR
-var QMIMO_MU_SWITCH_SCRIPT = 'iperf_start_set_mu.pl';
+// script to call when switching to MU Mode, inside QMIMO_PERL_SCRIPT_DIR
+var QMIMO_MU_SWITCH_SCRIPT = 'ap_mu_mode.pl';
 
-// script to call when switching to MU mode, inside QMIMO_PERL_SCRIPT_DIR
-var QMIMO_SU_SWITCH_SCRIPT = 'iperf_start_set_su.pl';
+// script to call when switching to SU Mode, inside QMIMO_PERL_SCRIPT_DIR
+var QMIMO_SU_SWITCH_SCRIPT = 'ap_su_mode.pl';
+
+// script to call when switching to MG Demo, inside QMIMO_PERL_SCRIPT_DIR
+var QMIMO_MG_SWITCH_SCRIPT = 'mg_udp_traffic.pl';
+
+// script to call when switching to LB Demo, inside QMIMO_PERL_SCRIPT_DIR
+var QMIMO_LB_SWITCH_SCRIPT = 'lb_tcp_traffic.pl';
 
 // Directory (inside the overall qmimo GUI folder?) to find tput files
 var QMIMO_TPUT_DATA_DIR = 'fake-demo-contents';
 
-// Which Mode to start in : 'mu' = Multi User, 'su' = Single User
-var QMIMO_INITIAL_MODE = 'su';
+// Mode to start in : 'mu' = Multi User, 'su' = Single User
+var QMIMO_INITIAL_MODE = 'mu';
+
+// Demo to start in : 'mg' = Multi User Gain, 'lb' = Legacy Client Benefit
+var QMIMO_INITIAL_DEMO = 'mg';
 
 // How many decimals to show for the "MU Gain" number, in case we want to tweak
 var QMIMO_MU_GAIN_DECIMAL_PLACES = 2;
