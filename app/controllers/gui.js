@@ -19,6 +19,7 @@ angular
         resolve: {
           // "resolve" polls initial tput data before the UI loads
           tputs: function( tputFactory ) {
+            //console.log('setting up initial guiCtrl resolve tputs');
             return tputFactory.getDevicesTput( true );
           }
         }
@@ -34,6 +35,7 @@ guiCtrl.$inject = [ '$scope', '$rootScope', '$timeout', 'tputFactory', 'mimoGen'
  * We are in the GUI Controller's control from here out
  */
 function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScripts, tputs ) {
+  //console.log( 'we are in guiCtrl' );
   // initial GUI setup & map initial data from our tputFactory
   $rootScope.demo = QMIMO_INITIAL_DEMO;
   $rootScope.loading = false;
@@ -90,6 +92,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     }
   };
   // (re)total for the initial data..
+  //console.log( 'calling initial scope retotal');
   $scope.retotal();
   
   // Set timeout to (re) poll tput datas
@@ -154,6 +157,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   // similar idea to fake generating numbers via mimoGen
   var tputGenTimer;
   $scope.kickGenerator = function( wait ) {
+    //console.log( 'gui.js : kickGenerator( '+ wait +' )' );
     $timeout.cancel( tputGenTimer );
     var waitms = QMIMO_FAKE_DEMO_LOOP_MS;
     if ( wait ) {
@@ -311,9 +315,11 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   };
   
   // #todo : wrap these in case we want to start in LB instead of MG?
+  //console.log('calling initial scope reloadTput');
   $scope.reloadTput();
   // if we actually want to actually fake the numbers?
   if ( QMIMO_FAKE_DEMO === true ) {
+    //console.log('FAKE_DEMO = true, calling initial kickGenerator too');
     $scope.kickGenerator();
   }
   
