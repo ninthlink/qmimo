@@ -7,9 +7,9 @@ angular
   .module('qmimo')
   .factory('tputFactory', tputFactory);
 
-tputFactory.$inject = [ '$rootScope', '$http', '$q' ]; // $resource?
+tputFactory.$inject = [ '$rootScope', '$http', '$q', '$timeout' ]; // $resource?
 
-function tputFactory( $rootScope, $http, $q ) {
+function tputFactory( $rootScope, $http, $q, $timeout ) {
   var mode = QMIMO_INITIAL_MODE,
       numberOfDevices = QMIMO_NUMBER_OF_MU_DEVICES, // # of connected devices aka files to loop
       legacyDevices = QMIMO_NUMBER_OF_LEGACY_DEVICES,
@@ -77,9 +77,9 @@ function tputFactory( $rootScope, $http, $q ) {
   /**
    * obscures $http.get requests?
    */
-  o.getTputData = function( n ) {
+  o.getTputData = function( n, defer ) {
     var fname = fileName.replace( '#', n );
-    return $http.get( tputLocation +'/'+ fname );
+    return $http.get( tputLocation +'/'+ fname, { timeout: defer.promise });
   };
   /**
    * gets response from getTputData and does some parsing to conglomerate feeds together?
@@ -88,13 +88,15 @@ function tputFactory( $rootScope, $http, $q ) {
     // set up the $q.defer Promise
     var defer = $q.defer();
     // call our getTputData & process result after it returns
-    o.getTputData( n ).then(function(result) {
+    o.getTputData( n, defer ).then(function(result) {
       //console.log( 'throughput #'+ n +' loaded : ' );
       //console.log( result.data );
       // extract number from data like 'eth0: 123 0'
       var i = ( mode === 'mu' ? 1 : 2 );
-      tputs[n][i] = o.parseTputData( result.data );
-      
+      var newtput = o.parseTputData( result.data );
+      if ( newtput > 0 ) {
+        tputs[n][i] = newtput;
+      }
       // pass the data back upstream
       //console.log('returning tput '+ n);
       defer.resolve( tputs[n] );
@@ -105,6 +107,11 @@ function tputFactory( $rootScope, $http, $q ) {
       // instead of rejecting, send anyways
       defer.resolve( tputs[n] );
     });
+    
+    $timeout( function() {
+      defer.resolve( tputs[n] );
+    }, QMIMO_TPUT_TIMEOUT_MS );
+    
     return defer.promise;
   };
   /**
@@ -114,7 +121,7 @@ function tputFactory( $rootScope, $http, $q ) {
     // set up the $q.defer Promise
     var defer = $q.defer();
     // call our getTputData & process result after it returns
-    o.getTputData( n ).then(function(result) {
+    o.getTputData( n, defer ).then(function(result) {
       //console.log( 'throughput #'+ n +' loaded : ' );
       //console.log( result.data );
       // extract number from data like 'eth0: 123 0'
@@ -123,6 +130,11 @@ function tputFactory( $rootScope, $http, $q ) {
     function(err) {
       defer.resolve( 0 );
     });
+    
+    $timeout( function() {
+      defer.resolve( 0 );
+    }, QMIMO_TPUT_TIMEOUT_MS );
+    
     return defer.promise;
   };
   /**

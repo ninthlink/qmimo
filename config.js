@@ -14,6 +14,9 @@ var QMIMO_NUMBER_OF_LEGACY_DEVICES = 1;
 // # of ms to wait to refresh device tput data
 var QMIMO_REFRESH_TPUT_MS = 2000;
 
+// if loading a number takes longer than this, abort & return previous #
+var QMIMO_TPUT_TIMEOUT_MS = 1000;
+
 // # of ms downtime delay when switching MU / SU modes
 var QMIMO_SWITCH_DELAY_MS = 5000;
 
