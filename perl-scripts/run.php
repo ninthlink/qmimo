@@ -12,6 +12,6 @@ switch( $pl ) {
     break;
 }
 if ( $run === true ) {
-  shell_exec($pl .'.pl');
+  shell_exec('perl '. $pl .'.pl');
 }
 ?>
