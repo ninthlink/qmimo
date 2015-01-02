@@ -24,6 +24,9 @@ angular
           },
           simulate: function() {
             return QMIMO_FAKE_DEMO;
+          },
+          hideLB: function() {
+            return QMIMO_DEFAULT_HIDE_LB;
           }
         }
       }).state('live', {
@@ -39,6 +42,9 @@ angular
           simulate: function() {
             // same but just set simulate = false
             return false;
+          },
+          hideLB: function() {
+            return QMIMO_DEFAULT_HIDE_LB;
           }
         }
       });
@@ -48,16 +54,17 @@ angular
   ])
   .controller('guiCtrl', guiCtrl);
 // inject any Angular dependencies in to our Controller, like our Factories
-guiCtrl.$inject = [ '$scope', '$rootScope', '$timeout', 'tputFactory', 'mimoGen', 'mimoScripts', 'tputs', 'simulate' ];
+guiCtrl.$inject = [ '$scope', '$rootScope', '$timeout', 'tputFactory', 'mimoGen', 'mimoScripts', 'tputs', 'simulate', 'hideLB' ];
 /**
  * We are in the GUI Controller's control from here out
  */
-function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScripts, tputs, simulate ) {
+function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScripts, tputs, simulate, hideLB ) {
   console.log( 'we are in guiCtrl : simulate = '+ ( simulate ? 'TRUE' : 'FALSE' ) );
   // initial GUI setup & map initial data from our tputFactory
   $rootScope.demo = QMIMO_INITIAL_DEMO;
   $rootScope.loading = false;
   $rootScope.shownumbers = true;
+  $rootScope.hideLB = hideLB;
   $scope.simulate = simulate;
   //$rootScope.mode = tputs.mode;
   $scope.switchleft = ( $rootScope.mode === 'mu' );
@@ -381,6 +388,10 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   
   $scope.toggleNumbers = function() {
     $rootScope.shownumbers = !$rootScope.shownumbers;
+  };
+  
+  $scope.toggleLB = function() {
+    $rootScope.hideLB = !$rootScope.hideLB;
   };
   
   $scope.$on( '$destroy', function( event ) {

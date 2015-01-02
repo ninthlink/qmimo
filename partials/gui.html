@@ -63,7 +63,7 @@
       </div>
     </div>
   </div>
-  <div class="demo switches">
+  <div class="demo switches" ng-hide="hideLB">
     <label class="control radio mu blink" ng-class="{ 'active' : demo === 'mg' }">
       <input id="mgdemo" name="demo" type="radio" value="mg" ng-model="demo" ng-click="switchDemoTo('mg')">
       <span class="control-indicator"></span>
@@ -76,11 +76,11 @@
       LB
     </label>
   </div>
-  <div class="gain lb">
+  <div class="gain lb" ng-hide="hideLB">
     <div class="lbl">Legacy Benefit</div>
     <div class="num">{{ legacy_diff | number: 1 }} s</div>
   </div>
-  <div class="lb devices">
+  <div class="lb devices" ng-hide="hideLB">
     <div class="devicerow" ng-repeat="device in legacy" ng-class="'d'+ $index">
       <div class="inner">
         <label class="control radio mu" ng-class="( demo === 'lb' ) && ( mode === 'mu' ) ? 'blink' : ''">
@@ -106,7 +106,7 @@
   </div>
 </div>
 <div class="main">
-  <div class="devices"><!-- hardcoded # of devices for now? --></div>
+  <div class="devices" ng-class="{ 'd4' : hideLB }"><!-- hardcoded # of devices for now? --></div>
   <div class="lines mu-lines" ng-class="{ 'blink' : mode === 'mu' }" ng-show="( mode === 'mu' ) && !loading"></div>
   <div class="lines" ng-repeat="device in devices" ng-class="lineClasses(device[0])" ng-show="( mode === 'su' ) && !loading"></div>
   <div class="lines" ng-repeat="device in legacy" ng-class="lineClasses(device[0])" ng-show="( demo === 'lb' ) && !loading"></div>
@@ -116,7 +116,8 @@
       <div class="icon"></div>
     </div>
   </div>
-  <a class="numtog" ng-click="toggleNumbers();"></a>
-  <a class="simtog" href="#/live" ng-show="simulate"></a>
-  <a class="simtog" href="#/" ng-hide="simulate"></a>
+  <a class="tog num" ng-click="toggleNumbers();"></a>
+  <a class="tog lbt" ng-click="toggleLB();"></a>
+  <a class="tog sim" href="#/live" ng-show="simulate"></a>
+  <a class="tog sim" href="#/" ng-hide="simulate"></a>
 </div>

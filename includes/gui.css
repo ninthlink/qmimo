@@ -489,6 +489,9 @@ body {
   left: 0;
   z-index: 2;
 }
+.main .devices.d4 {
+  background-image: url(images/devices4.png);
+}
 .lines {
   background-image: none;
   z-index: 1;
@@ -671,8 +674,7 @@ body.loading {
   }
 }
 
-.numtog,
-.simtog {
+.tog {
   background: url(images/fx.gif) repeat 0 0;
   cursor: default;
   display: block;
@@ -682,11 +684,17 @@ body.loading {
   right: 0;
   z-index: 99;
 }
-.numtog {
+.tog.num {
+  right: 0;
   bottom: 0;
 }
-.simtog {
+.tog.sim {
   top: 0;
+  right: 0;
+}
+.tog.lbt {
+  top: 0;
+  left: 0;
 }
 
 /* animations */
