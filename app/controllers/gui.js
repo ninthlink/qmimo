@@ -21,6 +21,24 @@ angular
           tputs: function( tputFactory ) {
             //console.log('setting up initial guiCtrl resolve tputs');
             return tputFactory.getDevicesTput( true );
+          },
+          simulate: function() {
+            return QMIMO_FAKE_DEMO;
+          }
+        }
+      }).state('live', {
+        url: '/live',
+        templateUrl: './partials/gui.html',
+        controller: 'guiCtrl',
+        resolve: {
+          // "resolve" polls initial tput data before the UI loads
+          tputs: function( tputFactory ) {
+            //console.log('setting up initial guiCtrl resolve tputs');
+            return tputFactory.getDevicesTput( true );
+          },
+          simulate: function() {
+            // same but just set simulate = false
+            return false;
           }
         }
       });
@@ -30,16 +48,17 @@ angular
   ])
   .controller('guiCtrl', guiCtrl);
 // inject any Angular dependencies in to our Controller, like our Factories
-guiCtrl.$inject = [ '$scope', '$rootScope', '$timeout', 'tputFactory', 'mimoGen', 'mimoScripts', 'tputs' ];
+guiCtrl.$inject = [ '$scope', '$rootScope', '$timeout', 'tputFactory', 'mimoGen', 'mimoScripts', 'tputs', 'simulate' ];
 /**
  * We are in the GUI Controller's control from here out
  */
-function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScripts, tputs ) {
-  //console.log( 'we are in guiCtrl' );
+function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScripts, tputs, simulate ) {
+  console.log( 'we are in guiCtrl : simulate = '+ ( simulate ? 'TRUE' : 'FALSE' ) );
   // initial GUI setup & map initial data from our tputFactory
   $rootScope.demo = QMIMO_INITIAL_DEMO;
   $rootScope.loading = false;
   $rootScope.shownumbers = true;
+  $scope.simulate = simulate;
   //$rootScope.mode = tputs.mode;
   $scope.switchleft = ( $rootScope.mode === 'mu' );
   $scope.demoleft = ( $rootScope.demo === 'mg' );
@@ -195,12 +214,12 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
       if ( $rootScope.demo === 'mg' ) {
         // pause tput # getting..
         $timeout.cancel( tputTimer );
-        if ( QMIMO_FAKE_DEMO === true ) {
+        if ( simulate === true ) {
           $timeout.cancel( tputGenTimer );
         }
         // after QMIMO_SWITCH_DELAY_MS delay, poll new tput data & reactivate GUI
         $timeout(function() {
-          if ( QMIMO_FAKE_DEMO === true ) {
+          if ( simulate === true ) {
             /**
              * If we are using our throughput data faking Factory too,
              * reset that first, and Then start GUI back up
@@ -266,7 +285,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
       $rootScope.loading = true;
       // pause tput # getting..
       $timeout.cancel( tputTimer );
-      if ( QMIMO_FAKE_DEMO === true ) {
+      if ( simulate === true ) {
         $timeout.cancel( tputGenTimer );
       }
       // call our scripts?
@@ -278,7 +297,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
       // after QMIMO_SWITCH_DELAY_MS delay, poll new tput data & reactivate GUI
       $timeout(function() {
         if ( newmode === 'mg' ) {
-          if ( QMIMO_FAKE_DEMO === true ) {
+          if ( simulate === true ) {
             /**
              * If we are using our throughput data faking Factory too,
              * reset that first, and Then start GUI back up
@@ -319,7 +338,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   //console.log('calling initial scope reloadTput');
   $scope.reloadTput();
   // if we actually want to actually fake the numbers?
-  if ( QMIMO_FAKE_DEMO === true ) {
+  if ( simulate === true ) {
     //console.log('FAKE_DEMO = true, calling initial kickGenerator too');
     $scope.kickGenerator();
   }
@@ -333,7 +352,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     mimoGen.clearLegacyTputs().then(function(result) {
       //console.log( 'wiped for i='+ QMIMO_NUMBER_OF_MU_DEVICES +'&m='+ QMIMO_NUMBER_OF_LEGACY_DEVICES );
       //console.log( result );
-      if ( QMIMO_FAKE_DEMO === true ) {
+      if ( simulate === true ) {
         $scope.kickGenerator( wait );
       }
       // and start polling
@@ -341,7 +360,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     },
     function(err) {
       console.log('wipe failed');
-      if ( QMIMO_FAKE_DEMO === true ) {
+      if ( simulate === true ) {
         $scope.kickGenerator( wait );
       }
     });
@@ -367,7 +386,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $scope.$on( '$destroy', function( event ) {
     // be polite : cancel $timeout(s)?
     $timeout.cancel( tputTimer );
-    if ( QMIMO_FAKE_DEMO === true ) {
+    if ( simulate === true ) {
       $timeout.cancel( tputGenTimer );
     }
   });

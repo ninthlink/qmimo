@@ -671,7 +671,8 @@ body.loading {
   }
 }
 
-.numtog {
+.numtog,
+.simtog {
   background: url(images/fx.gif) repeat 0 0;
   cursor: default;
   display: block;
@@ -679,8 +680,13 @@ body.loading {
   height: 41px;
   position: absolute;
   right: 0;
-  bottom: 0;
   z-index: 99;
+}
+.numtog {
+  bottom: 0;
+}
+.simtog {
+  top: 0;
 }
 
 /* animations */
