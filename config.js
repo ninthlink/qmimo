@@ -15,7 +15,7 @@ var QMIMO_NUMBER_OF_LEGACY_DEVICES = 1;
 var QMIMO_REFRESH_TPUT_MS = 2000;
 
 // # of ms downtime delay when switching MU / SU modes
-var QMIMO_SWITCH_DELAY_MS = 3000;
+var QMIMO_SWITCH_DELAY_MS = 5000;
 
 // Directory (inside the overall qmimo GUI folder?) to find .pl scripts to call
 var QMIMO_PERL_SCRIPT_DIR = 'perl-scripts';
