@@ -480,7 +480,7 @@ body {
 /* just single images for rough now */
 .lines,
 .main .devices {
-  background: url(images/devices5.png) no-repeat 50% 50%;
+  background: url(images/devices5l.png) no-repeat 50% 50%;
   background-size: cover;
   position: absolute;
   top: 0;
