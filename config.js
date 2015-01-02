@@ -20,17 +20,20 @@ var QMIMO_SWITCH_DELAY_MS = 5000;
 // Directory (inside the overall qmimo GUI folder?) to find .pl scripts to call
 var QMIMO_PERL_SCRIPT_DIR = 'perl-scripts';
 
+/**
+ * our 4 .pl scripts, without the .pl at the end
+ */
 // script to call when switching to MU Mode, inside QMIMO_PERL_SCRIPT_DIR
-var QMIMO_MU_SWITCH_SCRIPT = 'ap_mu_mode.pl';
+var QMIMO_MU_SWITCH_SCRIPT = 'ap_mu_mode';
 
 // script to call when switching to SU Mode, inside QMIMO_PERL_SCRIPT_DIR
-var QMIMO_SU_SWITCH_SCRIPT = 'ap_su_mode.pl';
+var QMIMO_SU_SWITCH_SCRIPT = 'ap_su_mode';
 
 // script to call when switching to MG Demo, inside QMIMO_PERL_SCRIPT_DIR
-var QMIMO_MG_SWITCH_SCRIPT = 'mg_udp_traffic.pl';
+var QMIMO_MG_SWITCH_SCRIPT = 'mg_udp_traffic';
 
 // script to call when switching to LB Demo, inside QMIMO_PERL_SCRIPT_DIR
-var QMIMO_LB_SWITCH_SCRIPT = 'lb_tcp_traffic.pl';
+var QMIMO_LB_SWITCH_SCRIPT = 'lb_tcp_traffic';
 
 // Directory (inside the overall qmimo GUI folder?) to find tput files
 var QMIMO_TPUT_DATA_DIR = 'fake-demo-contents';
