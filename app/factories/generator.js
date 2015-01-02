@@ -38,15 +38,25 @@
 			});
 		};
 		/**
-		 * obscures $http.get requests?
+		 * obscures $http.get requests to the generatorScript
+     *
+     * if "wipe" arg is false or not supplied, then
+     * n = index # for a tput#.txt
+     * m = the Mode we are in, where '1' = MU and '0' = SU
+     *
+     * if "wipe" = true, then
+     * n = total # of MU-capable clients, to NOT change data for
+     * m = # of "Legacy" clients, to wipe / change data for
 		 */
-		o.triggerTputGen = function( n, m, w ) {
-      if ( w ) {
-        // i = m = start tput#, n = # of file(s) to wipe, w = 1 yes, quietly
-        return $http.get( txtsLocation +'/'+ generatorScript +'?i='+ m +'&m='+ n +'&w=1&q=1' );
-      } // else
-      // i = n = index to generate, m = 1 for MU or 0 for SU, &q = quietly
-			return $http.get( txtsLocation +'/'+ generatorScript +'?i='+ n +'&m='+ m +'&q=1' );
+		o.triggerTputGen = function( n, m, wipe ) {
+      var querystr = 'i='+ n +'&m='+ m;
+      if ( wipe ) {
+        querystr += '&w=1';
+      }
+      // and tell php script to be quiet & not print things
+      querystr += '&q=1';
+      // and then return our Promise / $http.get
+			return $http.get( txtsLocation +'/'+ generatorScript +'?'+ querystr );
 		};
 		/**
 		 * gets response from triggerTputGen and then resolves our Promise?
@@ -66,6 +76,29 @@
 			});
 			return defer.promise;
 		};
+    /**
+     * "wipes" tput data via triggerTputGen
+     */
+    o.clearLegacyTputs = function() {
+      //console.log('generators.js : clearLegacyTputs');
+      return o.triggerTputGen(
+        QMIMO_NUMBER_OF_MU_DEVICES,
+        QMIMO_NUMBER_OF_LEGACY_DEVICES,
+        true
+      );
+    };
+    /**
+     * by copying clearLegacyTputs but adding an extra query arg
+     * we can fake updating the tput#.txt with that value
+     */
+    o.fakeLegacyTime = function( time ) {
+      //console.log('generators.js : fakeLegacyTime');
+      return o.triggerTputGen(
+        QMIMO_NUMBER_OF_MU_DEVICES +'&r='+ time,
+        QMIMO_NUMBER_OF_LEGACY_DEVICES,
+        true
+      );
+    };
 		// return our factory
 		return o;
 	}

@@ -166,7 +166,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
         });
       } else {
         // LB mode, so
-        mimoGen.triggerTputGen( QMIMO_NUMBER_OF_MU_DEVICES +'&r='+ wait, QMIMO_NUMBER_OF_LEGACY_DEVICES, true ).then(function(result) {
+        mimoGen.fakeLegacyTime( wait ).then(function(result) {
           // all set, just hang out
         });
       }
@@ -323,7 +323,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     $scope.legacy_diff = 0;
     var wait = $rootScope.mode === 'mu' ? QMIMO_FAKE_LB_MU_TIME : QMIMO_FAKE_LB_SU_TIME;
     
-    mimoGen.triggerTputGen( QMIMO_NUMBER_OF_MU_DEVICES, QMIMO_NUMBER_OF_LEGACY_DEVICES, true ).then(function(result) {
+    mimoGen.clearLegacyTputs().then(function(result) {
       //console.log( 'wiped for i='+ QMIMO_NUMBER_OF_MU_DEVICES +'&m='+ QMIMO_NUMBER_OF_LEGACY_DEVICES );
       //console.log( result );
       if ( QMIMO_FAKE_DEMO === true ) {
