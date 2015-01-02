@@ -198,12 +198,6 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
         if ( QMIMO_FAKE_DEMO === true ) {
           $timeout.cancel( tputGenTimer );
         }
-        // call our scripts?
-        mimoScripts.modeChange( newmode ).then(function(results) {
-          console.log('pl script triggered?');
-        }, function() {
-          console.log('switch script call failed?');
-        });
         // after QMIMO_SWITCH_DELAY_MS delay, poll new tput data & reactivate GUI
         $timeout(function() {
           if ( QMIMO_FAKE_DEMO === true ) {
@@ -233,6 +227,13 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
           //console.log('LB mode switched to '+ newmode);
         }, qwait );
       }
+      
+      // and call our mode-change scripts?
+      mimoScripts.modeChange( newmode ).then(function(results) {
+        console.log('pl script triggered?');
+      }, function() {
+        console.log('switch script call failed?');
+      });
     } else {
       console.log( 'Switch already in progress, please wait..' );
     }
