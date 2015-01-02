@@ -394,10 +394,11 @@ body {
 }
 /* device tput data # rows */
 .left .devices {
+  border-bottom: 1px solid #efefef;
   display: block;
-  overflow-y: auto;
+  overflow: hidden; /*-y: auto;*/
   width: 100%;
-  height: 42%;
+  height: 33%;
 }
 .devicerow {
   background: url(images/bg_row.png) repeat-x 0 0;

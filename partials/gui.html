@@ -44,7 +44,7 @@
     <div class="lbl"><strong>MU</strong> Gain</div>
     <div class="num">{{ mu_gain | number: roundgain }}</div>
   </div>
-  <div class="devices">
+  <div class="mg devices">
     <div class="devicerow" ng-repeat="device in devices" ng-class="'d'+ $index">
       <div class="inner">
         <label class="control radio mu" ng-class="mode === 'mu' ? 'blink' : ''">
@@ -62,6 +62,25 @@
         </label>
       </div>
     </div>
+  </div>
+  <div class="demo switches">
+    <label class="control radio mu blink" ng-class="{ 'active' : demo === 'mg' }">
+      <input id="mgdemo" name="demo" type="radio" value="mg" ng-model="demo" ng-click="switchDemoTo('mg')">
+      <span class="control-indicator"></span>
+      MG
+    </label>
+    <button class="switch" ng-click="switchDemo()" ng-class="{ 'l' : demoleft }"></button>
+    <label class="control radio su blink" ng-class="{ 'active' : demo === 'lb' }">
+      <input id="lbdemo" name="demo" type="radio" value="lb" ng-model="demo" ng-click="switchDemoTo('lb')">
+      <span class="control-indicator"></span>
+      LB
+    </label>
+  </div>
+  <div class="gain lb">
+    <div class="lbl">Legacy Benefit</div>
+    <div class="num">{{ legacy_diff | number: 1 }} s</div>
+  </div>
+  <div class="lb devices">
     <div class="devicerow" ng-repeat="device in legacy" ng-class="'d'+ $index">
       <div class="inner">
         <label class="control radio mu" ng-class="( demo === 'lb' ) && ( mode === 'mu' ) ? 'blink' : ''">
@@ -79,23 +98,6 @@
         </label>
       </div>
     </div>
-  </div>
-  <div class="gain lb">
-    <div class="lbl">Legacy Benefit</div>
-    <div class="num">{{ legacy_diff | number: 1 }} s</div>
-  </div>
-  <div class="demo switches">
-    <label class="control radio mu blink" ng-class="{ 'active' : demo === 'mg' }">
-      <input id="mgdemo" name="demo" type="radio" value="mg" ng-model="demo" ng-click="switchDemoTo('mg')">
-      <span class="control-indicator"></span>
-      MG
-    </label>
-    <button class="switch" ng-click="switchDemo()" ng-class="{ 'l' : demoleft }"></button>
-    <label class="control radio su blink" ng-class="{ 'active' : demo === 'lb' }">
-      <input id="lbdemo" name="demo" type="radio" value="lb" ng-model="demo" ng-click="switchDemoTo('lb')">
-      <span class="control-indicator"></span>
-      LB
-    </label>
   </div>
   <div class="logo">
     <div class="icn">MU</div>
