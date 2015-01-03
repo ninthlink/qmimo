@@ -400,6 +400,10 @@ body {
   width: 100%;
   height: 33%;
 }
+.left .devices.nolb {
+  height: 50%;
+  border-bottom: none;
+}
 .devicerow {
   background: url(images/bg_row.png) repeat-x 0 0;
   display: table;

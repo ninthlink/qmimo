@@ -44,7 +44,7 @@
     <div class="lbl"><strong>MU</strong> Gain</div>
     <div class="num">{{ mu_gain | number: roundgain }}</div>
   </div>
-  <div class="mg devices">
+  <div class="mg devices" ng-class="{ 'nolb' : hideLB }">
     <div class="devicerow" ng-repeat="device in devices" ng-class="'d'+ $index">
       <div class="inner">
         <label class="control radio mu" ng-class="mode === 'mu' ? 'blink' : ''">
