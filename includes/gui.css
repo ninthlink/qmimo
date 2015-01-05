@@ -183,7 +183,7 @@ body {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 20%;
+  width: 268px;
   /* height: 100%; */
 }
 /* top left dials & switches */
@@ -328,19 +328,20 @@ body {
 }
 .dials .switches .control {
   font-size: 14px;
+  padding-left: 2rem;
 }
 .demo.switches .control {
   font-size: 16px;
 }
 .switches .control-indicator {
-  width: 1.3rem;
-  height: 1.3rem;
-  line-height: 1.3rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  line-height: 1.25rem;
   background-image: url(images/dots_big.png);
 }
 .switches .control.su {
   padding-left: 0;
-  padding-right: 1.5rem;
+  padding-right: 2rem;
 }
 .switches .su .control-indicator {
   left: auto;
@@ -375,22 +376,29 @@ body {
   height: 6.4%;
 }
 .gain .lbl {
+  line-height: 1;
+  margin: -0.5em 0 0;
   position: absolute;
   left: 0;
   top: 50%;
   width: 46%;
   text-align: right;
-  line-height: 1;
-  margin: -0.5em 0 0;
+}
+.gain.mg .lbl {
+  font-size: 1.375rem;
+}
+.gain.lb .lbl {
+  font-size: 1.1875rem;
 }
 .gain .num {
+  font-size: 1.5rem;
+  line-height: 1;
+  margin: -0.5em 0 0 0.75em;
   position: absolute;
   left: 50%;
   top: 50%;
   width: 20%;
   text-align: center;
-  line-height: 1;
-  margin: -0.5em 0 0 1em;
 }
 /* device tput data # rows */
 .left .devices {
@@ -408,7 +416,10 @@ body {
   background: url(images/bg_row.png) repeat-x 0 0;
   display: table;
   width: 100%;
-  padding: 0.5em 0;
+  padding: 0.6em 0;
+}
+.nolb .devicerow {
+  padding: 1.5em 0;
 }
 .devicerow .inner {
   display: table-row;
@@ -419,14 +430,14 @@ body {
 .tput,
 .dnum {
   display: table-cell;
-  width: 18%;
   text-align: center;
   vertical-align: middle;
 }
 .devicerow .control {
   cursor: default;
-  padding-left: 0;
   font-size: 15px;
+  padding-left: 0;
+  width: 36px;
 }
 .devicerow .control-indicator {
   margin-left: -0.5rem;
@@ -438,11 +449,12 @@ body {
   background-size: contain;
   font-size: 18px;
   text-align: center;
-  width: 28%;
+  width: 40px;
   height: inherit;
 }
 .tput {
   font-size: 17px;
+  width: 76px;
 }
 .tput small {
   font-size: 13px;
@@ -475,11 +487,11 @@ body {
   background: url(images/bg_room.jpg) no-repeat 50% 50%;
   background-size: cover;
   position: absolute;
-  left: 20%;
+  left: 268px;
   right: 0;
   top: 0;
   bottom: 0;
-  width: 80%;
+  /*width: 80%;*/
 }
 /* just single images for rough now */
 .lines,
