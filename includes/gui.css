@@ -496,7 +496,7 @@ body {
 /* just single images for rough now */
 .lines,
 .main .devices {
-  background: url(images/devices5l.png) no-repeat 50% 50%;
+  background: url(images/devices5q.png) no-repeat 50% 50%;
   background-size: cover;
   position: absolute;
   top: 0;
@@ -506,7 +506,7 @@ body {
   z-index: 2;
 }
 .main .devices.d4 {
-  background-image: url(images/devices4.png);
+  background-image: url(images/devices4q.png);
 }
 .lines {
   background-image: none;
@@ -586,7 +586,7 @@ body.loading {
   background-color: #f8991d;
 }
 .router .icon {
-  background: url(images/router.png) no-repeat 0 0;
+  background: url(images/router4.png) no-repeat 0 0;
   background-size: contain;
   position: absolute;
   top: 0;
@@ -594,6 +594,17 @@ body.loading {
   bottom: 0;
   left: 0;
   z-index: 7;
+}
+.router .lbl {
+  background: url(images/qca9980.png) no-repeat 0 0;
+  background-size: contain;
+  width: 172%;
+  height: 72%;
+  position: absolute;
+  bottom: -58%;
+  left: 50%;
+  margin: 0 0 0 -73%;
+  z-index: 8;
 }
 /* responsive tweaking */
 @media screen and (min-height: 960px) {
