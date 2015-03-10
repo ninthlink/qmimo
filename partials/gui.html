@@ -2,8 +2,6 @@
   <div class="dials">
     <div class="drap mu">
       <div class="dial mu">
-        <div class="ring" ng-class="{ 'spin' : mode === 'mu' }"></div>
-        <div class="bg"></div>
         <div class="pie" qmimo-border-fill="mu"></div>
         <div class="mode">MU</div>
         <div class="desc"><strong>MULTI</strong>-USER</div>
@@ -15,8 +13,6 @@
     </div>
     <div class="drap su">
       <div class="dial su">
-        <div class="ring" ng-class="{ 'spin' : mode === 'su' }"></div>
-        <div class="bg"></div>
         <div class="pie" qmimo-border-fill="su"></div>
         <div class="mode">SU</div>
         <div class="desc"><strong>SINGLE</strong>-USER</div>
@@ -99,11 +95,7 @@
       </div>
     </div>
   </div>
-  <div class="logo">
-    <div class="icn">MU</div>
-    <div class="title">Qualcomm<sup>&reg;</sup> MU | EFX</div>
-    <div class="byline">Experience the effects of ultimate 11ac</div>
-  </div>
+  <div class="logo"></div>
 </div>
 <div class="main">
   <div class="devices" ng-class="{ 'd4' : hideLB }"><!-- hardcoded # of devices for now? --></div>
@@ -114,9 +106,11 @@
     <div class="bg" ng-click="switchMode()">
       <div class="circle"></div>
       <div class="icon"></div>
-      <div class="lbl"></div>
+      <!--div class="lbl"></div-->
     </div>
   </div>
+  <div class="ftr">Qualcomm MU | EFX is a product of Qualcomm Atheros, Inc.</div>
+  <!-- extra debugging / hidden click places... -->
   <a class="tog num" ng-click="toggleNumbers();"></a>
   <a class="tog lbt" ng-click="toggleLB();"></a>
   <a class="tog sim" href="#/live" ng-show="simulate"></a>

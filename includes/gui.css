@@ -171,11 +171,6 @@ body {
 .radio .control-indicator {
   border-radius: 50%;
 }
-/*
-.radio input:checked ~ .control-indicator {
-  background-image: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxNy4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+DQo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgOCA4IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCA4IDgiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBhdGggZmlsbD0iI0ZGRkZGRiIgZD0iTTQsMUMyLjMsMSwxLDIuMywxLDRzMS4zLDMsMywzczMtMS4zLDMtM1M1LjcsMSw0LDF6Ii8+DQo8L3N2Zz4NCg==);
-}
-*/
 /* left column */
 .left {
   background: #fff;
@@ -183,16 +178,14 @@ body {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 268px;
-  /* height: 100%; */
+  width: 480px;
 }
 /* top left dials & switches */
 .dials {
-  background: url(images/bg_top.png) repeat-x 0 0;
-  background-size: cover;
+  background: #fff;
   text-align: center;
   width: 100%;
-  height: 22%;
+  height: 232px;
 }
 .drap {
   float: left;
@@ -214,30 +207,6 @@ body {
   content: "";
   display: block;
   padding-top: 100%;
-}
-.dial .bg,
-.dial .ring {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-}
-.dial .bg {
-  background: url(images/dial.png) no-repeat 50% 50%;
-  background-size: contain;
-  z-index: 2;
-}
-.dial .ring {
-  background: url(images/ring_off.png) no-repeat 50% 50%;
-  background-size: contain;
-  z-index: 1;
-}
-.mu-mode .dial.mu .ring {
-  background-image: url(images/ring_mu.png);
-}
-.su-mode .dial.su .ring {
-  background-image: url(images/ring_su.png);
 }
 .pie {
   position: absolute;
@@ -373,7 +342,7 @@ body {
   background-size: cover;
   position: relative;
   width: 100%;
-  height: 6.4%;
+  height: 68px;
 }
 .gain .lbl {
   line-height: 1;
@@ -461,33 +430,20 @@ body {
 }
 /* bottom left logo */
 .logo {
-  background: url(images/bg_bottom.png) repeat-x 0 0;
+  background: url(images/logo_tagline.png) no-repeat 50% 50%;
   background-size: cover;
   position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 16%;
-}
-.icn {
-  background: url(images/icon_mu.png) no-repeat 50% 50%;
-  background-size: contain;
-  float: left;
-  margin: 12% 2% 0 6%;
-  text-indent: -999em;
-  width: 20.5%;
-  height: 46%;
-}
-.title {
-  font-size: 20px;
-  margin: 12% 0 0;
+  height: 119px;
 }
 /* main right side */
 .main {
-  background: url(images/bg_room.jpg) no-repeat 50% 50%;
-  background-size: cover;
+  background: #3C3D3e url(images/bg_room.jpg) no-repeat 0 50%;
+  background-size: contain;
   position: absolute;
-  left: 268px;
+  left: 480px;
   right: 0;
   top: 0;
   bottom: 0;
@@ -496,8 +452,8 @@ body {
 /* just single images for rough now */
 .lines,
 .main .devices {
-  background: url(images/devices5q.png) no-repeat 50% 50%;
-  background-size: cover;
+  background: url(images/devices5.png) no-repeat 0 50%;
+  background-size: contain;
   position: absolute;
   top: 0;
   right: 0;
@@ -506,7 +462,7 @@ body {
   z-index: 2;
 }
 .main .devices.d4 {
-  background-image: url(images/devices4q.png);
+  background-image: url(images/devices4.png);
 }
 .lines {
   background-image: none;
@@ -538,18 +494,19 @@ body {
 */
 /* router icon itself */
 .router {
-  position: relative;
-  left: 44%;
-  top: 0;
-  margin-top: 54%;
+  position: absolute;
+  left: 7.5%;
+  top: 67%;
   z-index: 5;
+  width: 52px;
+  height: 52px;
 }
 .router .bg {
   background: url(images/router_bg.png) no-repeat 50% 50%;
   background-size: contain;
   cursor: pointer;
   position: relative;
-  width: 5%;
+  width: 100%;
 }
 .router .bg:before {
   content: "";
@@ -605,6 +562,16 @@ body.loading {
   left: 50%;
   margin: 0 0 0 -73%;
   z-index: 8;
+}
+.ftr {
+  color: #898989;
+  font-size: 16px;
+  text-align: center;
+  text-shadow: 0 0 1px rgba(0,0,0,0.8);
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 30px;
 }
 /* responsive tweaking */
 @media screen and (min-height: 960px) {
