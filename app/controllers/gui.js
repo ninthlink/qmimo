@@ -73,6 +73,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   //console.log(tputs);
   $scope.devices = tputs.tputs;
   $scope.devicenum = $scope.devices.length;
+  $scope.dheight = { 'height': '25%' };
   $scope.roundtotals = QMIMO_TPUT_TOTALS_DECIMAL_PLACES;
   $scope.roundgain = QMIMO_MU_GAIN_DECIMAL_PLACES;
   // "LB" mode variable(s) too
@@ -95,30 +96,25 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $scope.mu_total = tputs.totals.mu;
   $scope.su_total = tputs.totals.su;
   $scope.mu_gain = tputs.totals.gain;
-  $scope.mu_b1s = $scope.mu_b2s = { 'transform': 'rotate(0deg)' };
-  $scope.su_b1s = $scope.su_b2s = { 'transform': 'rotate(0deg)' };
+  $scope.mu_b1s = { 'transform': 'rotate(0deg)' };
+  $scope.su_b1s = { 'transform': 'rotate(0deg)' };
   var total_multiplier = 24 / $scope.devicenum;
   
   // function to recalculate the % borders around the MU & SU dials 
   $scope.retotal = function() {
     // calculate border line too
     var tot = ( $rootScope.mode === 'mu' ) ? $scope.mu_total : $scope.su_total;
-    var deg = Math.round( tot * total_multiplier / 9 );
-    // make sure # between 0 & 360
-    deg = ( deg < 0 ) ? 0 : ( ( deg > 360 ) ? 360 : deg );
+    var deg = Math.round( tot * total_multiplier / 18 );
+    // make sure # between 0 & 180
+    deg = ( deg < 0 ) ? 0 : ( ( deg > 180 ) ? 180 : deg );
     
-    var b1 = ( deg < 180 ) ? deg : 180;
-    var b2 = ( deg > 180 ) ? deg - 180 : 0;
     if ( $rootScope.mode === 'mu' ) {
-      $scope.mu_b1s = { 'transform': 'rotate('+ b1 +'deg)' };
-      $scope.mu_b2s = { 'transform': 'rotate('+ b2 +'deg)' };
+      $scope.mu_b1s = { 'transform': 'rotate('+ deg +'deg)' };
     } else {
-      $scope.su_b1s = { 'transform': 'rotate('+ b1 +'deg)' };
-      $scope.su_b2s = { 'transform': 'rotate('+ b2 +'deg)' };
+      $scope.su_b1s = { 'transform': 'rotate('+ deg +'deg)' };
     }
   };
   // (re)total for the initial data..
-  //console.log( 'calling initial scope retotal');
   $scope.retotal();
   
   // Set timeout to (re) poll tput datas

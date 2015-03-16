@@ -50,6 +50,7 @@ body {
 .dial .desc {
   font-family: "Qualcomm-Light", sans-serif;
 }
+.dial .desc,
 .dial .desc strong,
 .dial .tot,
 .gain .num,
@@ -67,9 +68,6 @@ body {
 body {
   color: #333;
 }
-.dial .tot {
-  color: #474747;
-}
 body.mu-mode .tput.su,
 body.mu-mode .control.su,
 body.su-mode .tput.mu,
@@ -78,15 +76,17 @@ body.loading .tput,
 body.loading .control {
   color: #999;
 }
-.dial.mu .mode,
+.dial.mu,
 body.mu-mode .devices .control.mu,
 .gain .num {
-  color: #92278f;
+  color: #91247e;
 }
 .dial.mu .border {
-  border-color: #92278f;
+  border-color: #91247e;
 }
-.dial.su .mode,
+.dial.su {
+  color: #008d95;
+}
 body.su-mode .devices .control.su {
   color: #f8991d;
 }
@@ -114,20 +114,19 @@ body {
   padding: 0;
 }
 body {
-  background: #464646;
+  background: #3C3D3e;
 }
 /* wtf-forms */
 .control {
   position: relative;
   display: inline-block;
   padding-left: 1.5rem;
-  /*color: #555;*/
   cursor: pointer;
 }
 .control input {
   position: absolute;
   opacity: 0;
-  z-index: -1; /* Put the input behind the label so it doesn't overlay text */
+  z-index: -1;
 }
 .control-indicator {
   position: absolute;
@@ -142,12 +141,7 @@ body {
   text-align: center;
   background: url(images/dots_small.png) no-repeat 0 0;
   background-size: cover;
-  /*
-  background-color: #eee;
-  background-size: 50% 50%;
-  background-position: center center;
-  background-repeat: no-repeat;
-  */
+  
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -162,11 +156,6 @@ body {
 .control.su input:checked ~ .control-indicator {
   background-position: 0 -26px;
 }
-/* Active *
-.control input:active ~ .control-indicator {
-  color: #fff;
-  /*background-color: #84c6ff;*/
-}
 /* Radio modifiers */
 .radio .control-indicator {
   border-radius: 50%;
@@ -178,30 +167,35 @@ body {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 480px;
+  width: 25%;
+  height: 100%;
 }
 /* top left dials & switches */
 .dials {
   background: #fff;
   text-align: center;
   width: 100%;
-  height: 232px;
+  height: 21.48%; /*232px;*/
 }
 .drap {
   float: left;
-  margin: 1.5% 0 0 4%;
+  margin: 4% 0 0 4%;
+  padding: 0;
   position: relative;
   max-width: 166px;
   width: 44%;
+  height: 71%;
+  overflow: hidden;
 }
 .drap.su {
   float: right;
-  margin: 1.5% 4% 0 0;
+  margin: 4% 4% 0 0;
 }
 .dial {
   width: 100%;
   margin: 0;
   position: relative;
+  top: 35%;
 }
 .dial:before {
   content: "";
@@ -210,13 +204,18 @@ body {
 }
 .pie {
   position: absolute;
-  left: 9%;
-  right: 9%;
-  top: 9%;
-  bottom: 9%;
+  left: 5.5%;
+  right: 5.5%;
+  top: 5.5%;
+  bottom: 5.5%;
   z-index: 3;
+  
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  transform: rotate(90deg);
 }
 .pie .h {
+  background: #e4e4e4;
   position: absolute;
   top: 0;
   left: 0;
@@ -256,30 +255,40 @@ body {
   z-index: 3;
 }
 .dial .mode {
-  font-size: 19px;
+  font-size: 31px;
   line-height: 1;
-  top: 20%;
+  top: -29%;
 }
 .dial .desc {
-  top: 35%;
+  font-size: 15px;
+  line-height: 1;
+  top: -9%;
 }
 .dial .tot {
-  top: 45%;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 5px;
+  top: 20%;
+  left: 50%;
+  width: 60%;
+  height: 60%;
+  margin-left: -30%;
 }
 .dial .tot div {
-  font-size: 26px;
+  font-size: 28px;
   line-height: 1;
-  position: relative;
-  top: 0.22em;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 9.5%;
 }
 .dial .tot small {
-  position: relative;
-  top: -0.2em;
-}
-.dial .desc,
-.dial .tot small {
-  font-size: 12px;
+  font-size: 10px;
   line-height: 1;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 36%;
 }
 .dials .switches {
   float: left;
@@ -342,7 +351,7 @@ body {
   background-size: cover;
   position: relative;
   width: 100%;
-  height: 68px;
+  height: 6.39%; /*68px;*/
 }
 .gain .lbl {
   line-height: 1;
@@ -371,29 +380,31 @@ body {
 }
 /* device tput data # rows */
 .left .devices {
-  border-bottom: 1px solid #efefef;
+  /*border-bottom: 1px solid #d7d7d7;*/
   display: block;
   overflow: hidden; /*-y: auto;*/
   width: 100%;
   height: 33%;
 }
 .left .devices.nolb {
-  height: 55%;
+  height: 61.11%;
   border-bottom: none;
 }
 .devicerow {
-  background: url(images/bg_row.png) repeat-x 0 0;
+  background: #fff url(images/d7d7d7.gif) repeat-y 50% 0;
   display: table;
   width: 100%;
-  padding: 0.6em 0;
+  padding: 0;/*0.6em 0;*/
 }
+/*
 .nolb .devicerow {
   padding: 1.5em 0;
 }
+*/
 .devicerow .inner {
+  background: url(images/d7d7d7.gif) repeat-x 0 100%;
   display: table-row;
   width: 100%;
-  height: 3em;
 }
 .devicerow .control,
 .tput,
@@ -431,19 +442,19 @@ body {
 /* bottom left logo */
 .logo {
   background: url(images/logo_tagline.png) no-repeat 50% 50%;
-  background-size: cover;
+  background-size: contain;
   position: absolute;
   left: 0;
   bottom: 0;
   width: 100%;
-  height: 119px;
+  height: 11.22%; /*119px;*/
 }
 /* main right side */
 .main {
-  background: #3C3D3e url(images/bg_room.jpg) no-repeat 0 50%;
+  background: url(images/bg_room.jpg) no-repeat 0 50%;
   background-size: contain;
   position: absolute;
-  left: 480px;
+  left: 25%;
   right: 0;
   top: 0;
   bottom: 0;
@@ -487,11 +498,6 @@ body {
 .su-line-5 {
   background-image: url(images/lines/su5.png);
 }
-/*
-.loading .lines {
-  display: none;
-}
-*/
 /* router icon itself */
 .router {
   position: absolute;
@@ -785,23 +791,6 @@ body.loading {
   -moz-animation-duration: 2s;
   animation-duration: 2s;
 }
-/*
-.mg-demo .lines.alt.su-line-2 {
-  -webkit-animation-delay: 525ms;
-  -moz-animation-delay: 525ms;
-  animation-delay: 525ms;
-}
-.mg-demo .lines.alt.su-line-3 {
-  -webkit-animation-delay: 1050ms;
-  -moz-animation-delay: 1050ms;
-  animation-delay: 1050ms;
-}
-.mg-demo .lines.alt.su-line-4 {
-  -webkit-animation-delay: 1575ms;
-  -moz-animation-delay: 1575ms;
-  animation-delay: 1575ms;
-}
-*/
 .lines.alt.su-line-2 {
   -webkit-animation-delay: 400ms;
   -moz-animation-delay: 400ms;
@@ -821,12 +810,6 @@ body.loading {
   -webkit-animation-delay: 1600ms;
   -moz-animation-delay: 1600ms;
   animation-delay: 1600ms;
-}
-/*
-.lines.blink.su-line-5 {
-  -webkit-animation-delay: 300ms;
-  -moz-animation-delay: 300ms;
-  animation-delay: 300ms;
 }
 /* animation keyframes */
 @-moz-keyframes spin {

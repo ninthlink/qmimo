@@ -4,10 +4,10 @@
       <div class="dial mu">
         <div class="pie" qmimo-border-fill="mu"></div>
         <div class="mode">MU</div>
-        <div class="desc"><strong>MULTI</strong>-USER</div>
+        <div class="desc">MULTI-USER</div>
         <div class="tot">
           <div>{{ mu_total | number: roundtotals }}</div>
-          <small>Mbps</small>
+          <small>MBPS</small>
         </div>
       </div>
     </div>
@@ -15,10 +15,10 @@
       <div class="dial su">
         <div class="pie" qmimo-border-fill="su"></div>
         <div class="mode">SU</div>
-        <div class="desc"><strong>SINGLE</strong>-USER</div>
+        <div class="desc">SINGLE-USER</div>
         <div class="tot">
           <div>{{ su_total | number: roundtotals }}</div>
-          <small>Mbps</small>
+          <small>MBPS</small>
         </div>
       </div>
     </div>
@@ -41,7 +41,7 @@
     <div class="num">{{ mu_gain | number: roundgain }}</div>
   </div>
   <div class="mg devices" ng-class="{ 'nolb' : hideLB }">
-    <div class="devicerow" ng-repeat="device in devices" ng-class="'d'+ $index">
+    <div class="devicerow" ng-repeat="device in devices" ng-class="'d'+ $index" ng-style="dheight">
       <div class="inner">
         <label class="control radio mu" ng-class="mode === 'mu' ? 'blink' : ''">
           <input type="radio" ng-disabled="true" ng-checked="mode === 'mu'">
