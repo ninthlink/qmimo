@@ -98,7 +98,7 @@
   <div class="logo"></div>
 </div>
 <div class="main">
-  <div class="devices" ng-class="{ 'd4' : hideLB }"><!-- hardcoded # of devices for now? --></div>
+  <div class="devices" ng-class="{ 'd4' : hideLB, 'dq' : showQlabels }"><!-- hardcoded # of devices for now? --></div>
   <div class="lines mu-lines" ng-class="{ 'blink' : mode === 'mu' }" ng-show="( mode === 'mu' ) && !loading"></div>
   <div class="lines" ng-repeat="device in devices" ng-class="lineClasses(device[0])" ng-show="( mode === 'su' ) && !loading"></div>
   <div class="lines" ng-repeat="device in legacy" ng-class="lineClasses(device[0])" ng-show="( demo === 'lb' ) && !loading"></div>

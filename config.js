@@ -14,6 +14,9 @@ var QMIMO_NUMBER_OF_LEGACY_DEVICES = 1;
 // by default, hide LB switch & numbers?
 var QMIMO_DEFAULT_HIDE_LB = true;
 
+// show QCA#### label names or generic Smartphone / Notebook labels if false
+var QMIMO_Q_LABELS = true;
+
 // # of ms to wait to refresh device tput data
 var QMIMO_REFRESH_TPUT_MS = 2000;
 

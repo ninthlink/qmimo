@@ -503,6 +503,9 @@ body {
 .main .devices.d4 {
   background-image: url(images/devices4.png);
 }
+.main .devices.d4.dq {
+  background-image: url(images/devices4q.png);
+}
 .lines {
   background-image: none;
   z-index: 1;

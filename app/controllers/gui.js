@@ -65,6 +65,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $rootScope.loading = false;
   $rootScope.shownumbers = true;
   $rootScope.hideLB = hideLB;
+  $rootScope.showQlabels = QMIMO_Q_LABELS;
   $scope.simulate = simulate;
   //$rootScope.mode = tputs.mode;
   $scope.switchleft = ( $rootScope.mode === 'mu' );
