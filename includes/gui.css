@@ -44,7 +44,8 @@ body {
   font-family: "Qualcomm-Regular", sans-serif;
 }
 .dial .mode,
-.gain .lbl strong {
+.devices .control,
+.gain .num {
   font-family: "Qualcomm-Bold", sans serif;
 }
 .dial .desc {
@@ -53,11 +54,11 @@ body {
 .dial .desc,
 .dial .desc strong,
 .dial .tot,
-.gain .num,
-.devices .control,
 .dnum,
 .title,
-.demo.switches {
+.demo.switches,
+.tput,
+.gain .lbl strong {
   font-family: "Qualcomm-Semibold", sans-serif;
 }
 .dial .desc strong,
@@ -74,7 +75,7 @@ body.su-mode .tput.mu,
 body.su-mode .control.mu,
 body.loading .tput,
 body.loading .control {
-  color: #999;
+  color: #888;
 }
 .dial.mu,
 body.mu-mode .devices .control.mu,
@@ -84,14 +85,12 @@ body.mu-mode .devices .control.mu,
 .dial.mu .border {
   border-color: #91247e;
 }
-.dial.su {
+.dial.su,
+body.su-mode .devices .control.su {
   color: #008d95;
 }
-body.su-mode .devices .control.su {
-  color: #f8991d;
-}
 .dial.su .border {
-  border-color: #f8991d;
+  border-color: #008d95;
 }
 .gain .lbl {
   color: #fff;
@@ -133,13 +132,13 @@ body {
   top: .25rem;
   left: 0;
   display: block;
-  width:  0.875rem;
-  height: 0.8125rem;
-  line-height: 0.8125rem;
+  width:  1.125rem;
+  height: 1.125rem;
+  line-height: 1.125rem;
   font-size: 65%;
   /*color: #eee;*/
   text-align: center;
-  background: url(images/dots_small.png) no-repeat 0 0;
+  background: url(images/dots_big.png) no-repeat 0 0;
   background-size: cover;
   
   -webkit-user-select: none;
@@ -150,11 +149,11 @@ body {
 /* Checked state */
 .control input:checked ~ .control-indicator {
   color: #fff;
-  background-position: 0 -13px;
+  background-position: 0 -18px;
   /*background-color: #0074d9;*/
 }
 .control.su input:checked ~ .control-indicator {
-  background-position: 0 -26px;
+  background-position: 0 -36px;
 }
 /* Radio modifiers */
 .radio .control-indicator {
@@ -312,9 +311,9 @@ body {
   font-size: 16px;
 }
 .switches .control-indicator {
-  width: 1.25rem;
-  height: 1.25rem;
-  line-height: 1.25rem;
+  width: 1.125rem;
+  height: 1.125rem;
+  line-height: 1.125rem;
   background-image: url(images/dots_big.png);
 }
 .switches .control.su {
@@ -326,10 +325,10 @@ body {
   right: 0;
 }
 .switches .control input:checked ~ .control-indicator {
-  background-position: 0 -21px;
+  background-position: 0 -18px;
 }
 .switches .control.su input:checked ~ .control-indicator {
-  background-position: 0 -42px;
+  background-position: 0 -36px;
 }
 .switch {
   background: url(images/switch.png) no-repeat 0 0;
@@ -359,23 +358,23 @@ body {
   position: absolute;
   left: 0;
   top: 50%;
-  width: 46%;
+  width: 37%;
   text-align: right;
 }
 .gain.mg .lbl {
-  font-size: 1.375rem;
+  font-size: 1.625rem;
 }
 .gain.lb .lbl {
   font-size: 1.1875rem;
 }
 .gain .num {
-  font-size: 1.5rem;
+  font-size: 2.25rem;
   line-height: 1;
-  margin: -0.5em 0 0 0.75em;
+  margin: -0.5em 0 0 1em;
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 20%;
+  width: 30%;
   text-align: center;
 }
 /* device tput data # rows */
@@ -417,27 +416,56 @@ body {
   cursor: default;
   font-size: 15px;
   padding-left: 0;
-  width: 36px;
+  width: 12%; /*41px;*/
 }
 .devicerow .control-indicator {
   margin-left: -0.5rem;
   left: 50%;
-  top: 0;
+  top: 25%;
 }
 .dnum {
   background: url(images/bg_circle.png) no-repeat 50% 50%;
   background-size: contain;
   font-size: 18px;
   text-align: center;
-  width: 40px;
+  width: 16.4%; /*56px;*/
   height: inherit;
+  position: relative;
+}
+.dnum .dv {
+  width: 57%;
+  height: 29px;
+  display: block;
+  margin: -13px 0 0 -28.5%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: url(images/devices_left.png) no-repeat 0 0;
+  background-size: cover;
+  text-align: left;
+  text-indent: -999em;
+}
+.dnum .dv.d2 {
+  background-position: -31px 0;
+}
+.dnum .dv.d3 {
+  background-position: -62px 0;
+}
+.dnum .dv.d4 {
+  background-position: -93px 0;
+}
+.dnum .dv.d5 {
+  background-position: -124px 0;
+}
+.dnum .dv.d6 {
+  background-position: -155px 0;
 }
 .tput {
-  font-size: 17px;
-  width: 76px;
+  font-size: 22px;
+  width: 29.8%; /*101px;*/
 }
 .tput small {
-  font-size: 13px;
+  font-size: 14px;
 }
 /* bottom left logo */
 .logo {
@@ -546,7 +574,7 @@ body.loading {
   background-color: #92278f;
 }
 .su-mode .circle {
-  background-color: #f8991d;
+  background-color: #008d95;
 }
 .router .icon {
   background: url(images/router4.png) no-repeat 0 0;
@@ -580,6 +608,14 @@ body.loading {
   bottom: 30px;
 }
 /* responsive tweaking */
+@media screen and (max-height: 767px) {
+  .dial .tot div {
+    top: 0;
+  }
+  .dial .tot small {
+    top: 25%;
+  }
+}
 @media screen and (min-height: 960px) {
   .drap {
     margin: 4% 0 0 4%;

@@ -73,7 +73,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   //console.log(tputs);
   $scope.devices = tputs.tputs;
   $scope.devicenum = $scope.devices.length;
-  $scope.dheight = { 'height': '25%' };
+  $scope.dheight = { 'height': ( 100 / $scope.devicenum ) + '%' };
   $scope.roundtotals = QMIMO_TPUT_TOTALS_DECIMAL_PLACES;
   $scope.roundgain = QMIMO_MU_GAIN_DECIMAL_PLACES;
   // "LB" mode variable(s) too
