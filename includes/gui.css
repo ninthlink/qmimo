@@ -115,6 +115,9 @@ body {
 body {
   background: #3C3D3e;
 }
+body.centered {
+  background: #fff;
+}
 /* wtf-forms */
 .control {
   position: relative;
@@ -168,6 +171,11 @@ body {
   bottom: 0;
   width: 25%;
   height: 100%;
+}
+.left.centered {
+  width: 26%;
+  left: 37%;
+  right: 37%;
 }
 /* top left dials & switches */
 .dials {

@@ -29,6 +29,23 @@ angular
             return QMIMO_DEFAULT_HIDE_LB;
           }
         }
+      }).state('guiCentered', {
+        url: '/centered/',
+        templateUrl: './partials/gui-centered.html',
+        controller: 'guiCtrl',
+        resolve: {
+          // "resolve" polls initial tput data before the UI loads
+          tputs: function( tputFactory ) {
+            //console.log('setting up initial guiCtrl resolve tputs');
+            return tputFactory.getDevicesTput( true );
+          },
+          simulate: function() {
+            return QMIMO_FAKE_DEMO;
+          },
+          hideLB: function() {
+            return QMIMO_DEFAULT_HIDE_LB;
+          }
+        }
       }).state('live', {
         url: '/live',
         templateUrl: './partials/gui.html',
@@ -54,12 +71,15 @@ angular
   ])
   .controller('guiCtrl', guiCtrl);
 // inject any Angular dependencies in to our Controller, like our Factories
-guiCtrl.$inject = [ '$scope', '$rootScope', '$timeout', 'tputFactory', 'mimoGen', 'mimoScripts', 'tputs', 'simulate', 'hideLB' ];
+guiCtrl.$inject = [ '$scope', '$rootScope', '$timeout', 'tputFactory', 'mimoGen', 'mimoScripts', 'tputs', 'simulate', 'hideLB', '$location' ];
 /**
  * We are in the GUI Controller's control from here out
  */
-function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScripts, tputs, simulate, hideLB ) {
-  console.log( 'we are in guiCtrl : simulate = '+ ( simulate ? 'TRUE' : 'FALSE' ) );
+function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScripts, tputs, simulate, hideLB, $location ) {
+  //console.log( 'we are in guiCtrl : simulate = '+ ( simulate ? 'TRUE' : 'FALSE' ) );
+  // update : check for "centered" ?
+  console.log( $location.path() );
+  $rootScope.centered = ( $location.path() == '/centered/' );
   // initial GUI setup & map initial data from our tputFactory
   $rootScope.demo = QMIMO_INITIAL_DEMO;
   $rootScope.loading = false;
