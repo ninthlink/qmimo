@@ -173,9 +173,8 @@ body.centered {
   height: 100%;
 }
 .left.centered {
-  width: 26%;
-  left: 37%;
-  right: 37%;
+  left: 37.5%;
+  right: 37.5%;
 }
 /* top left dials & switches */
 .dials {
