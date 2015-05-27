@@ -1,0 +1,131 @@
+/* responsive tweaking */
+@media screen and (max-height: 767px) {
+  .dial .tot div {
+    top: 0;
+  }
+  .dial .tot small {
+    top: 25%;
+  }
+}
+@media screen and (min-height: 960px) {
+  .dial .mode {
+    font-size: 27px;
+  }
+  .left .devices {
+    height: 35%;
+  }
+  .left .devices.nolb {
+    height: 50%;
+  }
+  .devicerow {
+    padding: 1.25em 0;
+  }
+  .nolb .devicerow {
+    padding: 2.5em 0;
+  }
+  .devicerow .inner {
+    height: 3.4em;
+  }
+  .tput {
+    font-size: 24px;
+  }
+  .tput small {
+    font-size: 14px;
+  }
+  .demo.switches {
+    height: 5%;
+  }
+}
+@media screen and (min-width:1600px) {
+  .left {
+    width: 378px;
+  }
+  .main {
+    left: 378px;
+  }
+  .dials .switches .control.mu {
+    padding-left: 3em;
+  }
+  .dials .switches .control.su {
+    padding-right: 3em;
+  }
+  .switches .control-indicator {
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+  }
+  .switches .control input:checked ~ .control-indicator {
+    background-position: 0 -26px;
+  }
+  .switches .control.su input:checked ~ .control-indicator {
+    background-position: 0 -52px;
+  }
+  .demo.switches .control {
+    font-size: 20px;
+  }
+  .demo.switches .control.mu {
+    padding-left: 2em;
+  }
+  .demo.switches .control.su {
+    padding-right: 2em;
+  }
+  
+  .gain.mg .lbl {
+    font-size: 31px;
+  }
+  .gain.lb .lbl {
+    font-size: 28px;
+  }
+  .gain .num {
+    font-size: 33px;
+    margin-left: 0.75em;
+  }
+  .title {
+    font-size: 29px;
+    margin: 15% 0 0;
+  }
+  .byline {
+    position: relative;
+    top: -4px;
+  }
+}
+@media screen and (min-width:1600px) and (min-height:960px) {
+  .dial .mode {
+    font-size: 27px;
+    margin-top: 4px;
+  }
+  .dial .desc {
+    margin-top: 3px;
+  }
+  .dial .desc,
+  .dial .tot small {
+    font-size: 13px;
+  }
+  .dial .tot div {
+    font-size: 32px;
+    margin: 5px 0 3px;
+  }
+}
+
+.tog {
+  background: url(images/fx.gif) repeat 0 0;
+  cursor: default;
+  display: block;
+  width: 41px;
+  height: 41px;
+  position: absolute;
+  right: 0;
+  z-index: 99;
+}
+.tog.num {
+  right: 0;
+  bottom: 0;
+}
+.tog.sim {
+  top: 0;
+  right: 0;
+}
+.tog.lbt {
+  top: 0;
+  left: 0;
+}

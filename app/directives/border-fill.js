@@ -13,7 +13,7 @@ angular
 function qmimoBorderFill( $compile ) {
   return {
     link: function (scope, element, attrs) {
-      var mo = attrs['qmimoBorderFill'] === 'su' ? 'su' : 'mu';
+      var mo = attrs['qmimoBorderFill'];// === 'su' ? 'su' : 'mu';
       
       var ow = element[0].offsetWidth;
       
@@ -21,7 +21,7 @@ function qmimoBorderFill( $compile ) {
         // clipping for auto circles requires dividing in 2
         var hw = Math.round( ow / 2 );
         // and setting ring border-width = width / 13 seems to work nice
-        var bw = 32; /*Math.round( ow / 5.5 );*/
+        var bw = 38; /*Math.round( ow / 5.5 );*/
         // add our id so we can subsequently inject the rest of the HTML
         element.attr( 'id', 'pie-'+ mo );
         // add our sub element HTML

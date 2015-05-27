@@ -66,9 +66,13 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $rootScope.shownumbers = true;
   $rootScope.hideLB = hideLB;
   $rootScope.showQlabels = QMIMO_Q_LABELS;
+  $rootScope.collapseNumbers = QMIMO_COLLAPSE_DEVICE_NUMBERS;
+  $rootScope.openedhbtn = false;
   $scope.simulate = simulate;
   //$rootScope.mode = tputs.mode;
-  $scope.switchleft = ( $rootScope.mode === 'mu' );
+  $scope.switchsuon = ( $rootScope.mode === 'su' );
+  $scope.switchmuon = ( $rootScope.mode === 'mu' );
+  //$scope.switchsuon = ( $rootScope.mode === 'mu' );
   $scope.demoleft = ( $rootScope.demo === 'mg' );
   //console.log('initial values::');
   //console.log(tputs);
@@ -77,6 +81,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $scope.dheight = { 'height': ( 100 / $scope.devicenum ) + '%' };
   $scope.roundtotals = QMIMO_TPUT_TOTALS_DECIMAL_PLACES;
   $scope.roundgain = QMIMO_MU_GAIN_DECIMAL_PLACES;
+  $scope.roundtbgain = QMIMO_TB_GAIN_DECIMAL_PLACES;
   // "LB" mode variable(s) too
   $scope.legacy = [];
   $scope.legacy_diff = 0;
@@ -212,6 +217,11 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
       //console.log( 'mode '+ qprev +' to '+ newmode +' in '+ qwait +'ms'  );
       // $scope.switchleft boolean controls actual position of UI switch
       $scope.switchleft = !$scope.switchleft;
+      
+      $scope.switchsuon = false;
+      $scope.switchmuon = false;
+      $scope.switchtbon = false;
+  
       // show "loading" mode rather than 'mu' or 'su'
       $rootScope.loading = true;
       $rootScope.mode = '';
@@ -238,6 +248,10 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
             // after delay, start getting the data again in new mode
             $scope.reloadTputNow( newmode );
           }
+          
+          $scope.switchsuon = newmode === 'su';
+          $scope.switchmuon = newmode === 'mu';
+          //$scope.switchsuon = newmode === 'su';
         }, qwait );
       } else {
         // LB Demo : for now, just switch first
@@ -389,6 +403,18 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   
   $scope.toggleLB = function() {
     $rootScope.hideLB = !$rootScope.hideLB;
+  };
+  
+  $scope.toggleDeviceNumbers = function() {
+    $rootScope.collapseNumbers = !$rootScope.collapseNumbers;
+  };
+  
+  $scope.openHomeBtn = function( which ) {
+    if ( $rootScope.openedhbtn === which ) {
+      $rootScope.openedhbtn = false;
+    } else {
+      $rootScope.openedhbtn = which;
+    }
   };
   
   $scope.$on( '$destroy', function( event ) {

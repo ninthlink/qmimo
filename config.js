@@ -8,6 +8,9 @@
 // # of devices we can expect tput from
 var QMIMO_NUMBER_OF_MU_DEVICES = 4;
 
+// whether to start with the home Devices numbers collapsed (or not)
+var QMIMO_COLLAPSE_DEVICE_NUMBERS = false;
+
 // # of "legacy" / non-MU-capable devices, for "LB" mode
 var QMIMO_NUMBER_OF_LEGACY_DEVICES = 1;
 
@@ -55,6 +58,9 @@ var QMIMO_INITIAL_DEMO = 'mg';
 
 // How many decimals to show for the "MU Gain" number, in case we want to tweak
 var QMIMO_MU_GAIN_DECIMAL_PLACES = 2;
+
+// How many decimals to show for the "TB Gain" number
+var QMIMO_TB_GAIN_DECIMAL_PLACES = 0;
 
 // How many decimals to show for the 'MU' & 'SU' totals
 var QMIMO_TPUT_TOTALS_DECIMAL_PLACES = 0;

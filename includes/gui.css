@@ -48,17 +48,13 @@ body {
 .gain .num {
   font-family: "Qualcomm-Bold", sans serif;
 }
-.dial .desc {
-  font-family: "Qualcomm-Light", sans-serif;
-}
-.dial .desc,
-.dial .desc strong,
 .dial .tot,
 .dnum,
 .title,
 .demo.switches,
 .tput,
-.gain .lbl strong {
+.gain .lbl strong,
+.rbtn .txt {
   font-family: "Qualcomm-Semibold", sans-serif;
 }
 .dial .desc strong,
@@ -78,8 +74,7 @@ body.loading .control {
   color: #888;
 }
 .dial.mu,
-body.mu-mode .devices .control.mu,
-.gain .num {
+body.mu-mode .devices .control.mu {
   color: #91247e;
 }
 .dial.mu .border {
@@ -92,8 +87,12 @@ body.su-mode .devices .control.su {
 .dial.su .border {
   border-color: #008d95;
 }
-.gain .lbl {
+.gain .num,
+.rbtn .lbl {
   color: #fff;
+}
+.collapser {
+  color: #464646;
 }
 body.mu-mode .dials .switches .control.mu,
 body.su-mode .dials .switches .control.su,
@@ -159,6 +158,17 @@ body {
 .radio .control-indicator {
   border-radius: 50%;
 }
+/* screens general idea */
+.screen {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+}
 /* left column */
 .left {
   background: #fff;
@@ -166,7 +176,7 @@ body {
   left: 0;
   top: 0;
   bottom: 0;
-  width: 25%;
+  width: 66.72%;
   height: 100%;
 }
 /* top left dials & switches */
@@ -174,27 +184,30 @@ body {
   background: #fff;
   text-align: center;
   width: 100%;
-  height: 21.48%; /*232px;*/
+  height: 46.3%; /*500px;*/
+}
+.dials .col {
+  float: left;
+  width: 33.333%;
+  height: 100%;
+  position: relative;
 }
 .drap {
-  float: left;
-  margin: 4% 0 0 4%;
+  float: none;
+  display: block;
+  margin: 0 auto;
   padding: 0;
   position: relative;
-  max-width: 166px;
-  width: 44%;
-  height: 71%;
+  max-width: 258px;
+  width: 60%;
+  height: 51.6%; /*258px*/
   overflow: hidden;
-}
-.drap.su {
-  float: right;
-  margin: 4% 4% 0 0;
 }
 .dial {
   width: 100%;
   margin: 0;
   position: relative;
-  top: 35%;
+  top: 51%;
 }
 .dial:before {
   content: "";
@@ -254,32 +267,40 @@ body {
   z-index: 3;
 }
 .dial .mode {
-  font-size: 31px;
+  font-size: 55px;
   line-height: 1;
   top: -29%;
 }
 .dial .desc {
-  font-size: 15px;
+  font-size: 24px;
   line-height: 1;
   top: -9%;
 }
 .dial .tot {
   background: #fff;
   border-radius: 50%;
-  box-shadow: 0 0 5px;
+  box-shadow: 0 0 6px inset;
   top: 20%;
   left: 50%;
   width: 60%;
   height: 60%;
   margin-left: -30%;
 }
-.dial .tot div {
+.dial .tot .t {
   font-size: 28px;
   line-height: 1;
   position: absolute;
   width: 100%;
   left: 0;
   top: 9.5%;
+}
+.dial .tot .fx {
+  background: #fff;
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
 }
 .dial .tot small {
   font-size: 10px;
@@ -290,8 +311,14 @@ body {
   top: 36%;
 }
 .dials .switches {
-  float: left;
+  display: table;
+  float: none;
   width: 100%;
+  height: 20%;
+}
+.dials .switches .inner {
+  display: table-cell;
+  vertical-align: middle;
 }
 .demo.switches {
   background: #fbfbfb; /* gradient? */
@@ -331,27 +358,49 @@ body {
   background-position: 0 -36px;
 }
 .switch {
-  background: url(images/switch.png) no-repeat 0 0;
+  background: url(images/2015/switches.png) no-repeat 0 0;
   border: none;
   cursor: pointer;
   display: inline-block;
   margin: 0 10px;
   padding: 0;
-  width: 61px;
-  height: 31px;
+  width: 83px;
+  height: 48px;
   vertical-align: middle;
 }
-.switch.l {
-  background-position: 0 -31px;
+.col.su .switch.r {
+  background-position: 0 -48px;
 }
-/* mu gain row */
+.col.mu .switch.r {
+  background-position: 0 -96px;
+}
+.col.tb .switch.r {
+  background-position: 0 -144px;
+}
+/* gain rows */
 .gain {
-  background: url(images/bg_gain.png) no-repeat 50% 50%;
-  background-size: cover;
+  display: table;
+  background: #a1a1a1 url(images/2015/shadow.png) no-repeat top center;
   position: relative;
   width: 100%;
-  height: 6.39%; /*68px;*/
+  height: 28.4%; /*142px;*/
 }
+body.su-mode .col.su .gain {
+  background-color: #008d95;
+}
+body.mu-mode .col.mu .gain {
+  background-color: #91247e;
+}
+body.mu-mode .col.mu .gain {
+  background-color: #91247e;
+}
+.gain .num {
+  display: table-cell;
+  font-size: 32px;
+  text-align: center;
+  vertical-align: middle;
+}
+/*
 .gain .lbl {
   line-height: 1;
   margin: -0.5em 0 0;
@@ -377,105 +426,239 @@ body {
   width: 30%;
   text-align: center;
 }
+*/
+/* collapser */
+.collapser {
+  background: url(images/d7d7d7.gif) repeat-x 0 100%;
+  display: table;
+  width: 100%;
+  height: 4.63%; /* 50px */
+}
+.collapser .inner {
+  display: table-cell;
+  font-size: 22px;
+  position: relative;
+  text-align: center;
+  vertical-align: middle;
+}
+.collapser .arrow {
+  background: #d7d7d7;
+  cursor: pointer;
+  display: block;
+  width: 50px;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.collapser .arrow .arr {
+  background: url(images/2015/collapse.png) no-repeat 0 0;
+  display: block;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -10px;
+}
 /* device tput data # rows */
 .left .devices {
-  /*border-bottom: 1px solid #d7d7d7;*/
   display: block;
-  overflow: hidden; /*-y: auto;*/
+  overflow: hidden;
   width: 100%;
-  height: 33%;
-}
-.left .devices.nolb {
-  height: 61.11%;
-  border-bottom: none;
+  height: 43%;
+  
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 .devicerow {
-  background: #fff url(images/d7d7d7.gif) repeat-y 50% 0;
   display: table;
   width: 100%;
   padding: 0;/*0.6em 0;*/
 }
-/*
-.nolb .devicerow {
-  padding: 1.5em 0;
-}
-*/
 .devicerow .inner {
   background: url(images/d7d7d7.gif) repeat-x 0 100%;
   display: table-row;
   width: 100%;
 }
-.devicerow .control,
 .tput,
 .dnum {
   display: table-cell;
   text-align: center;
   vertical-align: middle;
 }
-.devicerow .control {
-  cursor: default;
-  font-size: 15px;
-  padding-left: 0;
-  width: 12%; /*41px;*/
-}
-.devicerow .control-indicator {
-  margin-left: -0.5rem;
-  left: 50%;
-  top: 25%;
-}
 .dnum {
-  background: url(images/bg_circle.png) no-repeat 50% 50%;
-  background-size: contain;
   font-size: 18px;
   text-align: center;
-  width: 16.4%; /*56px;*/
+  width: 12.5%; /*56px;*/
   height: inherit;
   position: relative;
 }
-.dnum .dv {
-  width: 57%;
-  height: 29px;
-  display: block;
-  margin: -13px 0 0 -28.5%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  background: url(images/devices_left.png) no-repeat 0 0;
-  background-size: cover;
-  text-align: left;
-  text-indent: -999em;
-}
-.dnum .dv.d2 {
-  background-position: -31px 0;
-}
-.dnum .dv.d3 {
-  background-position: -62px 0;
-}
-.dnum .dv.d4 {
-  background-position: -93px 0;
-}
-.dnum .dv.d5 {
-  background-position: -124px 0;
-}
-.dnum .dv.d6 {
-  background-position: -155px 0;
-}
 .tput {
   font-size: 22px;
-  width: 29.8%; /*101px;*/
+  width: 33.33333%; /*101px;*/
+}
+.tput.su {
+  width: 20.83333%;
+  text-align: left;
 }
 .tput small {
   font-size: 14px;
 }
-/* bottom left logo */
-.logo {
-  background: url(images/logo_tagline.png) no-repeat 50% 50%;
+/* handle collapsing device numbers */
+.dials,
+.drap,
+.dials .switches,
+.gain,
+.left .devices {
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+
+.collapser .arrow .arr {
+  -webkit-transition: all 0.3s ease-in-out 0.2s;
+  -moz-transition: all 0.3s ease-in-out 0.2s;
+  transition: all 0.3s ease-in-out 0.2s;
+}
+.collapse-numbers .collapser .arrow .arr {
+  -moz-transform: rotate(-180deg);
+  -webkit-transform: rotate(-180deg);
+  -o-transform: rotate(-180deg);
+  -ms-transform: rotate(-180deg);
+  transform: rotate(-180deg);
+}
+.collapse-numbers .dials {
+  height: 95.37%;
+}
+.collapse-numbers .drap {
+  height: 37.1%;
+}
+.collapse-numbers .dials .switches {
+  height: 16%;
+}
+.collapse-numbers .gain {
+  height: 46.9%;
+}
+.collapse-numbers .left .devices {
+  height: 0;
+}
+/* home right side */
+.right {
+  background: #fff;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 33.28%;
+  height: 100%;
+}
+.rbtn {
+  background: url(images/2015/btn-athome-bg.jpg) no-repeat 0 0;
+  background-size: cover;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  height: 33.333333%%;
+  position: relative;
+}
+.rbtn.onthego {
+  background-image: url(images/2015/btn-onthego-bg.jpg);
+}
+.rbtn.office {
+  background-image: url(images/2015/btn-office-bg.jpg);
+}
+.rbtn .border {
+  background: url(images/2015/btn-border.png) no-repeat 100% 0;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+}
+.rbtn .txt {
+  cursor: pointer;
+  font-size: 42px;
+  line-height: 47px;
+  width: 300px;
+  position: absolute;
+  bottom: 36px;
+  left: 36px;
+  z-index: 5;
+}
+.rbtn .txt .dot {
+  background: url(images/2015/btn-plus.png) no-repeat 0 0;
+  float: left;
+  width: 44px;
+  height: 47px;
+  margin-right: 20px;
+}
+.rbtn.active .txt .dot {
+  background-image: url(images/2015/btn-x.png)
+}
+.layover {
+  background: url(images/2015/btn-overlay.png) repeat 0 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.layover,
+.dbx {
+  opacity: 0;
+  
+  -webkit-transition: opacity 100ms linear;
+  -moz-transition: opacity 100ms linear;
+  transition: opacity 100ms linear;
+}
+.active .layover,
+.active .dbx {
+  opacity: 1;
+}
+.dbx {
+  background: #91247e url(images/2015/btn-athome-mu.jpg) no-repeat 0 0;
   background-size: contain;
+  display: block;
+  width: 43.75%;
+  height: 58.33333%;
+  position: absolute;
+  top: 8.33333%;
+  left: 4.5%;
+  z-index: 6;
+}
+.dbx.tb {
+  background-color: #e99f00;
+  background-image: url(images/2015/btn-athome-tb.jpg);
+  left: auto;
+  right: 4.5%;
+}
+.rbtn.onthego .dbx.mu {
+  background-image: url(images/2015/btn-onthego-mu.jpg);
+}
+.rbtn.onthego .dbx.tb {
+  background-image: url(images/2015/btn-onthego-tb.jpg);
+}
+.rbtn.office .dbx.mu {
+  background-image: url(images/2015/btn-office-mu.jpg);
+}
+.rbtn.office .dbx.tb {
+  background-image: url(images/2015/btn-office-tb.jpg);
+}
+.dbx .lbl {
+  display: block;
+  font-size: 36px;
+  line-height: 1.45;
+  text-align: center;
+  width: 100%;
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 100%;
-  height: 11.22%; /*119px;*/
 }
 /* main right side */
 .main {
@@ -609,143 +792,6 @@ body.loading {
   position: absolute;
   left: 0;
   bottom: 30px;
-}
-/* responsive tweaking */
-@media screen and (max-height: 767px) {
-  .dial .tot div {
-    top: 0;
-  }
-  .dial .tot small {
-    top: 25%;
-  }
-}
-@media screen and (min-height: 960px) {
-  .drap {
-    margin: 4% 0 0 4%;
-  }
-  .drap.su {
-    margin: 4% 4% 0 0;
-  }
-  .dial .mode {
-    font-size: 27px;
-  }
-  .left .devices {
-    height: 35%;
-  }
-  .left .devices.nolb {
-    height: 50%;
-  }
-  .devicerow {
-    padding: 1.25em 0;
-  }
-  .nolb .devicerow {
-    padding: 2.5em 0;
-  }
-  .devicerow .inner {
-    height: 3.4em;
-  }
-  .tput {
-    font-size: 24px;
-  }
-  .tput small {
-    font-size: 14px;
-  }
-  .demo.switches {
-    height: 5%;
-  }
-}
-@media screen and (min-width:1600px) {
-  .left {
-    width: 378px;
-  }
-  .main {
-    left: 378px;
-  }
-  .dials .switches .control.mu {
-    padding-left: 3em;
-  }
-  .dials .switches .control.su {
-    padding-right: 3em;
-  }
-  .switches .control-indicator {
-    width: 26px;
-    height: 26px;
-    line-height: 26px;
-  }
-  .switches .control input:checked ~ .control-indicator {
-    background-position: 0 -26px;
-  }
-  .switches .control.su input:checked ~ .control-indicator {
-    background-position: 0 -52px;
-  }
-  .demo.switches .control {
-    font-size: 20px;
-  }
-  .demo.switches .control.mu {
-    padding-left: 2em;
-  }
-  .demo.switches .control.su {
-    padding-right: 2em;
-  }
-  
-  .gain.mg .lbl {
-    font-size: 31px;
-  }
-  .gain.lb .lbl {
-    font-size: 28px;
-  }
-  .gain .num {
-    font-size: 33px;
-    margin-left: 0.75em;
-  }
-  .title {
-    font-size: 29px;
-    margin: 15% 0 0;
-  }
-  .byline {
-    position: relative;
-    top: -4px;
-  }
-}
-@media screen and (min-width:1600px) and (min-height:960px) {
-  .dial .mode {
-    font-size: 27px;
-    margin-top: 4px;
-  }
-  .dial .desc {
-    margin-top: 3px;
-  }
-  .dial .desc,
-  .dial .tot small {
-    font-size: 13px;
-  }
-  .dial .tot div {
-    font-size: 32px;
-    margin: 5px 0 3px;
-  }
-}
-
-.tog {
-  background: url(images/fx.gif) repeat 0 0;
-  cursor: default;
-  display: block;
-  width: 41px;
-  height: 41px;
-  position: absolute;
-  right: 0;
-  z-index: 99;
-}
-.tog.num {
-  right: 0;
-  bottom: 0;
-}
-.tog.sim {
-  top: 0;
-  right: 0;
-}
-.tog.lbt {
-  top: 0;
-  left: 0;
 }
 
 /* animations */
