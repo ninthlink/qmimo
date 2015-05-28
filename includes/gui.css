@@ -856,11 +856,6 @@ body.loading {
   left: 50%;
   top: 50%;
   margin: -186px 0 0 -440px;
-  
-  animation: playathometb1 1s steps(12) infinite;
-}
-@keyframes playathometb1 {
-	100% { background-position: -3025px; }
 }
 .athome-tb .sig2 {
   background: url(images/2015/athome-tb-2.png) no-repeat 118px 0;
@@ -871,11 +866,6 @@ body.loading {
   left: 50%;
   top: 50%;
   margin: -27px 0 0 332px;
-  
-  animation: playathometb2 0.6s steps(20) infinite;
-}
-@keyframes playathometb2 {
-	100% { background-position: -2242px; }
 }
 .athome-tb .sig3 {
   background: url(images/2015/athome-tb-3.png) no-repeat 110px 0;
@@ -886,23 +876,68 @@ body.loading {
   left: 50%;
   top: 50%;
   margin: -27px 0 0 436px;
-  
-  animation: playathometb3 1s steps(16) infinite;
+}
+.athome-tb.onscreen .sig1 {
+  animation: playathometb1 1s steps(12) 1s infinite;
+}
+.athome-tb.onscreen .sig2 {
+  animation: playathometb2 0.6s steps(20) 1s infinite;
+}
+.athome-tb.onscreen .sig3 {
+  animation: playathometb3 1s steps(16) 1s infinite;
+}
+@keyframes playathometb1 {
+	100% { background-position: -3025px 0; }
+}
+@keyframes playathometb2 {
+	100% { background-position: -2242px 0; }
 }
 @keyframes playathometb3 {
-	100% { background-position: -1650px; }
+	100% { background-position: -1650px 0; }
 }
 .screen.office-tb {
   background: url(images/2015/office-tb.jpg) no-repeat 50% 50%;
 }
+.office-tb .sig1 {
+  background: url(images/2015/office-tb-1.png) no-repeat 0 290px;
+  display: block;
+  width: 491px;
+  height: 290px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -444px 0 0 -321px;
+}
+.office-tb.onscreen .sig1 {
+  animation: playofficetb1 1s steps(14) 1s infinite;
+}
+@keyframes playofficetb1 {
+	100% { background-position: 0 -3770px; }
+}
 .screen.office-mu {
-  background: url(images/2015/office-mu.jpg) no-repeat 50% 50%;
+  background: url(images/2015/office-mu-lines.jpg) no-repeat 50% 50%;
 }
 .screen.onthego-tb {
   background: url(images/2015/onthego-tb.jpg) no-repeat 50% 50%;
 }
+.onthego-tb .sig1 {
+  background: url(images/2015/onthego-tb-1.png) no-repeat 0 -3081px;
+  display: block;
+  width: 441px;
+  height: 237px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -164px 0 0 -381px;
+}
+.onthego-tb.onscreen .sig1 {
+  animation: playonthegotb1 1s steps(14) 1s infinite;
+}
+@keyframes playonthegotb1 {
+	100% { background-position: 0 237px; }
+}
 .screen.onthego-mu {
-  background: url(images/2015/onthego-mu.jpg) no-repeat 50% 50%;
+  background: url(images/2015/onthego-mu-lines.jpg) no-repeat 50% 50%;
 }
 .dhome {
   background: url(images/2015/home.png) no-repeat 0 0;
