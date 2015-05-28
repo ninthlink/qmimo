@@ -21,7 +21,7 @@
             <span class="control-indicator"></span>
             Off
           </label>
-          <button class="switch" ng-click="switchMode()" ng-class="{ 'r' : switchsuon }"></button>
+          <button class="switch" ng-click="switchModeToggle('su')" ng-class="{ 'r' : switchsuon }"></button>
           <label class="control radio lbl-on">
             <input id="sumode-on" name="sumode" type="radio" value="su" ng-model="mode" ng-click="switchModeTo('su')">
             <span class="control-indicator"></span>
@@ -54,7 +54,7 @@
             <span class="control-indicator"></span>
             Off
           </label>
-          <button class="switch" ng-click="switchMode()" ng-class="{ 'r' : switchmuon }"></button>
+          <button class="switch" ng-click="switchModeToggle('mu')" ng-class="{ 'r' : switchmuon }"></button>
           <label class="control radio lbl-on">
             <input id="mumode-on" name="mumode" type="radio" value="mu" ng-model="mode" ng-click="switchModeTo('mu')">
             <span class="control-indicator"></span>
@@ -75,7 +75,7 @@
           <div class="desc">60GHz</div>
           <div class="tot">
             <div class="t">{{ tb_total | number: roundtotals }}</div>
-            <small>Mbps</small>
+            <small>MBPS</small>
             <div class="fx"></div>
           </div>
         </div>
@@ -87,7 +87,7 @@
             <span class="control-indicator"></span>
             Off
           </label>
-          <button class="switch" ng-click="switchModeTo('tb')" ng-class="{ 'r' : switchtbon }"></button>
+          <button class="switch" ng-click="switchModeToggle('tb')" ng-class="{ 'r' : switchtbon }"></button>
           <label class="control radio lbl-on">
             <input id="tbmode-on" name="mode" type="radio" value="tb" ng-model="mode" ng-click="switchModeTo('tb')">
             <span class="control-indicator"></span>

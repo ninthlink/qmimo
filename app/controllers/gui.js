@@ -69,6 +69,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $rootScope.collapseNumbers = QMIMO_COLLAPSE_DEVICE_NUMBERS;
   $rootScope.openedhbtn = false;
   $scope.simulate = simulate;
+  $rootScope.onscreen = 'home';
   //$rootScope.mode = tputs.mode;
   $scope.switchsuon = ( $rootScope.mode === 'su' );
   $scope.switchmuon = ( $rootScope.mode === 'mu' );
@@ -308,6 +309,24 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
         $scope.switchMode();
       }
     }
+  };
+  // helper UI function to switch between modes to specified mode
+  $scope.switchModeToggle = function( m ) {
+    //console.log('switchModeToggle : '+ m);
+    if ( $rootScope.loading === false ) {
+      if ( $rootScope.mode === m ) {
+        $rootScope.nextmode = 'su';
+      } else {
+        $rootScope.nextmode = m;
+      }
+      // init switch
+      $scope.switchMode();
+    }
+  };
+  // helper UI function to switch between DEMO screens?!
+  $scope.showDemo = function( m ) {
+    console.log('showDemo : '+ m);
+    $rootScope.onscreen = m;
   };
   
   // action(s) to take when a switch is pressed to switch between demos

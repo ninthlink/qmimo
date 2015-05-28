@@ -66,6 +66,13 @@ body {
   color: #333;
 }
 body.mu-mode .tput.su,
+body.mu-mode .tput.tb,
+body.su-mode .tput.tb,
+body.su-mode .tput.mu,
+body.tb-mode .tput.su,
+body.tb-mode .tput.mu {
+  color: #a1a1a1;
+}
 body.mu-mode .control.su,
 body.su-mode .tput.mu,
 body.su-mode .control.mu,
@@ -74,14 +81,24 @@ body.loading .control {
   color: #888;
 }
 .dial.mu,
-body.mu-mode .devices .control.mu {
+body.mu-mode .devices .control.mu,
+body.mu-mode .tput.mu {
   color: #91247e;
 }
 .dial.mu .border {
   border-color: #91247e;
 }
+.dial.tb,
+body.tb-mode .devices .control.tb,
+body.tb-mode .tput.tb {
+  color: #e99f00;
+}
+.dial.tb .border {
+  border-color: #e99f00;
+}
 .dial.su,
-body.su-mode .devices .control.su {
+body.su-mode .devices .control.su,
+body.su-mode .tput.su {
   color: #008d95;
 }
 .dial.su .border {
@@ -168,6 +185,17 @@ body {
   bottom: 0;
   left: 0;
   z-index: 1;
+  
+  opacity: 0;
+  display: none;
+  
+  -webkit-transition: opacity 400ms linear;
+  -moz-transition: opacity 400ms linear;
+  transition: opacity 400ms linear;
+}
+.screen.onscreen {
+  opacity: 1;
+  display: block;
 }
 /* left column */
 .left {
@@ -284,7 +312,7 @@ body {
 .dial .tot {
   background: #fff;
   border-radius: 50%;
-  box-shadow: 0 0 6px inset;
+  box-shadow: #000 0 0 6px inset;
   top: 20%;
   left: 50%;
   width: 60%;
@@ -397,6 +425,9 @@ body.su-mode .col.su .gain {
 }
 body.mu-mode .col.mu .gain {
   background-color: #91247e;
+}
+body.tb-mode .col.tb .gain {
+  background-color: #e99f00;
 }
 body.mu-mode .col.mu .gain {
   background-color: #91247e;
@@ -619,6 +650,7 @@ body.mu-mode .col.mu .gain {
 .layover,
 .dbx {
   opacity: 0;
+  display: none;
   
   -webkit-transition: opacity 100ms linear;
   -moz-transition: opacity 100ms linear;
@@ -626,12 +658,12 @@ body.mu-mode .col.mu .gain {
 }
 .active .layover,
 .active .dbx {
+  display: block;
   opacity: 1;
 }
 .dbx {
   background: #91247e url(images/2015/btn-athome-mu.jpg) no-repeat 0 0;
   background-size: contain;
-  display: block;
   width: 43.75%;
   height: 58.33333%;
   position: absolute;
