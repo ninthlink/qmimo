@@ -181,21 +181,20 @@ body {
   height: 100%;
   position: absolute;
   top: 0;
-  right: 0;
   bottom: 0;
-  left: 0;
+  left: 100%;
   z-index: 1;
   
-  opacity: 0;
-  display: none;
-  
-  -webkit-transition: opacity 400ms linear;
-  -moz-transition: opacity 400ms linear;
-  transition: opacity 400ms linear;
+  -webkit-transition: all 400ms ease-in-out;
+  -moz-transition: all 400ms ease-in-out;
+  transition: all 400ms ease-in-out;
 }
-.screen.onscreen {
-  opacity: 1;
-  display: block;
+.screen.home {
+  left: -100%;
+}
+.screen.onscreen,
+.screen.home.onscreen {
+  left: 0;
 }
 /* left column */
 .left {
@@ -832,7 +831,59 @@ body.loading {
   left: 0;
   bottom: 30px;
 }
-
+/* other demo scenes */
+.screen.athome-tb {
+  background: url(images/2015/athome-tb.jpg) no-repeat 50% 50%;
+  background-size: cover;
+}
+.screen.office-tb {
+  background: url(images/2015/office-tb.jpg) no-repeat 50% 50%;
+  background-size: cover;
+}
+.screen.office-mu {
+  background: url(images/2015/office-mu.jpg) no-repeat 50% 50%;
+  background-size: cover;
+}
+.screen.onthego-tb {
+  background: url(images/2015/onthego-tb.jpg) no-repeat 50% 50%;
+  background-size: cover;
+}
+.screen.onthego-mu {
+  background: url(images/2015/onthego-mu.jpg) no-repeat 50% 50%;
+  background-size: cover;
+}
+.dhome {
+  background: url(images/2015/home.png) no-repeat 0 0;
+  display: block;
+  text-indent: -999em;
+  width: 132px;
+  height: 114px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 99;
+}
+.dbtn {
+  background: url(images/2015/dbtn-mu-off.png) no-repeat 50% 50%;
+  display: block;
+  text-indent: -999em;
+  width: 104px;
+  height: 104px;
+  position: absolute;
+  top: 138px;
+  right: 13px;
+  z-index: 99;
+}
+.dbtn.mu.onn {
+  background-image: url(images/2015/dbtn-mu-on.png);
+}
+.dbtn.tb {
+  background-image: url(images/2015/dbtn-tb-off.png);
+  top: 257px;
+}
+.dbtn.tb.onn {
+  background-image: url(images/2015/dbtn-tb-on.png);
+}
 /* animations */
 .dial .ring {
   -webkit-animation: spin 8s linear infinite;

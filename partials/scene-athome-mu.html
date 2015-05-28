@@ -1,1 +1,16 @@
-<!-- and then? -->
+<div class="main">
+  <div class="devices" ng-class="{ 'd4' : hideLB, 'dq' : showQlabels }"></div>
+  <div class="lines mu-lines" ng-class="{ 'blink' : mode === 'mu' }" ng-show="( mode === 'mu' ) && !loading"></div>
+  <div class="lines" ng-repeat="device in devices" ng-class="lineClasses(device[0])" ng-show="( mode === 'su' ) && !loading"></div>
+  <div class="lines" ng-repeat="device in legacy" ng-class="lineClasses(device[0])" ng-show="( demo === 'lb' ) && !loading"></div>
+  <div class="router">
+    <div class="bg" ng-click="switchMode()">
+      <div class="circle"></div>
+      <div class="icon"></div>
+    </div>
+  </div>
+  <div class="ftr">Qualcomm MU | EFX is a product of Qualcomm Atheros, Inc.</div>
+</div>
+<a href="#" class="dhome" ng-click="showDemo('home')">Home</a>
+<a href="#" class="dbtn mu onn" ng-click="showDemo('athome-mu')">MU</a>
+<a href="#" class="dbtn tb" ng-click="showDemo('athome-tb')">TB</a>
