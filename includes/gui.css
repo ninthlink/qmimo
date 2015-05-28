@@ -937,7 +937,23 @@ body.loading {
 	100% { background-position: 0 237px; }
 }
 .screen.onthego-mu {
-  background: url(images/2015/onthego-mu-lines.jpg) no-repeat 50% 50%;
+  background: url(images/2015/onthego-mu.jpg) no-repeat 50% 50%;
+}
+.onthego-mu .sig1 {
+  background: url(images/2015/onthego-mu-1.png) no-repeat 0 503px;
+  display: block;
+  width: 802px;
+  height: 503px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -463px 0 0 -425px;
+}
+.onthego-mu.onscreen .sig1 {
+  animation: playonthegomu1 1.5s steps(18) 1s infinite;
+}
+@keyframes playonthegomu1 {
+	100% { background-position: 0 -8551px; }
 }
 .dhome {
   background: url(images/2015/home.png) no-repeat 0 0;
