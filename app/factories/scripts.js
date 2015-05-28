@@ -15,7 +15,12 @@ function mimoScripts( $http ) {
      * trigger our QMIMO_MU_SWITCH_SCRIPT / QMIMO_SU_SWITCH_SCRIPT via a GET
      */
     modeChange: function( newmode ) {
-      var fname = newmode === 'mu' ? QMIMO_MU_SWITCH_SCRIPT : QMIMO_SU_SWITCH_SCRIPT;
+      var fname = QMIMO_SU_SWITCH_SCRIPT;
+      if ( newmode === 'mu' ) {
+        fname = QMIMO_MU_SWITCH_SCRIPT;
+      } else if ( newmode === 'tb' ) {
+        fname = QMIMO_TB_SWITCH_SCRIPT;
+      }
       console.log('calling '+ QMIMO_PERL_SCRIPT_DIR +'/'+ fname +'.pl' );
       return $http.get( QMIMO_PERL_SCRIPT_DIR +'/run.php?s='+ fname );
     },

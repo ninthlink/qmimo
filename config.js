@@ -41,6 +41,9 @@ var QMIMO_MU_SWITCH_SCRIPT = 'ap_mu_mode';
 // script to call when switching to SU Mode, inside QMIMO_PERL_SCRIPT_DIR
 var QMIMO_SU_SWITCH_SCRIPT = 'ap_su_mode';
 
+// script to call when switching to TB Mode, inside QMIMO_PERL_SCRIPT_DIR
+var QMIMO_TB_SWITCH_SCRIPT = 'ap_tb_mode';
+
 // script to call when switching to MG Demo, inside QMIMO_PERL_SCRIPT_DIR
 var QMIMO_MG_SWITCH_SCRIPT = 'mg_udp_traffic';
 
@@ -60,7 +63,10 @@ var QMIMO_INITIAL_DEMO = 'mg';
 var QMIMO_MU_GAIN_DECIMAL_PLACES = 2;
 
 // How many decimals to show for the "TB Gain" number
-var QMIMO_TB_GAIN_DECIMAL_PLACES = 0;
+var QMIMO_TB_GAIN_DECIMAL_PLACES = 1;
+
+// "magic" number to calculate demo Tri-Band Gain against
+var QMIMO_TB_GAIN_MAGIC_NUMBER = 1500;
 
 // How many decimals to show for the 'MU' & 'SU' totals
 var QMIMO_TPUT_TOTALS_DECIMAL_PLACES = 0;

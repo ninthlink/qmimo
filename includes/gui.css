@@ -267,9 +267,14 @@ body {
   z-index: 3;
 }
 .dial .mode {
-  font-size: 55px;
+  font-size: 41px;
   line-height: 1;
   top: -29%;
+}
+@media screen and (min-height: 900px) and (min-width: 1600px) {
+  .dial .mode {
+    font-size: 55px;
+  }
 }
 .dial .desc {
   font-size: 24px;
@@ -332,16 +337,18 @@ body {
 }
 .dials .switches .control {
   font-size: 14px;
-  padding-left: 2rem;
+  padding-left: 0; /* 2rem */
 }
 .demo.switches .control {
   font-size: 16px;
 }
 .switches .control-indicator {
+  display: none; /* actually...
   width: 1.125rem;
   height: 1.125rem;
   line-height: 1.125rem;
   background-image: url(images/dots_big.png);
+  */
 }
 .switches .control.su {
   padding-left: 0;

@@ -72,7 +72,8 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   //$rootScope.mode = tputs.mode;
   $scope.switchsuon = ( $rootScope.mode === 'su' );
   $scope.switchmuon = ( $rootScope.mode === 'mu' );
-  //$scope.switchsuon = ( $rootScope.mode === 'mu' );
+  $scope.switchtbon = ( $rootScope.mode === 'tb' );
+  $rootScope.nextmode = '';
   $scope.demoleft = ( $rootScope.demo === 'mg' );
   //console.log('initial values::');
   //console.log(tputs);
@@ -98,26 +99,41 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     ];
   }
   //console.log($scope.legacy);
-  // recalculate our top MU & SU numbers based on initial tputs
+  // recalculate our top Gain numbers based on initial tputs
   $scope.mu_total = tputs.totals.mu;
   $scope.su_total = tputs.totals.su;
   $scope.mu_gain = tputs.totals.gain;
+  $scope.tb_gain = ( $scope.mu_total > 0 ) ? $scope.tb_total / $scope.mu_total : 0;
+  $scope.tb_total = QMIMO_TB_GAIN_MAGIC_NUMBER;
   $scope.mu_b1s = { 'transform': 'rotate(0deg)' };
   $scope.su_b1s = { 'transform': 'rotate(0deg)' };
+  $scope.tb_b1s = { 'transform': 'rotate(0deg)' };
   var total_multiplier = 24 / $scope.devicenum;
   
   // function to recalculate the % borders around the MU & SU dials 
   $scope.retotal = function() {
-    // calculate border line too
-    var tot = ( $rootScope.mode === 'mu' ) ? $scope.mu_total : $scope.su_total;
-    var deg = Math.round( tot * total_multiplier / 18 );
-    // make sure # between 0 & 180
-    deg = ( deg < 0 ) ? 0 : ( ( deg > 180 ) ? 180 : deg );
-    
-    if ( $rootScope.mode === 'mu' ) {
-      $scope.mu_b1s = { 'transform': 'rotate('+ deg +'deg)' };
+    // (re)calculate the border line fill
+    if ( $rootScope.mode === 'tb' ) {
+      // for now at least, just fake fill pulsing here..
+      if ( $rootScope.nextmode === 'tb' ) {
+        $scope.tb_b1s = { 'transform': 'rotate(80deg)' };
+        // we'll key alternating off nextmode unused var maybe?
+        $rootScope.nextmode = '';
+      } else {
+        $scope.tb_b1s = { 'transform': 'rotate(180deg)' };
+        $rootScope.nextmode = 'tb';
+      }
     } else {
-      $scope.su_b1s = { 'transform': 'rotate('+ deg +'deg)' };
+      var tot = ( $rootScope.mode === 'mu' ) ? $scope.mu_total : $scope.su_total;
+      var deg = Math.round( tot * total_multiplier / 18 );
+      // make sure # between 0 & 180
+      deg = ( deg < 0 ) ? 0 : ( ( deg > 180 ) ? 180 : deg );
+      
+      if ( $rootScope.mode === 'mu' ) {
+        $scope.mu_b1s = { 'transform': 'rotate('+ deg +'deg)' };
+      } else {
+        $scope.su_b1s = { 'transform': 'rotate('+ deg +'deg)' };
+      }
     }
   };
   // (re)total for the initial data..
@@ -135,6 +151,8 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
       $scope.mu_total = results.totals.mu;
       $scope.su_total = results.totals.su;
       $scope.mu_gain = results.totals.gain;
+      $scope.tb_gain = ( $scope.mu_total > 0 ) ? $scope.tb_total / $scope.mu_total : 0;
+      
       $scope.retotal();
     });
     // and no matter how long that takes, trigger this again
@@ -213,7 +231,12 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
       // and then
       var qprev = $rootScope.mode;
       var qwait = QMIMO_SWITCH_DELAY_MS;
-      var newmode = ( qprev === 'mu' ? 'su' : 'mu' );
+      if ( $rootScope.nextmode === '' ) {
+        var newmode = ( qprev === 'mu' ? 'su' : 'mu' );
+      } else {
+        var newmode = $rootScope.nextmode;
+      }
+      $rootScope.nextmode = '';
       //console.log( 'mode '+ qprev +' to '+ newmode +' in '+ qwait +'ms'  );
       // $scope.switchleft boolean controls actual position of UI switch
       $scope.switchleft = !$scope.switchleft;
@@ -251,7 +274,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
           
           $scope.switchsuon = newmode === 'su';
           $scope.switchmuon = newmode === 'mu';
-          //$scope.switchsuon = newmode === 'su';
+          $scope.switchtbon = newmode === 'tb';
         }, qwait );
       } else {
         // LB Demo : for now, just switch first
@@ -280,6 +303,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     //console.log('switchModeTo : '+ m);
     if ( $rootScope.loading === false ) {
       if ( $rootScope.mode !== m ) {
+        $rootScope.nextmode = m;
         // init switch
         $scope.switchMode();
       }

@@ -15,6 +15,7 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
       legacyDevices = QMIMO_NUMBER_OF_LEGACY_DEVICES,
       tputLocation = QMIMO_TPUT_DATA_DIR, // relative path?
       fileName = QMIMO_TPUT_FILE_NAME_FORMAT, // # replaced by actual #s
+      defaultTBnumber = QMIMO_TB_GAIN_MAGIC_NUMBER / numberOfDevices,
       tputs = [], // array for caching (previous) tput results,
       legacy_totals = { mu: 0, su: 0, diff: 0 },
       stored_totals = { mu: 0, su: 0, gain: 0 },
@@ -44,7 +45,9 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
           // latest MU tput data
           0,
           // latest SU tput data
-          0
+          0,
+          // latest TB tput data
+          defaultTBnumber
         ];
       }
       // and set up our Promises array so we can use $q.all
@@ -53,7 +56,7 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
     return $q.all( tputPromises ).then(function(results) {
       //console.log('returning total tputs results');
       // recalculate totals for the new numbers here
-      var i = ( mode === 'mu' ? 1 : 2 );
+      var i = ( mode === 'su' ? 2 : ( mode === 'mu' ? 1 : 3 ) );
       stored_totals[ mode ] = 0;
       angular.forEach( results, function( d, k ) {
         stored_totals[ mode ] += d[i];
@@ -92,10 +95,15 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
       //console.log( 'throughput #'+ n +' loaded : ' );
       //console.log( result.data );
       // extract number from data like 'eth0: 123 0'
-      var i = ( mode === 'mu' ? 1 : 2 );
-      var newtput = o.parseTputData( result.data );
-      if ( newtput > 0 ) {
-        tputs[n][i] = newtput;
+      var i = ( mode === 'su' ? 2 : ( mode === 'tb' ? 3 : 1 ) );
+      if ( i === 3 ) {
+        // for now?
+        tputs[n][i] = defaultTBnumber;
+      } else {
+        var newtput = o.parseTputData( result.data );
+        if ( newtput > 0 ) {
+          tputs[n][i] = newtput;
+        }
       }
       // pass the data back upstream
       //console.log('returning tput '+ n);
