@@ -103,9 +103,9 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   // recalculate our top Gain numbers based on initial tputs
   $scope.mu_total = tputs.totals.mu;
   $scope.su_total = tputs.totals.su;
+  $scope.tb_total = tputs.totals.tb;
   $scope.mu_gain = tputs.totals.gain;
   $scope.tb_gain = ( $scope.mu_total > 0 ) ? $scope.tb_total / $scope.mu_total : 0;
-  $scope.tb_total = QMIMO_TB_GAIN_MAGIC_NUMBER;
   $scope.mu_b1s = { 'transform': 'rotate(0deg)' };
   $scope.su_b1s = { 'transform': 'rotate(0deg)' };
   $scope.tb_b1s = { 'transform': 'rotate(0deg)' };
@@ -114,6 +114,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   // function to recalculate the % borders around the MU & SU dials 
   $scope.retotal = function() {
     // (re)calculate the border line fill
+    /*
     if ( $rootScope.mode === 'tb' ) {
       // for now at least, just fake fill pulsing here..
       if ( $rootScope.nextmode === 'tb' ) {
@@ -125,10 +126,24 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
         $rootScope.nextmode = 'tb';
       }
     } else {
-      var tot = ( $rootScope.mode === 'mu' ) ? $scope.mu_total : $scope.su_total;
+    */
+    if ( $rootScope.mode === 'tb' ) {
+      var tot = $scope.tb_total;
+      var deg = Math.round( tot * 3 / 25 );
+      console.log( 'tot = ' + tot + ' : deg = ' + deg );
+      // make sure # between 0 & 180
+      deg = ( deg < 0 ) ? 0 : ( ( deg > 180 ) ? 180 : deg );
+      
+      $scope.tb_b1s = { 'transform': 'rotate('+ deg +'deg)' };
+    } else {
+      var tot = $scope.su_total;
+      if ( $rootScope.mode === 'mu' ) {
+        tot = $scope.mu_total;
+      }
       var deg = Math.round( tot * total_multiplier / 18 );
       // make sure # between 0 & 180
       deg = ( deg < 0 ) ? 0 : ( ( deg > 180 ) ? 180 : deg );
+      console.log( 'tot = ' + tot + ' : deg = ' + deg );
       
       if ( $rootScope.mode === 'mu' ) {
         $scope.mu_b1s = { 'transform': 'rotate('+ deg +'deg)' };
@@ -151,6 +166,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
       $scope.devices = results.tputs;
       $scope.mu_total = results.totals.mu;
       $scope.su_total = results.totals.su;
+      $scope.tb_total = results.totals.tb;
       $scope.mu_gain = results.totals.gain;
       $scope.tb_gain = ( $scope.mu_total > 0 ) ? $scope.tb_total / $scope.mu_total : 0;
       

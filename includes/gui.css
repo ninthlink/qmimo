@@ -236,6 +236,11 @@ body {
   position: relative;
   top: 51%;
 }
+@media screen and (max-height: 699px) {
+  .dial {
+    top: 41%;
+  }
+}
 .dial:before {
   content: "";
   display: block;

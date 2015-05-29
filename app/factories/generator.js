@@ -23,7 +23,7 @@
 		o.genDeviceTput = function( mode ) {
       // set up array of Promises so we can use $q.all([...]).then(...
       var genPromises = [];
-      var m = ( mode === 'mu' ? '1' : '0' );
+      var m = ( mode === 'tb' ? '2' : ( mode === 'mu' ? '1' : '0' ) );
       //console.log('regenerating #s for m='+ m);
       for ( i = 0; i < numberOfDevices; i = i + 1 ) {
         // set up each Promise in the array

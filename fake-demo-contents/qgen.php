@@ -21,12 +21,15 @@ if ( isset( $_GET['m'] ) ) {
   } else {
     if ( intval( $_GET['m'] ) === 1 ) {
       $m = 1;
+    } elseif ( intval ( $_GET['m'] ) === 2 ) {
+      $m = 2;
     }
   }
 }
 $range = array(
   array( 10, 70 ),
-  array( 90, 125 )
+  array( 90, 125 ),
+  array( 270, 350 )
 );
 
 $n = 'qgen.php';

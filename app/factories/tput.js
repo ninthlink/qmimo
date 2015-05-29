@@ -15,10 +15,10 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
       legacyDevices = QMIMO_NUMBER_OF_LEGACY_DEVICES,
       tputLocation = QMIMO_TPUT_DATA_DIR, // relative path?
       fileName = QMIMO_TPUT_FILE_NAME_FORMAT, // # replaced by actual #s
-      defaultTBnumber = QMIMO_TB_GAIN_MAGIC_NUMBER / numberOfDevices,
+      //defaultTBnumber = QMIMO_TB_GAIN_MAGIC_NUMBER / numberOfDevices,
       tputs = [], // array for caching (previous) tput results,
-      legacy_totals = { mu: 0, su: 0, diff: 0 },
-      stored_totals = { mu: 0, su: 0, gain: 0 },
+      legacy_totals = { mu: 0, su: 0, tb: 0, diff: 0 },
+      stored_totals = { mu: 0, su: 0, tb: 0, gain: 0 },
       o = {}; // and finally our actual instance object that we will return
   /**
    * initial Promises for data to populate Devices tput data?
@@ -47,7 +47,7 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
           // latest SU tput data
           0,
           // latest TB tput data
-          defaultTBnumber
+          0
         ];
       }
       // and set up our Promises array so we can use $q.all
@@ -96,15 +96,11 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
       //console.log( result.data );
       // extract number from data like 'eth0: 123 0'
       var i = ( mode === 'su' ? 2 : ( mode === 'tb' ? 3 : 1 ) );
-      if ( i === 3 ) {
-        // for now?
-        tputs[n][i] = defaultTBnumber;
-      } else {
-        var newtput = o.parseTputData( result.data );
-        if ( newtput > 0 ) {
-          tputs[n][i] = newtput;
-        }
+      var newtput = o.parseTputData( result.data );
+      if ( newtput > 0 ) {
+        tputs[n][i] = newtput;
       }
+      //}
       // pass the data back upstream
       //console.log('returning tput '+ n);
       defer.resolve( tputs[n] );
