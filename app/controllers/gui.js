@@ -70,6 +70,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $rootScope.openedhbtn = false;
   $scope.simulate = simulate;
   $rootScope.onscreen = 'home';
+  $rootScope.prevscreen = '';
   //$rootScope.mode = tputs.mode;
   $scope.switchsuon = ( $rootScope.mode === 'su' );
   $scope.switchmuon = ( $rootScope.mode === 'mu' );
@@ -129,8 +130,8 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     */
     if ( $rootScope.mode === 'tb' ) {
       var tot = $scope.tb_total;
+      // adjust to 1500 mbps = 180 deg..
       var deg = Math.round( tot * 3 / 25 );
-      console.log( 'tot = ' + tot + ' : deg = ' + deg );
       // make sure # between 0 & 180
       deg = ( deg < 0 ) ? 0 : ( ( deg > 180 ) ? 180 : deg );
       
@@ -140,10 +141,11 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
       if ( $rootScope.mode === 'mu' ) {
         tot = $scope.mu_total;
       }
+      // adjust to up to 180 deg +/-
       var deg = Math.round( tot * total_multiplier / 18 );
       // make sure # between 0 & 180
       deg = ( deg < 0 ) ? 0 : ( ( deg > 180 ) ? 180 : deg );
-      console.log( 'tot = ' + tot + ' : deg = ' + deg );
+      //console.log( 'tot = ' + tot + ' : deg = ' + deg );
       
       if ( $rootScope.mode === 'mu' ) {
         $scope.mu_b1s = { 'transform': 'rotate('+ deg +'deg)' };
@@ -341,8 +343,10 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   };
   // helper UI function to switch between DEMO screens?!
   $scope.showDemo = function( m ) {
-    console.log('showDemo : '+ m);
+    $rootScope.prevscreen = $rootScope.onscreen;
     $rootScope.onscreen = m;
+    //console.log('showDemo : onscreen = ' + m + ', prevscreen = ' + $rootScope.prevscreen);
+    return false;
   };
   
   // action(s) to take when a switch is pressed to switch between demos

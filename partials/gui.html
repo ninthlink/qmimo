@@ -1,21 +1,21 @@
 <div class="screen home" ng-class="{ 'onscreen' : onscreen === 'home' }">
 <ng-include src="'partials/home.html'"></ng-include>
 </div>
-<div class="screen scene athome-mu" ng-class="{ 'onscreen' : onscreen === 'athome-mu' }">
+<div class="screen scene athome-mu" ng-class="{ 'onscreen' : onscreen === 'athome-mu', 'xfade' : ( ( onscreen === 'athome-mu' && prevscreen === 'athome-tb' ) || onscreen === 'athome-tb' ) }">
 <ng-include src="'partials/scene-athome-mu.html'"></ng-include>
 </div>
-<div class="screen scene athome-tb" ng-class="{ 'onscreen' : onscreen === 'athome-tb' }">
+<div class="screen scene athome-tb" ng-class="{ 'onscreen' : onscreen === 'athome-tb', 'xfade' : ( ( onscreen === 'athome-tb' && prevscreen === 'athome-mu' ) || onscreen === 'athome-mu' ) }">
 <ng-include src="'partials/scene-athome-tb.html'"></ng-include>
 </div>
-<div class="screen scene onthego-mu" ng-class="{ 'onscreen' : onscreen === 'onthego-mu' }">
+<div class="screen scene onthego-mu" ng-class="{ 'onscreen' : onscreen === 'onthego-mu', 'xfade' : ( ( onscreen === 'onthego-mu' && prevscreen === 'onthego-tb' ) || ( onscreen === 'onthego-tb' ) ) }">
 <ng-include src="'partials/scene-onthego-mu.html'"></ng-include>
 </div>
-<div class="screen scene onthego-tb" ng-class="{ 'onscreen' : onscreen === 'onthego-tb' }">
+<div class="screen scene onthego-tb" ng-class="{ 'onscreen' : onscreen === 'onthego-tb', 'xfade' : ( ( onscreen === 'onthego-tb' && prevscreen === 'onthego-mu' ) || ( onscreen === 'onthego-mu' ) ) }">
 <ng-include src="'partials/scene-onthego-tb.html'"></ng-include>
 </div>
-<div class="screen scene office-mu" ng-class="{ 'onscreen' : onscreen === 'office-mu' }">
+<div class="screen scene office-mu" ng-class="{ 'onscreen' : onscreen === 'office-mu', 'xfade' : ( ( onscreen === 'office-mu' && prevscreen === 'office-tb' ) || onscreen === 'office-tb' ) }">
 <ng-include src="'partials/scene-office-mu.html'"></ng-include>
 </div>
-<div class="screen scene office-tb" ng-class="{ 'onscreen' : onscreen === 'office-tb' }">
+<div class="screen scene office-tb" ng-class="{ 'onscreen' : onscreen === 'office-tb', 'xfade' : ( ( onscreen === 'office-tb' && prevscreen === 'office-mu' ) || onscreen === 'office-mu' ) }">
 <ng-include src="'partials/scene-office-tb.html'"></ng-include>
 </div>

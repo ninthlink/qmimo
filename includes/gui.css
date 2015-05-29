@@ -183,6 +183,7 @@ body {
   top: 0;
   bottom: 0;
   left: 100%;
+  opacity: 1;
   z-index: 1;
   
   -webkit-transition: all 400ms ease-in-out;
@@ -195,6 +196,19 @@ body {
 .screen.onscreen,
 .screen.home.onscreen {
   left: 0;
+  z-index: 2;
+}
+.screen.xfade {
+/*
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+*/
+  left: 0;
+  opacity: 0;
+}
+.screen.xfade.onscreen {
+  opacity: 1;
 }
 /* left column */
 .left {
@@ -628,7 +642,7 @@ body.mu-mode .col.mu .gain {
   line-height: 47px;
   width: 300px;
   position: absolute;
-  bottom: 36px;
+  bottom: 30px;
   left: 36px;
   z-index: 5;
 }
@@ -706,6 +720,7 @@ body.mu-mode .col.mu .gain {
   background-image: url(images/2015/btn-office-tb.jpg);
 }
 .dbx .lbl {
+  background: #91247e;
   display: block;
   font-size: 36px;
   line-height: 1.45;
@@ -714,6 +729,17 @@ body.mu-mode .col.mu .gain {
   position: absolute;
   left: 0;
   bottom: 0;
+}
+.dbx.tb .lbl {
+  background: #e99f00;
+}
+@media screen and (max-height: 699px) {
+  .rbtn .txt {
+    bottom: 16px;
+  }
+  .dbx .lbl {
+    font-size: 24px;
+  }
 }
 /* main right side */
 .main {
@@ -883,13 +909,13 @@ body.loading {
   margin: -27px 0 0 436px;
 }
 .athome-tb.onscreen .sig1 {
-  animation: playathometb1 1s steps(12) 1s infinite;
+  animation: playathometb1 1s steps(12) 0.6s infinite;
 }
 .athome-tb.onscreen .sig2 {
-  animation: playathometb2 0.6s steps(20) 1s infinite;
+  animation: playathometb2 0.6s steps(20) 0.6s infinite;
 }
 .athome-tb.onscreen .sig3 {
-  animation: playathometb3 1s steps(16) 1s infinite;
+  animation: playathometb3 1s steps(16) 0.6s infinite;
 }
 @keyframes playathometb1 {
 	100% { background-position: -3025px 0; }
@@ -914,7 +940,7 @@ body.loading {
   margin: -444px 0 0 -321px;
 }
 .office-tb.onscreen .sig1 {
-  animation: playofficetb1 1s steps(14) 1s infinite;
+  animation: playofficetb1 1s steps(14) 0.6s infinite;
 }
 @keyframes playofficetb1 {
 	100% { background-position: 0 -3770px; }
@@ -936,7 +962,7 @@ body.loading {
   margin: -164px 0 0 -381px;
 }
 .onthego-tb.onscreen .sig1 {
-  animation: playonthegotb1 1s steps(14) 1s infinite;
+  animation: playonthegotb1 1s steps(14) 0.6s infinite;
 }
 @keyframes playonthegotb1 {
 	100% { background-position: 0 237px; }
@@ -955,7 +981,7 @@ body.loading {
   margin: -463px 0 0 -425px;
 }
 .onthego-mu.onscreen .sig1 {
-  animation: playonthegomu1 1.5s steps(18) 1s infinite;
+  animation: playonthegomu1 1.5s steps(18) 0.6s infinite;
 }
 @keyframes playonthegomu1 {
 	100% { background-position: 0 -8551px; }
