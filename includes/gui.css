@@ -946,7 +946,23 @@ body.loading {
 	100% { background-position: 0 -3770px; }
 }
 .screen.office-mu {
-  background: url(images/2015/office-mu-lines.jpg) no-repeat 50% 50%;
+  background: url(images/2015/office-mu.jpg) no-repeat 50% 50%;
+}
+.office-mu .sig1 {
+  background: url(images/2015/office-mu-1.png) no-repeat 0 387px;
+  display: block;
+  width: 1728px;
+  height: 387px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -490px 0 0 -778px;
+}
+.office-mu.onscreen .sig1 {
+  animation: playofficemu1 1s steps(10) 0.6s infinite;
+}
+@keyframes playofficemu1 {
+	100% { background-position: 0 -3483px; }
 }
 .screen.onthego-tb {
   background: url(images/2015/onthego-tb.jpg) no-repeat 50% 50%;
