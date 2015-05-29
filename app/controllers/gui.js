@@ -472,7 +472,17 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     $rootScope.collapseNumbers = !$rootScope.collapseNumbers;
   };
   
+  // set a timer var for resetting home buttons just in case?
+  var homebtntimer;
+  /* toggles which right button on the home screen is active */
   $scope.openHomeBtn = function( which ) {
+    $timeout.cancel( homebtntimer );
+    if ( QMIMO_CLOSE_HOME_BUTTONS_MS > 0 ) {
+      // set $timeout to close a home btn if it was left open a while
+      homebtntimer = $timeout( function() {
+        $rootScope.openedhbtn = false;
+      }, QMIMO_CLOSE_HOME_BUTTONS_MS );
+    }
     if ( $rootScope.openedhbtn === which ) {
       $rootScope.openedhbtn = false;
     } else {
@@ -483,6 +493,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $scope.$on( '$destroy', function( event ) {
     // be polite : cancel $timeout(s)?
     $timeout.cancel( tputTimer );
+    $timeout.cancel( homebtntimer );
     if ( simulate === true ) {
       $timeout.cancel( tputGenTimer );
     }

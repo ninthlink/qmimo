@@ -32,6 +32,9 @@ var QMIMO_SWITCH_DELAY_MS = 5000;
 // Directory (inside the overall qmimo GUI folder?) to find .pl scripts to call
 var QMIMO_PERL_SCRIPT_DIR = 'perl-scripts';
 
+// ms to wait to auto close a Home right 1/3rd btn if left open. 0 = never
+var QMIMO_CLOSE_HOME_BUTTONS_MS = 60000;
+
 /**
  * our 4 .pl scripts, without the .pl at the end
  */
