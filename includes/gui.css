@@ -40,19 +40,20 @@
     font-style: normal;
 }
 
-body {
+body,
+.tput small {
   font-family: "Qualcomm-Regular", sans-serif;
 }
 .dial .mode,
 .devices .control,
+.tput,
 .gain .num {
   font-family: "Qualcomm-Bold", sans serif;
 }
 .dial .tot,
 .dnum,
 .title,
-.demo.switches,
-.tput,
+.switches,
 .gain .lbl strong,
 .rbtn .txt {
   font-family: "Qualcomm-Semibold", sans-serif;
@@ -65,6 +66,14 @@ body {
 body {
   color: #333;
 }
+body.su-mode .col.mu .lbl-on,
+body.su-mode .col.tb .lbl-on,
+body.mu-mode .col.su .lbl-on,
+body.mu-mode .col.tb .lbl-on,
+body.tb-mode .col.su .lbl-on,
+body.tb-mode .col.mu .lbl-on {
+  color: #a6a6a6;
+}
 body.mu-mode .tput.su,
 body.mu-mode .tput.tb,
 body.su-mode .tput.tb,
@@ -72,6 +81,11 @@ body.su-mode .tput.mu,
 body.tb-mode .tput.su,
 body.tb-mode .tput.mu {
   color: #a1a1a1;
+}
+body.su-mode .col.su .lbl-off,
+body.mu-mode .col.mu .lbl-off,
+body.tb-mode .col.tb .lbl-off {
+  color: #959595;
 }
 body.mu-mode .control.su,
 body.su-mode .tput.mu,
@@ -113,6 +127,12 @@ body.su-mode .tput.su {
 }
 body.mu-mode .dials .switches .control.mu,
 body.su-mode .dials .switches .control.su,
+body.su-mode .col.mu .lbl-off,
+body.su-mode .col.tb .lbl-off,
+body.mu-mode .col.su .lbl-off,
+body.mu-mode .col.tb .lbl-off,
+body.tb-mode .col.su .lbl-off,
+body.tb-mode .col.mu .lbl-off,
 .demo.switches .control.active {
   color: #000;
 }
@@ -233,6 +253,12 @@ body {
   height: 100%;
   position: relative;
 }
+.dials .col.mu {
+  margin: 0 -1px;
+  border-left: 1px solid #d7d7d7;
+  border-right: 1px solid #d7d7d7;
+  z-index: 3;
+}
 .drap {
   float: none;
   display: block;
@@ -248,13 +274,15 @@ body {
   width: 100%;
   margin: 0;
   position: relative;
-  top: 51%;
+  top: 41%;
 }
+/*
 @media screen and (max-height: 699px) {
   .dial {
     top: 41%;
   }
 }
+*/
 .dial:before {
   content: "";
   display: block;
@@ -317,11 +345,6 @@ body {
   line-height: 1;
   top: -29%;
 }
-@media screen and (min-height: 900px) and (min-width: 1600px) {
-  .dial .mode {
-    font-size: 55px;
-  }
-}
 .dial .desc {
   font-size: 24px;
   line-height: 1;
@@ -379,10 +402,10 @@ body {
 }
 .switches .control {
   line-height: 31px;
-  vertical-align: middle;
+  vertical-align: top;
 }
 .dials .switches .control {
-  font-size: 14px;
+  font-size: 18px;
   padding-left: 0; /* 2rem */
 }
 .demo.switches .control {
@@ -455,6 +478,9 @@ body.mu-mode .col.mu .gain {
   font-size: 32px;
   text-align: center;
   vertical-align: middle;
+}
+.gain .num strong {
+  font-size: 60px;
 }
 /*
 .gain .lbl {
@@ -545,14 +571,14 @@ body.mu-mode .col.mu .gain {
   vertical-align: middle;
 }
 .dnum {
-  font-size: 18px;
+  font-size: 34px;
   text-align: center;
   width: 12.5%; /*56px;*/
   height: inherit;
   position: relative;
 }
 .tput {
-  font-size: 22px;
+  font-size: 34px;
   width: 33.33333%; /*101px;*/
 }
 .tput.su {
@@ -560,7 +586,7 @@ body.mu-mode .col.mu .gain {
   text-align: left;
 }
 .tput small {
-  font-size: 14px;
+  font-size: 22px;
 }
 /* handle collapsing device numbers */
 .dials,
@@ -746,8 +772,8 @@ body.mu-mode .col.mu .gain {
   background: url(images/bg_room.jpg) no-repeat 0 50%;
   background-size: contain;
   position: absolute;
-  left: 25%;
-  right: 0;
+  left: 20%;
+  right: 10%;
   top: 0;
   bottom: 0;
   /*width: 80%;*/
@@ -801,12 +827,6 @@ body.mu-mode .col.mu .gain {
   z-index: 5;
   width: 52px;
   height: 52px;
-}
-@media screen and (min-width: 1400px) and (min-height: 800px) {
-  .router {
-    width: 74px;
-    height: 73px;
-  }
 }
 .router .bg {
   background: url(images/router_bg.png) no-repeat 50% 50%;
@@ -879,6 +899,22 @@ body.loading {
   position: absolute;
   left: 0;
   bottom: 30px;
+}
+/* responsive minor cleanup */
+@media screen and (min-width: 1400px) and (min-height: 800px) {
+  .dial .mode {
+    font-size: 55px;
+  }
+  .dial .tot .t {
+    font-size: 42px;
+  }
+  .dial .tot small {
+    font-size: 20px;
+  }
+  .router {
+    width: 74px;
+    height: 73px;
+  }
 }
 /* other demo scenes */
 .screen.athome-tb {
