@@ -6,7 +6,7 @@
  * and whether or not to generate fake Throughputs data.
  */
 // Mode to start in : 'mu' = Multi User, 'su' = Single User
-var QMIMO_INITIAL_MODE = 'mu';
+var QMIMO_INITIAL_11AC_MODE = 'mu';
 
 // Directory (inside the overall qmimo GUI folder?) to find tput files
 var QMIMO_TPUT_DATA_DIR = 'fake-demo-contents';
