@@ -642,7 +642,7 @@ body.mu-mode .col.mu .gain {
   cursor: pointer;
   display: block;
   width: 100%;
-  height: 33.333333%%;
+  height: 33.333%;
   position: relative;
   overflow: hidden;
 }
