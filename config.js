@@ -17,10 +17,28 @@ var QMIMO_INITIAL_11AD = true;
 // Directory (inside the overall qmimo GUI folder?) to find tput files
 var QMIMO_TPUT_DATA_DIR = 'fake-demo-contents';
 
-// Optional control actual file name format for tput .txt : '#' is replaced
+// list of tput files to parse, corresponding to # of 11AC (SU/MU) devices
+var QMIMO_11AC_TPUT_FILES = [
+    'tput1.txt',
+    'tput2.txt',
+    'tput3.txt',
+    'tput4.txt'
+];
+
+// list of tput files to parse, corresponding to # of 11AC (SU/MU) devices
+var QMIMO_11AD_TPUT_FILES = [
+    'tput7.txt',
+    'tput8.txt',
+    'tput9.txt',
+    'tput10.txt',
+    'tput11.txt',
+    'tput12.txt'
+];
+
+// (outdated) control actual file name format for tput .txt : '#' is replaced
 var QMIMO_TPUT_FILE_NAME_FORMAT = 'tput#.txt';
  
-// # of devices we can expect tput from
+// (outdated) # of devices we can expect tput from
 var QMIMO_NUMBER_OF_MU_DEVICES = 4;
 
 // whether to start with the home Devices numbers collapsed (or not)

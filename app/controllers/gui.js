@@ -19,8 +19,8 @@ angular
         resolve: {
           // "resolve" polls initial tput data before the UI loads
           tputs: function( tputFactory ) {
-            //$scope.maybeLog('setting up initial guiCtrl resolve tputs');
-            return tputFactory.getDevicesTput( true );
+            //console.log('setting up initial guiCtrl resolve tputs');
+            return tputFactory.iniTputs();
           },
           simulate: function() {
             return QMIMO_FAKE_DEMO;
@@ -36,8 +36,8 @@ angular
         resolve: {
           // "resolve" polls initial tput data before the UI loads
           tputs: function( tputFactory ) {
-            //$scope.maybeLog('setting up initial guiCtrl resolve tputs');
-            return tputFactory.getDevicesTput( true );
+            //console.log('setting up initial guiCtrl resolve tputs');
+            return tputFactory.iniTputs();
           },
           simulate: function() {
             // same but just set simulate = false
@@ -83,7 +83,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $scope.tbmode = QMIMO_INITIAL_11AD; //( $rootScope.mode === 'tb' );
   $rootScope.nextmode = '';
   $scope.demoleft = ( $rootScope.demo === 'mg' );
-  //$scope.maybeLog('initial values::');
+  //$scope.maybeLog('initial values :: tputs = ');
   //$scope.maybeLog(tputs);
   $scope.devices = tputs.tputs;
   $scope.devicenum = $scope.devices.length;
@@ -171,7 +171,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   // Set timeout to (re) poll tput datas
   var tputTimer;
   $scope.reloadTputNow = function( newmode ) {
-    tputFactory.getDevicesTput( false, newmode ).then(function(results) {
+    tputFactory.get11acTput( newmode ).then(function(results) {
       //$scope.maybeLog(' mode = '+ $rootScope.mode);
       //$scope.maybeLog(results);
       $rootScope.loading = false;
