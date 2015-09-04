@@ -74,8 +74,8 @@
           <div class="mode">TRI-BAND</div>
           <div class="desc">60GHz</div>
           <div class="tot">
-            <div class="t">{{ tb_total | number: roundtotals }}</div>
-            <small>MBPS</small>
+            <div class="t" ng-show="tbmode">{{ tb_total | number: roundtotals }}</div>
+            <small ng-show="tbmode">MBPS</small>
             <div class="fx"></div>
           </div>
         </div>
@@ -83,20 +83,20 @@
       <div class="switches">
         <div class="inner">
           <label class="control radio lbl-off">
-            <input id="tbmode-off" name="mode" type="radio" value="su" ng-model="mode" ng-click="switchModeTo('su')">
+            <input id="tbmode-off" name="tbmode" type="radio" value="false" ng-model="tbmode" ng-click="switchTBMode(false)">
             <span class="control-indicator"></span>
             Off
           </label>
-          <button class="switch" ng-click="switchModeToggle('tb')" ng-class="{ 'r' : switchtbon }"></button>
+          <button class="switch" ng-click="toggleTB()" ng-class="{ 'r' : tbmode == true }"></button>
           <label class="control radio lbl-on">
-            <input id="tbmode-on" name="mode" type="radio" value="tb" ng-model="mode" ng-click="switchModeTo('tb')">
+            <input id="tbmode-on" name="tbmode" type="radio" value="true" ng-model="tbmode" ng-click="switchTBMode(true)">
             <span class="control-indicator"></span>
             On
           </label>
         </div>
       </div>
       <div class="gain mg">
-        <div class="num"><strong>{{ tb_gain | number: roundtbgain }}X</strong> Gain</div>
+        <div class="num"><span ng-show="tbmode"><strong>{{ tb_gain | number: roundtbgain }}X</strong> Gain</span></div>
       </div>
     </div>
   </div>
@@ -112,7 +112,7 @@
         <div class="dnum">{{device[0]}}</div>
         <div class="tput su"><span ng-show="shownumbers"><strong>{{ device[2] | number: 0 }}</strong><small> mbps</small></span></div>
         <div class="tput mu"><span ng-show="shownumbers"><strong>{{ device[1] | number: 0 }}</strong><small> mbps</small></span></div>
-        <div class="tput tb"><span ng-show="shownumbers"><strong>{{ device[3] | number: 0 }}</strong><small> mbps</small></span></div>
+        <div class="tput tb"><span ng-show="shownumbers && tbmode"><strong>{{ device[3] | number: 0 }}</strong><small> mbps</small></span></div>
       </div>
     </div>
   </div>
