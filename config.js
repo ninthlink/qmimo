@@ -5,20 +5,29 @@
  * including # of connected devices, time before refreshing pieces,
  * and whether or not to generate fake Throughputs data.
  */
+// Mode to start in : 'mu' = Multi User, 'su' = Single User
+var QMIMO_INITIAL_MODE = 'mu';
+
+// Directory (inside the overall qmimo GUI folder?) to find tput files
+var QMIMO_TPUT_DATA_DIR = 'fake-demo-contents';
+
+// Optional control actual file name format for tput .txt : '#' is replaced
+var QMIMO_TPUT_FILE_NAME_FORMAT = 'tput#.txt';
+ 
 // # of devices we can expect tput from
 var QMIMO_NUMBER_OF_MU_DEVICES = 4;
 
 // whether to start with the home Devices numbers collapsed (or not)
 var QMIMO_COLLAPSE_DEVICE_NUMBERS = false;
 
-// # of "legacy" / non-MU-capable devices, for "LB" mode
-var QMIMO_NUMBER_OF_LEGACY_DEVICES = 1;
+// How many decimals to show for the top SU/MU/Tri-Band MBPS totals
+var QMIMO_TPUT_TOTALS_DECIMAL_PLACES = 0;
 
-// by default, hide LB switch & numbers?
-var QMIMO_DEFAULT_HIDE_LB = true;
+// How many decimals to show for the "MU Gain" calculation number
+var QMIMO_MU_GAIN_DECIMAL_PLACES = 2;
 
-// show QCA#### label names or generic Smartphone / Notebook labels if false
-var QMIMO_Q_LABELS = true;
+// How many decimals to show for the "TB Gain" number
+var QMIMO_TB_GAIN_DECIMAL_PLACES = 1;
 
 // # of ms to wait to refresh device tput data
 var QMIMO_REFRESH_TPUT_MS = 2000;
@@ -29,53 +38,29 @@ var QMIMO_TPUT_TIMEOUT_MS = 1000;
 // # of ms downtime delay when switching MU / SU modes
 var QMIMO_SWITCH_DELAY_MS = 5000;
 
-// Directory (inside the overall qmimo GUI folder?) to find .pl scripts to call
-var QMIMO_PERL_SCRIPT_DIR = 'perl-scripts';
-
 // ms to wait to auto close a Home right 1/3rd btn if left open. 0 = never
 var QMIMO_CLOSE_HOME_BUTTONS_MS = 60000;
 
+// Directory (inside the overall qmimo GUI folder?) to find .pl scripts to call
+var QMIMO_PERL_SCRIPT_DIR = 'perl-scripts';
+
 /**
- * our 4 .pl scripts, without the .pl at the end
+ * .pl scripts inside that QMIMO_PERL_SCRIPT_DIR, without ".pl"
  */
-// script to call when switching to MU Mode, inside QMIMO_PERL_SCRIPT_DIR
+// script to call when switching to MU Mode
 var QMIMO_MU_SWITCH_SCRIPT = 'ap_mu_mode';
 
-// script to call when switching to SU Mode, inside QMIMO_PERL_SCRIPT_DIR
+// script to call when switching to SU Mode
 var QMIMO_SU_SWITCH_SCRIPT = 'ap_su_mode';
 
-// script to call when switching to TB Mode, inside QMIMO_PERL_SCRIPT_DIR
+// (outdated?) script to call when switching to TB Mode
 var QMIMO_TB_SWITCH_SCRIPT = 'ap_tb_mode';
 
-// script to call when switching to MG Demo, inside QMIMO_PERL_SCRIPT_DIR
+// (outdated?) script to call when switching to MG Demo
 var QMIMO_MG_SWITCH_SCRIPT = 'mg_udp_traffic';
 
-// script to call when switching to LB Demo, inside QMIMO_PERL_SCRIPT_DIR
+// (outdated?) script to call when switching to LB Demo
 var QMIMO_LB_SWITCH_SCRIPT = 'lb_tcp_traffic';
-
-// Directory (inside the overall qmimo GUI folder?) to find tput files
-var QMIMO_TPUT_DATA_DIR = 'fake-demo-contents';
-
-// Mode to start in : 'mu' = Multi User, 'su' = Single User
-var QMIMO_INITIAL_MODE = 'mu';
-
-// Demo to start in : 'mg' = Multi User Gain, 'lb' = Legacy Client Benefit
-var QMIMO_INITIAL_DEMO = 'mg';
-
-// How many decimals to show for the "MU Gain" number, in case we want to tweak
-var QMIMO_MU_GAIN_DECIMAL_PLACES = 2;
-
-// How many decimals to show for the "TB Gain" number
-var QMIMO_TB_GAIN_DECIMAL_PLACES = 1;
-
-// "magic" number to calculate demo Tri-Band Gain against
-var QMIMO_TB_GAIN_MAGIC_NUMBER = 1500;
-
-// How many decimals to show for the 'MU' & 'SU' totals
-var QMIMO_TPUT_TOTALS_DECIMAL_PLACES = 0;
-
-// Optional control actual file name format for tput .txt : '#' is replaced
-var QMIMO_TPUT_FILE_NAME_FORMAT = 'tput#.txt';
 
 /**
  * Fake Demo Throughput Numbers Generation
@@ -94,3 +79,21 @@ var QMIMO_FAKE_LB_MU_TIME = 40;
 
 // Time value / wait for LB Demo in SU mode : should be different than MU above
 var QMIMO_FAKE_LB_SU_TIME = 46;
+
+/**
+ * old config settings from previous demo configuration ideas
+ */
+// Demo to start in : 'mg' = Multi User Gain, 'lb' = Legacy Client Benefit
+var QMIMO_INITIAL_DEMO = 'mg';
+
+// # of "legacy" / non-MU-capable devices, for "LB" mode
+var QMIMO_NUMBER_OF_LEGACY_DEVICES = 1;
+
+// by default, hide LB switch & numbers?
+var QMIMO_DEFAULT_HIDE_LB = true;
+
+// show QCA#### label names or generic Smartphone / Notebook labels if false
+var QMIMO_Q_LABELS = true;
+
+// "magic" number to calculate demo Tri-Band Gain against
+var QMIMO_TB_GAIN_MAGIC_NUMBER = 1500;
