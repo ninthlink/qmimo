@@ -2,6 +2,8 @@
 /**
  * app.js
  *
- * Define our AngularJS "qmimo" module & a few module dependencies
+ * Simply call our AngularJS "qmimo" module & add a few module dependencies
+ *
+ * qmimo module itself is coming from /app/controllers/gui.js ..
  */
 angular.module('qmimo', ['ui.router', 'ngSanitize']);
