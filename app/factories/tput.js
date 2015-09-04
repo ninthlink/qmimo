@@ -10,7 +10,7 @@ angular
 tputFactory.$inject = [ '$rootScope', '$http', '$q', '$timeout' ]; // $resource?
 
 function tputFactory( $rootScope, $http, $q, $timeout ) {
-  var mode = QMIMO_INITIAL_11AC_MODE,
+  var mode = QMIMO_INITIAL_11AC,
       numberOfDevices = QMIMO_NUMBER_OF_MU_DEVICES, // # of connected devices aka files to loop
       legacyDevices = QMIMO_NUMBER_OF_LEGACY_DEVICES,
       tputLocation = QMIMO_TPUT_DATA_DIR, // relative path?

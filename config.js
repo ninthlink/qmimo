@@ -5,8 +5,14 @@
  * including # of connected devices, time before refreshing pieces,
  * and whether or not to generate fake Throughputs data.
  */
-// Mode to start in : 'mu' = Multi User, 'su' = Single User
-var QMIMO_INITIAL_11AC_MODE = 'mu';
+// Whether to output (console.log) messages or stay quiet
+var QMIMO_OUTPUT_LOGS = true;
+
+// SU/MU Mode to start in : 'mu' = Multi User, 'su' = Single User
+var QMIMO_INITIAL_11AC = 'mu';
+
+// Tri-Band Mode to start in : true = "On" = show TB #s, false = "Off" = hide
+var QMIMO_INITIAL_11AD = true;
 
 // Directory (inside the overall qmimo GUI folder?) to find tput files
 var QMIMO_TPUT_DATA_DIR = 'fake-demo-contents';
