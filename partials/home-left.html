@@ -8,8 +8,8 @@
           <div class="mode">SU</div>
           <div class="desc">SINGLE-USER</div>
           <div class="tot">
-            <div class="t">{{ su_total | number: roundtotals }}</div>
-            <small>MBPS</small>
+            <div class="t"><span ng-show="su_total > 0">{{ su_total | number: roundtotals }}</span></div>
+            <small ng-show="su_total > 0">MBPS</small>
             <div class="fx"></div>
           </div>
         </div>
@@ -41,8 +41,8 @@
           <div class="mode">MU</div>
           <div class="desc">MULTI-USER</div>
           <div class="tot">
-            <div class="t">{{ mu_total | number: roundtotals }}</div>
-            <small>MBPS</small>
+            <div class="t"><span ng-show="mu_total > 0">{{ mu_total | number: roundtotals }}</span></div>
+            <small ng-show="mu_total > 0">MBPS</small>
             <div class="fx"></div>
           </div>
         </div>
@@ -63,19 +63,19 @@
         </div>
       </div>
       <div class="gain mg">
-        <div class="num"><strong>{{ mu_gain | number: roundgain }}</strong> Gain</div>
+        <div class="num"><span ng-show="( mu_total > 0 ) || ( su_total > 0 )"><strong>{{ mu_gain | number: roundgain }}</strong> Gain</span></div>
       </div>
     </div>
     <!-- TB TRI-BAND -->
-    <div class="col tb">
+    <div class="col tb" ng-name="tbmode">
       <div class="drap tb">
         <div class="dial tb">
           <div class="pie" qmimo-border-fill="tb"></div>
           <div class="mode">TRI-BAND</div>
           <div class="desc">60GHz</div>
           <div class="tot">
-            <div class="t" ng-show="tbmode">{{ tb_total | number: roundtotals }}</div>
-            <small ng-show="tbmode">MBPS</small>
+            <div class="t" ng-show="tbmode"><span ng-show="tb_total > 0">{{ tb_total | number: roundtotals }}</span></div>
+            <small ng-show="tbmode && ( tb_total > 0 )">MBPS</small>
             <div class="fx"></div>
           </div>
         </div>
@@ -96,7 +96,7 @@
         </div>
       </div>
       <div class="gain mg">
-        <div class="num"><span ng-show="tbmode"><strong>{{ tb_gain | number: roundtbgain }}X</strong> Gain</span></div>
+        <div class="num"><span ng-show="tbmode && ( tb_total > 0 ) && ( ( mu_total > 0 ) || ( su_total > 0 ) )"><strong>{{ tb_gain | number: roundtbgain }}X</strong> Gain</span></div>
       </div>
     </div>
   </div>
@@ -112,7 +112,7 @@
         <div class="dnum">{{device[0]}}</div>
         <div class="tput su"><span ng-show="shownumbers"><span ng-show="( device[1] > 0 ) || ( device[2] > 0 )"><strong>{{ device[2] | number: 0 }}</strong><small> mbps</small></span></span><span ng-show="( device[1] == 0 ) && ( device[2] == 0 )"><small>not connected</small></span></div>
         <div class="tput mu"><span ng-show="shownumbers"><span ng-show="( device[1] > 0 ) || ( device[2] > 0 )"><strong>{{ device[1] | number: 0 }}</strong><small> mbps</small></span></span><span ng-show="( device[1] == 0 ) && ( device[2] == 0 )"><small>not connected</small></span></div>
-        <div class="tput tb"><span ng-show="shownumbers && tbmode"><strong>{{ device[3] | number: 0 }}</strong><small> mbps</small></span></div>
+        <div class="tput tb"><span ng-show="shownumbers && tbmode"><span ng-show="device[3] > 0"><strong>{{ device[3] | number: 0 }}</strong><small> mbps</small></span><span ng-show="device[3] == 0"><small>not connected</small></span></span></div>
       </div>
     </div>
   </div>
