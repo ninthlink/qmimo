@@ -25,7 +25,8 @@ function qmimoBorderFill( $compile ) {
         // add our id so we can subsequently inject the rest of the HTML
         element.attr( 'id', 'pie-'+ mo );
         // add our sub element HTML
-        angular.element(document.getElementById('pie-'+mo)).append($compile('<div class="h h0" style="clip: rect(0px '+ ow +'px '+ ow +'px '+ hw +'px);"><div class="border"  style="clip: rect(0px '+ hw +'px '+ ow +'px 0px); border-width: '+ bw + 'px;" ng-style="'+mo+'_b1s"></div></div>')(scope));
+        var oot = '<div class="h h0" style="clip: rect(0px '+ ow +'px '+ ow +'px '+ hw +'px);"><div class="border"  style="clip: rect(0px '+ hw +'px '+ ow +'px 0px); border-width: '+ bw + 'px;" ng-style="'+mo+'_b1s"></div></div>';
+        angular.element(document.getElementById('pie-'+mo)).append($compile( oot )(scope));
       }
     }
   }

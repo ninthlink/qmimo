@@ -70,10 +70,14 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
       // recalculate totals for the new numbers here
       var i = ( mode === 'su' ? 2 : 1 );
       stored_totals[ mode ] = 0;
-      var concatd = [];
+      stored_totals[ 'tb' ] = 0;
       angular.forEach( tputs, function( d, k ) {
-        stored_totals[ mode ] += d[i];
-        stored_totals[ 'tb' ] += d[3];
+        if ( n_11ac > 0 ) {
+          stored_totals[ mode ] += d[i];
+        }
+        if ( n_11ad > 0 ) {
+          stored_totals[ 'tb' ] += d[3];
+        }
       });
       // recalculate MU Gain too?
       if ( ( stored_totals.mu === 0 ) || ( stored_totals.su === 0 ) ) {
@@ -84,20 +88,20 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
         stored_totals.gain = stored_totals.mu / stored_totals.su;
       }
       // return our conglomerated data
-      var oot = {
+      return {
         mode: mode,
-        tputs: concatd,
+        n_11ac: n_11ac,
+        n_11ad: n_11ad,
+        tputs: tputs,
         totals: stored_totals
       };
-      //console.log('tots INIT');
-      //console.log(oot);
-      return oot;
     });
   };
   /**
    * initial Promises for data to populate Devices' 11AC (SU/MU) tput data
    */
   o.get11acTput = function( newmode ) {
+    //console.log('ggag get11acTput gagg');
     if ( newmode ) {
       mode = newmode;
     } else {
@@ -140,6 +144,8 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
       // return our conglomerated data
       return {
         mode: mode,
+        n_11ac: n_11ac,
+        n_11ad: n_11ad,
         tputs: tputs,
         totals: stored_totals
       };
@@ -149,6 +155,7 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
    * initial Promises for data to populate Devices' 11AD (TB) tput data
    */
   o.get11adTput = function() {
+    console.log('ggg get11adTput ggg');
     n_11ac = tput_files_11ac.length;
     n_11ad = tput_files_11ad.length;
     numberOfDevices = n_11ad > n_11ac ? n_11ad : n_11ac; // max of both
@@ -163,19 +170,23 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
         tputPromises[i] = o.loadTput( i, tputModeNum, fname );
       }
     }
+    console.log('ggg');
     return $q.all( tputPromises ).then(function(results) {
       // recalculate totals for the new numbers here
       stored_totals[ 'tb' ] = 0;
       angular.forEach( results, function( d, k ) {
+        console.log('gg :');
+        console.log(d);
         stored_totals[ 'tb' ] += d[ tputModeNum ];
       });
       // return our conglomerated data
-      var oot = {
-        mode: 'tb',
-        tputs: results,
+      return {
+        mode: mode,
+        n_11ac: n_11ac,
+        n_11ad: n_11ad,
+        tputs: tputs,
         totals: stored_totals
       };
-      return oot;
     });
   };
   /**
@@ -193,7 +204,7 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
    */
   o.loadTput = function( n, i, fname ) {
     var j = n < n_11ac ? n : n - n_11ac;
-    //console.log( 'loadTput for n ' + n + ' i '+ i + ' fname '+ fname +' : j = '+ j );
+    console.log( 'loadTput for n ' + n + ' i '+ i + ' fname '+ fname +' : j = '+ j );
     // set up the $q.defer Promise
     var defer = $q.defer();
     // call our getTputData & process result after it returns

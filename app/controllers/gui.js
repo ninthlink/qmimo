@@ -80,13 +80,15 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   //$rootScope.mode = tputs.mode;
   $scope.switchsuon = ( $rootScope.mode === 'su' );
   $scope.switchmuon = ( $rootScope.mode === 'mu' );
-  $scope.tbmode = QMIMO_INITIAL_11AD; //( $rootScope.mode === 'tb' );
+  $rootScope.tbmode = QMIMO_INITIAL_11AD; //( $rootScope.mode === 'tb' );
   $rootScope.nextmode = '';
   $scope.demoleft = ( $rootScope.demo === 'mg' );
   //$scope.maybeLog('initial values :: tputs = ');
   //$scope.maybeLog(tputs);
   $scope.devices = tputs.tputs;
   $scope.devicenum = $scope.devices.length;
+  $scope.num_11ac = tputs.n_11ac;
+  $scope.num_11ad = tputs.n_11ad;
   $scope.dheight = { 'height': ( 100 / $scope.devicenum ) + '%' };
   $scope.roundtotals = QMIMO_TPUT_TOTALS_DECIMAL_PLACES;
   $scope.roundgain = QMIMO_MU_GAIN_DECIMAL_PLACES;
@@ -115,54 +117,45 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   
   // re calculate TB Gain
   $scope.calcTBgain = function() {
-    $scope.tb_gain = ( $scope.mu_total > 0 ) ? $scope.tb_total / $scope.mu_total : 0;
+    if ( $scope.mode == 'su' ) {
+      $scope.tb_gain = ( $scope.su_total > 0 ) ? $scope.tb_total / $scope.su_total : 0;
+    } else {
+      $scope.tb_gain = ( $scope.mu_total > 0 ) ? $scope.tb_total / $scope.mu_total : 0;
+    }
   }
   $scope.calcTBgain();
   $scope.mu_b1s = { 'transform': 'rotate(0deg)' };
   $scope.su_b1s = { 'transform': 'rotate(0deg)' };
   $scope.tb_b1s = { 'transform': 'rotate(0deg)' };
-  var total_multiplier = 24 / $scope.devicenum;
+  var total_ac_multiplier = 24 / $scope.num_11ac;
   
   // function to recalculate the % borders around the MU & SU dials 
   $scope.retotal = function() {
-    // (re)calculate the border line fill
-    /*
-    if ( $rootScope.mode === 'tb' ) {
-      // for now at least, just fake fill pulsing here..
-      if ( $rootScope.nextmode === 'tb' ) {
-        $scope.tb_b1s = { 'transform': 'rotate(80deg)' };
-        // we'll key alternating off nextmode unused var maybe?
-        $rootScope.nextmode = '';
-      } else {
-        $scope.tb_b1s = { 'transform': 'rotate(180deg)' };
-        $rootScope.nextmode = 'tb';
-      }
-    } else {
-    */
-    if ( $rootScope.mode === 'tb' ) {
-      var tot = $scope.tb_total;
-      // adjust to 1500 mbps = 180 deg..
-      var deg = Math.round( tot * 3 / 25 );
+    if ( $rootScope.tbmode ) {
+      var tbtot = $scope.tb_total;
+      // adjust to 2700 mbps = 180 deg..
+      var tbdeg = Math.round( tbtot / 15 );
       // make sure # between 0 & 180
-      deg = ( deg < 0 ) ? 0 : ( ( deg > 180 ) ? 180 : deg );
+      tbdeg = ( tbdeg < 0 ) ? 0 : ( ( tbdeg > 180 ) ? 180 : tbdeg );
       
-      $scope.tb_b1s = { 'transform': 'rotate('+ deg +'deg)' };
+      $scope.tb_b1s = { 'transform': 'rotate('+ tbdeg +'deg)' };
     } else {
-      var tot = $scope.su_total;
-      if ( $rootScope.mode === 'mu' ) {
-        tot = $scope.mu_total;
-      }
-      // adjust to up to 180 deg +/-
-      var deg = Math.round( tot * total_multiplier / 18 );
-      // make sure # between 0 & 180
-      deg = ( deg < 0 ) ? 0 : ( ( deg > 180 ) ? 180 : deg );
-      //$scope.maybeLog( 'tot = ' + tot + ' : deg = ' + deg );
+      $scope.tb_b1s = { 'transform': 'rotate(0deg)' };
+    }
+    var tot = $scope.su_total;
+    if ( $rootScope.mode === 'mu' ) {
+      tot = $scope.mu_total;
+    }
+    // adjust to up to 180 deg +/-
+    var deg = Math.round( tot * total_ac_multiplier / 18 );
+    // make sure # between 0 & 180
+    deg = ( deg < 0 ) ? 0 : ( ( deg > 180 ) ? 180 : deg );
+    //$scope.maybeLog( 'tot = ' + tot + ' : deg = ' + deg );
       
-      if ( $rootScope.mode === 'mu' ) {
-        $scope.mu_b1s = { 'transform': 'rotate('+ deg +'deg)' };
-      } else {
-        $scope.su_b1s = { 'transform': 'rotate('+ deg +'deg)' };
-      }
+    if ( $rootScope.mode === 'mu' ) {
+      $scope.mu_b1s = { 'transform': 'rotate('+ deg +'deg)' };
+    } else {
+      $scope.su_b1s = { 'transform': 'rotate('+ deg +'deg)' };
     }
   };
   // (re)total for the initial data..
@@ -170,29 +163,52 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   
   // Set timeout to (re) poll tput datas
   var tputTimer;
+  var tbputTimer;
+  $scope.reprocessResults = function( results ) {
+    //$scope.maybeLog(' mode = '+ $rootScope.mode);
+    //$scope.maybeLog(results);
+    $rootScope.loading = false;
+    $rootScope.mode = results.mode;
+    $scope.devices = results.tputs;
+    $scope.devicenum = $scope.devices.length;
+    $scope.num_11ac = tputs.n_11ac;
+    $scope.num_11ad = tputs.n_11ad;
+    $scope.dheight = { 'height': ( 100 / $scope.devicenum ) + '%' };
+    $scope.mu_total = results.totals.mu;
+    $scope.su_total = results.totals.su;
+    $scope.tb_total = results.totals.tb;
+    $scope.mu_gain = results.totals.gain;
+    $scope.calcTBgain();
+    
+    $scope.retotal();
+  };
+  
   $scope.reloadTputNow = function( newmode ) {
-    tputFactory.get11acTput( newmode ).then(function(results) {
-      //$scope.maybeLog(' mode = '+ $rootScope.mode);
-      //$scope.maybeLog(results);
-      $rootScope.loading = false;
-      $rootScope.mode = results.mode;
-      $scope.devices = results.tputs;
-      $scope.mu_total = results.totals.mu;
-      $scope.su_total = results.totals.su;
-      $scope.tb_total = results.totals.tb;
-      $scope.mu_gain = results.totals.gain;
-      $scope.calcTBgain();
-      
-      $scope.retotal();
+    tputFactory.get11acTput( newmode ).then( function( results ) {
+        $scope.reprocessResults( results );
     });
     // and no matter how long that takes, trigger this again
     $scope.reloadTput();
+  };
+  $scope.reloadTBTputNow = function() {
+    tputFactory.get11adTput().then( function( results ) {
+        $scope.reprocessResults( results );
+    });
+    // and no matter how long that takes, trigger this again
+    $scope.reloadTBTput();
   };
   $scope.reloadTput = function() {
     $timeout.cancel( tputTimer );
     tputTimer = $timeout( function() {
       $scope.reloadTputNow();
-    }, QMIMO_REFRESH_TPUT_MS );
+    }, QMIMO_REFRESH_11AC_TPUT_MS );
+  };
+  $scope.reloadTBTput = function() {
+    // also for 11AC "Tri-Band" which is separate now
+    $timeout.cancel( tbputTimer );
+    tbputTimer = $timeout( function() {
+      $scope.reloadTBTputNow();
+    }, QMIMO_REFRESH_11AD_TPUT_MS );
   };
   // similar idea for LB Demo polling
   $scope.pollLBNow = function() {
@@ -228,7 +244,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     $timeout.cancel( tputTimer );
     tputTimer = $timeout( function() {
       $scope.pollLBNow();
-    }, QMIMO_REFRESH_TPUT_MS );
+    }, QMIMO_REFRESH_11AC_TPUT_MS );
   };
   // similar idea to fake generating numbers via mimoGen
   var tputGenTimer;
@@ -356,12 +372,17 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   };
   $scope.switchTBMode = function ( m ) {
     $scope.maybeLog( 'switchTBMode to '+ ( m ? 'ON' : 'OFF' ));
-    $scope.tbmode = m;
+    if ( $rootScope.tbmode != m ) {
+      $rootScope.tbmode = m;
+      if ( m ) {
+        $scope.calcTBgain();
+      }
+    }
   }
   // toggle switch between 11AD "Tri-Band" On / Off
   $scope.toggleTB = function() {
-    $scope.tbmode = !$scope.tbmode;
-    if ( $scope.tbmode ) {
+    $rootScope.tbmode = !$rootScope.tbmode;
+    if ( $rootScope.tbmode ) {
       $scope.calcTBgain();
     }
   }
@@ -442,6 +463,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   // #todo : wrap these in the event we want to start in LB instead of MG?
   //$scope.maybeLog('calling initial scope reloadTput');
   $scope.reloadTput();
+  $scope.reloadTBTput();
   // if we actually want to actually fake the numbers?
   if ( simulate === true ) {
     //$scope.maybeLog('FAKE_DEMO = true, calling initial kickGenerator too');
@@ -519,6 +541,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $scope.$on( '$destroy', function( event ) {
     // be polite : cancel $timeout(s)?
     $timeout.cancel( tputTimer );
+    $timeout.cancel( tbputTimer );
     $timeout.cancel( homebtntimer );
     if ( simulate === true ) {
       $timeout.cancel( tputGenTimer );
