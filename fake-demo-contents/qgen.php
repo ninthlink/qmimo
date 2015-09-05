@@ -7,12 +7,18 @@
  *
  * eth0: 123 0
  */
-$maxnum = 6;
+$maxnum = 8;
 
 $w = false;
 if ( isset( $_GET['w'] ) ) {
   $w = ( intval( $_GET['w'] ) == 1 );
 }
+
+$range = array(
+  array( 10, 70 ),
+  array( 90, 125 ),
+  array( 270, 350 )
+);
 
 $m = 0;
 if ( isset( $_GET['m'] ) ) {
@@ -21,16 +27,25 @@ if ( isset( $_GET['m'] ) ) {
   } else {
     if ( intval( $_GET['m'] ) === 1 ) {
       $m = 1;
-    } elseif ( intval ( $_GET['m'] ) === 2 ) {
+    } elseif ( intval( $_GET['m'] ) === 2 ) {
       $m = 2;
+      /**
+       * m = 2 = "Tri-Band" 11AD mode
+       *
+       * in this case, range is variable
+       * depending on how many devices are connected
+       * with total range going from roughly 2000 - 2600
+       */
+      if ( isset( $_GET['t'] ) ) {
+        $t = intval( $_GET['t'] );
+        if ( $t > 0 ) {
+          $range[$m][0] = round( 2000 / $t );
+          $range[$m][1] = round( 2600 / $t );
+        }
+      }
     }
   }
 }
-$range = array(
-  array( 10, 70 ),
-  array( 90, 125 ),
-  array( 270, 350 )
-);
 
 $n = 'qgen.php';
 $i = 1;
@@ -62,7 +77,11 @@ if ( $w ) {
   }
 } else {
   // actually write to the file then
-  $file = 'tput'. $i .'.txt';
+  if ( isset( $_GET['f'] ) ) {
+    $file = $_GET['f']; // uhhh
+  } else {
+    $file = 'tput'. $i .'.txt';
+  }
   file_put_contents( $file, $contents );
 }
 $q = isset( $_GET['q'] ) ? ( $_GET['q'] ? 1 : 0 ) : 0;
