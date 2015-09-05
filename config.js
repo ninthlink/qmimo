@@ -54,7 +54,10 @@ var QMIMO_MU_GAIN_DECIMAL_PLACES = 2;
 var QMIMO_TB_GAIN_DECIMAL_PLACES = 1;
 
 // # of ms to wait to refresh device tput data
-var QMIMO_REFRESH_TPUT_MS = 2000;
+var QMIMO_REFRESH_11AC_TPUT_MS = 2000;
+
+// # of ms to wait to refresh device tput data
+var QMIMO_REFRESH_11AD_TPUT_MS = 3000;
 
 // if loading a number takes longer than this, abort & return previous #
 var QMIMO_TPUT_TIMEOUT_MS = 1000;
