@@ -1,8 +1,8 @@
-/**
- * mimoGen
+ /**
+ * mimoGen Factory
  *
- * provides methods for triggering regenerating our fake tput data
- * with the /fake-demo-contents/qgen.php
+ * provides methods for regenerating fake tput data for Demo mode
+ * via calls through the /fake-demo-contents/qgen.php script
  */
 (function() {
 	angular
@@ -12,11 +12,11 @@
 	mimoGen.$inject = [ '$http', '$q' ]; // $resource?
 	
 	function mimoGen( $http, $q ) {
-    var numberOfDevices = QMIMO_NUMBER_OF_MU_DEVICES, // # of calls we need per
+    var numberOfDevices = QMIMO_NUMBER_OF_MU_DEVICES, // (outdated) #
         tput_files_11ac = QMIMO_11AC_TPUT_FILES,
         tput_files_11ad = QMIMO_11AD_TPUT_FILES,
         legacyDevices = QMIMO_NUMBER_OF_LEGACY_DEVICES,
-        txtsLocation = QMIMO_TPUT_DATA_DIR, // relative path?
+        txtsLocation = QMIMO_TPUT_DATA_DIR,
         generatorScript = 'qgen.php', // PHP script inside QMIMO_TPUT_DATA_DIR
         o = {}; // actual instance obj that instantiates?
 		/**
@@ -49,6 +49,8 @@
 		};
 		/**
 		 * obscures $http.get requests to the generatorScript
+     *
+     * per that "qgen.php" :
      *
      * if "wipe" arg is false or not supplied, then
      * t = total number of connected devices for the current Mode
@@ -117,7 +119,7 @@
         true
       );
     };
-		// return our factory
+		// and return our factory
 		return o;
 	}
 })();
