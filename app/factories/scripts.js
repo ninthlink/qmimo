@@ -1,7 +1,8 @@
 /**
  * mimoScripts Factory
  *
- * provides methods for loading tput datas
+ * provides methods for triggering perl scripts
+ * via a php helper file in /perl-scripts/run.php
  */
 angular
   .module('qmimo')
