@@ -1,13 +1,15 @@
 /**
  * tputFactory
  *
- * provides methods for loading 11AC SU/MU tput datas
+ * provides methods for loading tput datas
+ * both for "mg" demo mode for 11AC SU/MU + 11AD Tri-Band
+ * and for the "lb" Legacy Benefit demo mode as well
  */
 angular
   .module('qmimo')
   .factory('tputFactory', tputFactory);
 
-tputFactory.$inject = [ '$rootScope', '$http', '$q', '$timeout' ]; // $resource?
+tputFactory.$inject = [ '$rootScope', '$http', '$q', '$timeout' ];
 
 function tputFactory( $rootScope, $http, $q, $timeout ) {
   var mode = QMIMO_INITIAL_11AC,
