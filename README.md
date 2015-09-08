@@ -16,9 +16,17 @@ The GUI system now can also read throughput for a given number of devices operat
 ##System Requirements
 By default, the GUI is set to operate in "demo" mode. As such, if you are installing this and running locally, and want to make use of this "demo" mode, we assume the system has some sort of Apache + PHP installed, and the GUI should be downloaded to and run from some place inside the http://localhost area.
 
+GUI has been designed, developed and optimized to run in Google Chrome browser operating in "full-screen" mode on 1366x768 laptop & 1920x1080 large screen display resolutions. Some GUI elements and animations require HTML5 and CSS3 support, so a modern browser should be used. Displaying at some window dimensions other than those may result in sub-optimal viewing. 
+
+##Installation Instructions
+1. Per "System Requirements" above, we assume the system has some sort of Apache + PHP installed in order to handle running the GUI in "demo" mode.
+2. Download [the Source code .zip for the latest release](https://github.com/ninthlink/qmimo/releases)
+3. Unzip in to a folder like "qmimo" in the "httpdocs" area of the GUI machine.
+4. Open Google Chrome and go to http://localhost/qmimo/
+5. Press F11 or navigate in the Chrome menu to activate "full-screen" mode.
+
 For additional information on configuring the GUI, see the "Configuration" section below.
 
-GUI has been designed, developed and optimized to run in Google Chrome browser operating in "full-screen" mode on 1366x768 laptop & 1920x1080 large screen display resolutions. Some GUI elements and animations require HTML5 and CSS3 support, so a modern browser should be used. Displaying at some window dimensions other than those may result in sub-optimal viewing. 
 
 ##Configuration
 The majority of the configurability of the GUI is handled in the [config.js](config.js) file in the root of the repo :
@@ -71,13 +79,24 @@ var QMIMO_MU_GAIN_DECIMAL_PLACES = 2;
 // How many decimals to show for the "TB Gain" number
 var QMIMO_TB_GAIN_DECIMAL_PLACES = 1;
 ```
+####"demo" mode vs "live" mode configuration
 In addition to specifying whether the system should even be in "fake" Demo mode, or solely rely on the tput files being updated "live" themselves :
 
 ```js
 var QMIMO_FAKE_DEMO = true;
 ```
 
-And beyond that, there are a number of additional variables to control the overall timing of various elements :
+To turn the "demo" number generation off, in order to use "live" data, you will need to edit the [config.js Line 95](config.js#L95) to change
+
+```js
+var QMIMO_FAKE_DEMO = false;
+```
+
+Save the config.js with that change and then reload the GUI to load in "live" mode.
+
+####timing configuration
+
+There are also a number of additional variables to control the overall timing of various elements :
 
 ```js
 // # of ms to wait to refresh device tput data
@@ -100,7 +119,6 @@ var QMIMO_FAKE_DEMO_LOOP_MS = 1000;
 ```
 
 ... all specified in the [config.js](config.js) file in the root of the repo.
-
 
 ##Additional Screens
 In addtion, the right column of the GUI "Home" screen brings up 3 examples of environments where a Multi-User "MU" setup could be beneficial over a basic "SU" setup, and 3 more for Tri-Band "TB"
