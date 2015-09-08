@@ -6,7 +6,7 @@
  * and whether or not to generate fake Throughputs data.
  */
 // Whether to output (console.log) messages or stay quiet
-var QMIMO_OUTPUT_LOGS = true;
+var QMIMO_OUTPUT_LOGS = false;
 
 // SU/MU Mode to start in : 'mu' = Multi User, 'su' = Single User
 var QMIMO_INITIAL_11AC = 'mu';
