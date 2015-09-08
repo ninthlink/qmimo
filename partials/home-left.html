@@ -110,9 +110,9 @@
     <div class="devicerow" ng-repeat="device in devices" ng-class="'d'+ $index" ng-style="dheight">
       <div class="inner">
         <div class="dnum">{{device[0]}}</div>
-        <div class="tput su"><span ng-show="shownumbers"><span ng-show="( device[1] > 0 ) || ( device[2] > 0 )"><strong>{{ device[2] | number: 0 }}</strong><small> mbps</small></span></span><span ng-show="( device[1] == 0 ) && ( device[2] == 0 )"><small>not connected</small></span></div>
-        <div class="tput mu"><span ng-show="shownumbers"><span ng-show="( device[1] > 0 ) || ( device[2] > 0 )"><strong>{{ device[1] | number: 0 }}</strong><small> mbps</small></span></span><span ng-show="( device[1] == 0 ) && ( device[2] == 0 )"><small>not connected</small></span></div>
-        <div class="tput tb"><span ng-show="shownumbers && tbmode"><span ng-show="device[3] > 0"><strong>{{ device[3] | number: 0 }}</strong><small> mbps</small></span><span ng-show="device[3] == 0"><small>not connected</small></span></span></div>
+        <div class="tput su"><span ng-show="shownumbers && ( device[1] || device[2] )"><strong>{{ device[2] | number: 0 }}</strong><small> mbps</small></span><span ng-hide="device[1] || device[2]"><small>Not Connected</small></span></div>
+        <div class="tput mu"><span ng-show="shownumbers && ( device[1] || device[2] )"><strong>{{ device[1] | number: 0 }}</strong><small> mbps</small></span><span ng-hide="device[1] || device[2]"><small>Not Connected</small></span></div>
+        <div class="tput tb"><span ng-show="shownumbers && tbmode"><span ng-show="device[3] > 0"><strong>{{ device[3] | number: 0 }}</strong><small> mbps</small></span><span ng-hide="device[3]"><small>not connected</small></span></span></div>
       </div>
     </div>
   </div>
