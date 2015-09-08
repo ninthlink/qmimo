@@ -62,7 +62,7 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
       if ( i < n_11ad ) {
         var fname = tput_files_11ad[i];
         var n = i + n_11ac;
-        tputPromises[ n ] = o.loadTput( n, 3, fname );
+        tputPromises[ n ] = o.loadTput( i, 3, fname );
       }
     }
     //console.log('tputPromises set for '+ tputPromises.length +' 11AC ?');
@@ -157,7 +157,7 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
    * initial Promises for data to populate Devices' 11AD (TB) tput data
    */
   o.get11adTput = function() {
-    console.log('ggg get11adTput ggg');
+    //console.log('ggg get11adTput ggg');
     n_11ac = tput_files_11ac.length;
     n_11ad = tput_files_11ad.length;
     numberOfDevices = n_11ad > n_11ac ? n_11ad : n_11ac; // max of both
@@ -172,13 +172,13 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
         tputPromises[i] = o.loadTput( i, tputModeNum, fname );
       }
     }
-    console.log('ggg');
+    //console.log('ggg');
     return $q.all( tputPromises ).then(function(results) {
       // recalculate totals for the new numbers here
       stored_totals[ 'tb' ] = 0;
       angular.forEach( results, function( d, k ) {
-        console.log('gg :');
-        console.log(d);
+        //console.log('gg :');
+        //console.log(d);
         stored_totals[ 'tb' ] += d[ tputModeNum ];
       });
       // return our conglomerated data
@@ -205,8 +205,8 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
    * gets response from getTputData and does some parsing to conglomerate feeds together?
    */
   o.loadTput = function( n, i, fname ) {
-    var j = n < n_11ac ? n : n - n_11ac;
-    console.log( 'loadTput for n ' + n + ' i '+ i + ' fname '+ fname +' : j = '+ j );
+    var j = n;
+    //console.log( 'loadTput for n ' + n + ' i '+ i + ' fname '+ fname +' : j = '+ j );
     // set up the $q.defer Promise
     var defer = $q.defer();
     // call our getTputData & process result after it returns
@@ -221,7 +221,8 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
       }
       //}
       // pass the data back upstream
-      //console.log('returning tput '+ n);
+      //console.log('returning tput '+ j);
+      //console.log(tputs[j]);
       defer.resolve( tputs[j] );
     },
     function(err) {

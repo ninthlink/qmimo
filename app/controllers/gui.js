@@ -165,8 +165,8 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   var tputTimer;
   var tbputTimer;
   $scope.reprocessResults = function( results ) {
-    //$scope.maybeLog(' mode = '+ $rootScope.mode);
-    //$scope.maybeLog(results);
+    $scope.maybeLog('** mode = '+ $rootScope.mode);
+    $scope.maybeLog(results);
     $rootScope.loading = false;
     $rootScope.mode = results.mode;
     $scope.devices = results.tputs;
@@ -184,6 +184,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   };
   
   $scope.reloadTputNow = function( newmode ) {
+    $scope.maybeLog('reloadTputNow : 11ac');
     tputFactory.get11acTput( newmode ).then( function( results ) {
         $scope.reprocessResults( results );
     });
@@ -191,6 +192,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     $scope.reloadTput();
   };
   $scope.reloadTBTputNow = function() {
+    $scope.maybeLog('reloadTBTputNow ? 11ad');
     tputFactory.get11adTput().then( function( results ) {
         $scope.reprocessResults( results );
     });
@@ -198,13 +200,14 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     $scope.reloadTBTput();
   };
   $scope.reloadTput = function() {
+    // use $timeout to reload our 11ac MU/SU data every interval
     $timeout.cancel( tputTimer );
     tputTimer = $timeout( function() {
       $scope.reloadTputNow();
     }, QMIMO_REFRESH_11AC_TPUT_MS );
   };
   $scope.reloadTBTput = function() {
-    // also for 11AC "Tri-Band" which is separate now
+    // also for 11ad "Tri-Band" which is separate now
     $timeout.cancel( tbputTimer );
     tbputTimer = $timeout( function() {
       $scope.reloadTBTputNow();
