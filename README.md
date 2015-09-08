@@ -1,7 +1,8 @@
 q Mu-MiMo GUI
 =============
 
-####GUI demonstrating Multi-User Multi-Input Multi-Output (Mu-MiMo), built in AngularJS
+####Demonstrating Multi-User Multi-Input Multi-Output ("Mu-MiMo")
+######Built with AngularJS
 
 Highlights the benefit in comparing throughput mb/s of connected devices in a system switching between operating in Multi-User ("MU") Mode and Single-User ("SU") Mode on an 11ac network.
 
