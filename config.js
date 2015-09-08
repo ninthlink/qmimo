@@ -17,6 +17,8 @@ var QMIMO_INITIAL_11AD = true;
 // Directory (inside the overall qmimo GUI folder?) to find tput files
 var QMIMO_TPUT_DATA_DIR = 'fake-demo-contents';
 
+// Note : GUI automatically displays max # of devices from the following 2 sets
+
 // list of tput files to parse, corresponding to # of 11AC (SU/MU) devices
 var QMIMO_11AC_TPUT_FILES = [
     'tput1.txt',
@@ -25,7 +27,7 @@ var QMIMO_11AC_TPUT_FILES = [
     'tput4.txt'
 ];
 
-// list of tput files to parse, corresponding to # of 11AC (SU/MU) devices
+// list of tput files to parse, corresponding to # of 11ad (Tri-Band) devices
 var QMIMO_11AD_TPUT_FILES = [
     'tput7.txt',
     'tput8.txt',
@@ -34,12 +36,6 @@ var QMIMO_11AD_TPUT_FILES = [
     'tput11.txt',
     'tput12.txt'
 ];
-
-// (outdated) control actual file name format for tput .txt : '#' is replaced
-var QMIMO_TPUT_FILE_NAME_FORMAT = 'tput#.txt';
- 
-// (outdated) # of devices we can expect tput from
-var QMIMO_NUMBER_OF_MU_DEVICES = 4;
 
 // whether to start with the home Devices numbers collapsed (or not)
 var QMIMO_COLLAPSE_DEVICE_NUMBERS = false;
@@ -101,11 +97,21 @@ var QMIMO_FAKE_DEMO = true;
 // Time to wait before re-generating demo #s. probably <= QMIMO_REFRESH_TPUT_MS
 var QMIMO_FAKE_DEMO_LOOP_MS = 1000;
 
+/**
+ * the following are outdated config variables
+ * that should no longer be used in GUI v2.1+
+ */
 // Time value / wait for LB Demo in MU mode
 var QMIMO_FAKE_LB_MU_TIME = 40;
 
 // Time value / wait for LB Demo in SU mode : should be different than MU above
 var QMIMO_FAKE_LB_SU_TIME = 46;
+
+// (outdated) control actual file name format for tput .txt : '#' is replaced
+var QMIMO_TPUT_FILE_NAME_FORMAT = 'tput#.txt';
+ 
+// (outdated) # of devices to expect tput from
+var QMIMO_NUMBER_OF_MU_DEVICES = 4;
 
 /**
  * old config settings from previous demo configuration ideas
