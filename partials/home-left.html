@@ -63,7 +63,7 @@
         </div>
       </div>
       <div class="gain mg">
-        <div class="num"><span ng-show="( mu_total > 0 ) || ( su_total > 0 )"><strong>{{ mu_gain | number: roundgain }}</strong> Gain</span></div>
+        <div class="num"><span ng-show="( mu_gain > 0 ) || ( mu_total > 0 ) || ( su_total > 0 )"><strong>{{ mu_gain | number: roundgain }}{{mugainsuffix}}</strong> Gain</span></div>
       </div>
     </div>
     <!-- TB TRI-BAND -->
@@ -96,7 +96,7 @@
         </div>
       </div>
       <div class="gain mg">
-        <div class="num"><span ng-show="tbmode && ( tb_total > 0 ) && ( ( mu_total > 0 ) || ( su_total > 0 ) )"><strong>{{ tb_gain | number: roundtbgain }}X</strong> Gain</span></div>
+        <div class="num"><span ng-show="tbmode && ( tb_gain > 0 )"><strong>{{ tb_gain | number: roundtbgain }}{{tbgainsuffix}}</strong> Gain</span></div>
       </div>
     </div>
   </div>
@@ -104,6 +104,7 @@
     <div class="inner">
       <a class="arrow" ng-click="toggleDeviceNumbers()"><span class="arr"></span></a>
       Devices
+      <label for="toggletotes" ng-show="collapseNumbers"><input type="checkbox" ng-checked="showtotals" ng-click="toggleTotals()" name="toggletotes" id="toggletotes"> show totals</label>
     </div>
   </div>
   <div class="mg devices" ng-class="{ 'nolb' : hideLB }">

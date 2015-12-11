@@ -40,14 +40,23 @@ var QMIMO_11AD_TPUT_FILES = [
 // whether to start with the home Devices numbers collapsed (or not)
 var QMIMO_COLLAPSE_DEVICE_NUMBERS = false;
 
+// whether to show tput numbers when collapsed
+var QMIMO_COLLAPSE_TOTALS = true;
+
 // How many decimals to show for the top SU/MU/Tri-Band MBPS totals
 var QMIMO_TPUT_TOTALS_DECIMAL_PLACES = 0;
 
 // How many decimals to show for the "MU Gain" calculation number
 var QMIMO_MU_GAIN_DECIMAL_PLACES = 2;
 
+// What to show after the "MU Gain" number (either 'X' or nothing)
+var QMIMO_MU_GAIN_SUFFIX = 'X';
+
 // How many decimals to show for the "TB Gain" number
 var QMIMO_TB_GAIN_DECIMAL_PLACES = 1;
+
+// What to show after the "TB Gain" number (either 'X' or nothing)
+var QMIMO_TB_GAIN_SUFFIX = 'X';
 
 // # of ms to wait to refresh device tput data
 var QMIMO_REFRESH_11AC_TPUT_MS = 2000;

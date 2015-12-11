@@ -543,6 +543,14 @@ body.mu-mode .col.mu .gain {
   left: 50%;
   margin: -10px;
 }
+/* extra collapser checkbox? */
+.collapser label {
+  font-size: 15px;
+  line-height: 1;
+  position: absolute;
+  top: 8px;
+  right: 10px;
+}
 /* device tput data # rows */
 .left .devices {
   display: block;

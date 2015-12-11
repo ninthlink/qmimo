@@ -73,6 +73,28 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $rootScope.hideLB = hideLB;
   $rootScope.showQlabels = QMIMO_Q_LABELS;
   $rootScope.collapseNumbers = QMIMO_COLLAPSE_DEVICE_NUMBERS;
+  // allow hiding totals or not
+  $scope.hidecollapsedtotals = QMIMO_COLLAPSE_TOTALS;
+  $scope.showtotals = true;
+  
+  $scope.$watch('collapseNumbers', function( newValue, oldValue, $scope ) {
+    if ( newValue != oldValue ) {
+      console.log('collapseNumbers now '+ ( newValue ? 'true' : 'false' ) );
+      if ( newValue ) {
+        if ( $scope.hidecollapsedtotals ) {
+          console.log('hide totals then');
+          $scope.showtotals = false;
+        } else {
+          console.log('show total is ok then');
+          $scope.showtotals = true;
+        }
+      }
+    }
+  });
+  $scope.toggleTotals = function() {
+    $scope.showtotals = !$scope.showtotals;
+  };
+  
   $rootScope.openedhbtn = false;
   $scope.simulate = simulate;
   $rootScope.onscreen = 'home';
@@ -93,6 +115,9 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $scope.roundtotals = QMIMO_TPUT_TOTALS_DECIMAL_PLACES;
   $scope.roundgain = QMIMO_MU_GAIN_DECIMAL_PLACES;
   $scope.roundtbgain = QMIMO_TB_GAIN_DECIMAL_PLACES;
+  $scope.mugainsuffix = QMIMO_MU_GAIN_SUFFIX;
+  $scope.tbgainsuffix = QMIMO_TB_GAIN_SUFFIX;
+  
   // "LB" mode variable(s) too
   $scope.legacy = [];
   $scope.legacy_diff = 0;
@@ -157,6 +182,13 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     } else {
       $scope.su_b1s = { 'transform': 'rotate('+ deg +'deg)' };
     }
+    
+    // then wipe out if we should?
+    if ( $scope.showtotals == false ) {
+      $scope.su_total = 0;
+      $scope.mu_total = 0;
+      $scope.tb_total = 0;
+    }
   };
   // (re)total for the initial data..
   $scope.retotal();
@@ -177,6 +209,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     $scope.mu_total = results.totals.mu;
     $scope.su_total = results.totals.su;
     $scope.tb_total = results.totals.tb;
+    
     $scope.mu_gain = results.totals.gain;
     $scope.calcTBgain();
     
