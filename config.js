@@ -62,16 +62,16 @@ var QMIMO_TB_GAIN_DECIMAL_PLACES = 1;
 var QMIMO_TB_GAIN_SUFFIX = 'X';
 
 // # of ms to wait to refresh device tput data
-var QMIMO_REFRESH_11AC_TPUT_MS = 3000; //2000;
+var QMIMO_REFRESH_11AC_TPUT_MS = 2000;
 
 // # of ms to wait to refresh device tput data
-var QMIMO_REFRESH_11AD_TPUT_MS = 2000; //3000;
+var QMIMO_REFRESH_11AD_TPUT_MS = 3000;
 
 // if loading a number takes longer than this, abort & return previous #
-var QMIMO_TPUT_TIMEOUT_MS = 700; //1000;
+var QMIMO_TPUT_TIMEOUT_MS = 1000;
 
 // # of ms downtime delay when switching MU / SU modes
-var QMIMO_SWITCH_DELAY_MS = 8000; //5000;
+var QMIMO_SWITCH_DELAY_MS = 5000;
 
 // ms to wait to auto close a Home right 1/3rd btn if left open. 0 = never
 var QMIMO_CLOSE_HOME_BUTTONS_MS = 60000;
