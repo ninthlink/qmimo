@@ -22,7 +22,7 @@ function mimoScripts( $http ) {
       } else if ( newmode === 'tb' ) {
         fname = QMIMO_TB_SWITCH_SCRIPT;
       }
-      console.log('calling '+ QMIMO_PERL_SCRIPT_DIR +'/'+ fname +'.pl' );
+      //console.log('calling '+ QMIMO_PERL_SCRIPT_DIR +'/'+ fname +'.pl' );
       return $http.get( QMIMO_PERL_SCRIPT_DIR +'/run.php?s='+ fname );
     },
     /**
@@ -30,7 +30,7 @@ function mimoScripts( $http ) {
      */
     demoChange: function( newmode ) {
       var fname = newmode === 'mg' ? QMIMO_MG_SWITCH_SCRIPT : QMIMO_LB_SWITCH_SCRIPT;
-      console.log('calling '+ QMIMO_PERL_SCRIPT_DIR +'/'+ fname +'.pl' );
+      //console.log('calling '+ QMIMO_PERL_SCRIPT_DIR +'/'+ fname +'.pl' );
       return $http.get( QMIMO_PERL_SCRIPT_DIR +'/run.php?s='+ fname );
     }
   };
