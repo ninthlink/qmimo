@@ -14,6 +14,9 @@ var QMIMO_INITIAL_11AC = 'mu';
 // Tri-Band Mode to start in : true = "On" = show TB #s, false = "Off" = hide
 var QMIMO_INITIAL_11AD = true;
 
+// auto switch 11ac to SU after MU off, & vice versa, or allow total pause
+var QMIMO_AUTO_11AC_SWITCH = false;
+
 // Directory (inside the overall qmimo GUI folder?) to find tput files
 var QMIMO_TPUT_DATA_DIR = 'fake-demo-contents';
 
@@ -69,9 +72,6 @@ var QMIMO_TPUT_TIMEOUT_MS = 700; //1000;
 
 // # of ms downtime delay when switching MU / SU modes
 var QMIMO_SWITCH_DELAY_MS = 8000; //5000;
-
-// auto switch 11ac to SU after MU off, & vice versa, or allow total pause
-var QMIMO_AUTO_11AC_SWITCH = true;
 
 // ms to wait to auto close a Home right 1/3rd btn if left open. 0 = never
 var QMIMO_CLOSE_HOME_BUTTONS_MS = 60000;
