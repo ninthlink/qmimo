@@ -76,6 +76,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $rootScope.collapseNumbers = QMIMO_COLLAPSE_DEVICE_NUMBERS;
   // allow hiding totals or not
   $scope.hidecollapsedtotals = QMIMO_COLLAPSE_TOTALS;
+  // but always default true show, so just possibly hide when collapsing
   $scope.showtotals = true;
   
   $scope.$watch('collapseNumbers', function( newValue, oldValue, $scope ) {
@@ -86,6 +87,8 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
         } else {
           $scope.showtotals = true;
         }
+      } else {
+        $scope.showtotals = true;
       }
     }
   });
