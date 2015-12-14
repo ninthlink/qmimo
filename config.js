@@ -44,7 +44,7 @@ var QMIMO_11AD_TPUT_FILES = [
 var QMIMO_COLLAPSE_DEVICE_NUMBERS = false;
 
 // whether to show tput numbers when collapsed
-var QMIMO_COLLAPSE_TOTALS = true;
+var QMIMO_COLLAPSE_TOTALS = false;
 
 // How many decimals to show for the top SU/MU/Tri-Band MBPS totals
 var QMIMO_TPUT_TOTALS_DECIMAL_PLACES = 0;
