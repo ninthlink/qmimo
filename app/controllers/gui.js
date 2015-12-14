@@ -18,8 +18,10 @@ angular
         controller: 'guiCtrl',
         resolve: {
           // "resolve" polls initial tput data before the UI loads
-          tputs: function( tputFactory ) {
-            //console.log('setting up initial guiCtrl resolve tputs');
+          tputs: function( tputFactory, mimoGen ) {
+            // init tput generating for demo mode
+            mimoGen.genDeviceTput( QMIMO_INITIAL_11AC );
+            // and return after reading those tputs
             return tputFactory.iniTputs();
           },
           simulate: function() {
@@ -36,7 +38,6 @@ angular
         resolve: {
           // "resolve" polls initial tput data before the UI loads
           tputs: function( tputFactory ) {
-            //console.log('setting up initial guiCtrl resolve tputs');
             return tputFactory.iniTputs();
           },
           simulate: function() {
@@ -79,13 +80,10 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   
   $scope.$watch('collapseNumbers', function( newValue, oldValue, $scope ) {
     if ( newValue != oldValue ) {
-      console.log('collapseNumbers now '+ ( newValue ? 'true' : 'false' ) );
       if ( newValue ) {
         if ( $scope.hidecollapsedtotals ) {
-          console.log('hide totals then');
           $scope.showtotals = false;
         } else {
-          console.log('show total is ok then');
           $scope.showtotals = true;
         }
       }
@@ -142,19 +140,21 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   
   // re calculate TB Gain
   $scope.calcTBgain = function() {
-    if ( $scope.mode == 'su' ) {
+    if ( $rootScope.mode == 'su' ) {
       $scope.tb_gain = ( $scope.su_total > 0 ) ? $scope.tb_total / $scope.su_total : 0;
     } else {
       $scope.tb_gain = ( $scope.mu_total > 0 ) ? $scope.tb_total / $scope.mu_total : 0;
     }
   }
   $scope.calcTBgain();
+  // set up initial transforms
   $scope.mu_b1s = { 'transform': 'rotate(0deg)' };
   $scope.su_b1s = { 'transform': 'rotate(0deg)' };
   $scope.tb_b1s = { 'transform': 'rotate(0deg)' };
-  var total_ac_multiplier = 24 / $scope.num_11ac;
+  // magic multiplier
+  $scope.total_ac_multiplier = 24 / $scope.num_11ac;
   
-  // function to recalculate the % borders around the MU & SU dials 
+  // function to recalculate totals & % borders around dials 
   $scope.retotal = function() {
     if ( $rootScope.tbmode ) {
       var tbtot = $scope.tb_total;
@@ -172,7 +172,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
       tot = $scope.mu_total;
     }
     // adjust to up to 180 deg +/-
-    var deg = Math.round( tot * total_ac_multiplier / 18 );
+    var deg = Math.round( tot * $scope.total_ac_multiplier / 18 );
     // make sure # between 0 & 180
     deg = ( deg < 0 ) ? 0 : ( ( deg > 180 ) ? 180 : deg );
     //$scope.maybeLog( 'tot = ' + tot + ' : deg = ' + deg );
@@ -197,10 +197,9 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   var tputTimer;
   var tbputTimer;
   $scope.reprocessResults = function( results ) {
-    $scope.maybeLog('** mode = '+ $rootScope.mode);
     $scope.maybeLog(results);
-    $rootScope.loading = false;
-    $rootScope.mode = results.mode;
+    //$rootScope.loading = false;
+    //$rootScope.mode = results.mode;
     $scope.devices = results.tputs;
     $scope.devicenum = $scope.devices.length;
     $scope.num_11ac = tputs.n_11ac;
@@ -225,7 +224,6 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     $scope.reloadTput();
   };
   $scope.reloadTBTputNow = function() {
-    $scope.maybeLog('reloadTBTputNow ? 11ad');
     tputFactory.get11adTput().then( function( results ) {
         $scope.reprocessResults( results );
     });
@@ -240,7 +238,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     }, QMIMO_REFRESH_11AC_TPUT_MS );
   };
   $scope.reloadTBTput = function() {
-    // also for 11ad "Tri-Band" which is separate now
+    // $timeout reload 11ad TRI-BAND data every interval, separate from 11ac
     $timeout.cancel( tbputTimer );
     tbputTimer = $timeout( function() {
       $scope.reloadTBTputNow();
@@ -292,6 +290,9 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
       waitms = wait * 1000;
     }
     tputGenTimer = $timeout( function() {
+      // cancel again just for fun / just in case?
+      $timeout.cancel( tputGenTimer );
+      
       if ( $rootScope.demo === 'mg' ) {
         mimoGen.genDeviceTput( $rootScope.mode ).then(function(results) {
           $scope.kickGenerator();
@@ -307,27 +308,28 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   
   // action(s) to take when a button is pressed to switch between MU/SU mode
   $scope.switchMode = function() {
-    //$scope.maybeLog('switchMode');
+    //$scope.maybeLog('SWITCHMODE');
     // make sure we are not already in the process of switching modes..
     if ( $rootScope.loading === false ) {
       // and then
       var qprev = $rootScope.mode;
       var qwait = QMIMO_SWITCH_DELAY_MS;
+      var newmode = $rootScope.nextmode;
       if ( $rootScope.nextmode === '' ) {
-        var newmode = ( qprev === 'mu' ? 'su' : 'mu' );
+        if ( QMIMO_AUTO_11AC_SWITCH ) {
+          // in this case will we actually toggle automatically?
+          newmode = ( qprev === 'mu' ? 'su' : 'mu' );
+        }
       } else {
-        var newmode = $rootScope.nextmode;
+        //$scope.maybeLog('rootScope.nextmode was set to '+ newmode);
       }
+      // and we set newmode, so reset "nextmode"
       $rootScope.nextmode = '';
       //$scope.maybeLog( 'mode '+ qprev +' to '+ newmode +' in '+ qwait +'ms'  );
-      // $scope.switchleft boolean controls actual position of UI switch
-      //$scope.switchleft = !$scope.switchleft;
       
-      // while loading, turn OFF all switches
+      // while switching, turn OFF both 11ac SU & MU switches
       $scope.switchsuon = false;
       $scope.switchmuon = false;
-      // but TB (11AD) is now indepent of SU/MU (11AC)
-      // $scope.switchtbon = false;
   
       // show "loading" mode rather than 'mu' or 'su'
       $rootScope.loading = true;
@@ -335,31 +337,34 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
       if ( $rootScope.demo === 'mg' ) {
         // activate the "MG" (main) demo : first, pause tput # getting..
         $timeout.cancel( tputTimer );
-        if ( simulate === true ) {
-          $timeout.cancel( tputGenTimer );
-        }
-        // after "qwait" delay, re-poll tputs & reactivate GUI
-        $timeout(function() {
-          if ( simulate === true ) {
-            /**
-             * If we are using our throughput data faking Factory too,
-             * reset that first, and Then start GUI back up
-             */
-            mimoGen.genDeviceTput(newmode).then(function() {
-              // NOW we should be able to reloadTputNow with fresh new mode #s
+        if ( newmode == '' ) {
+          // in this case, we just turned it off, so
+          $rootScope.loading = false;
+        } else {
+          // after "qwait" delay, re-poll tputs & reactivate GUI
+          $timeout(function() {
+            /*
+            if ( simulate === true ) {
+              // If we are using our throughput data faking Factory too,
+              $timeout.cancel( tputGenTimer );
+              // reset that first, and Then start GUI back up
+              mimoGen.genDeviceTput(newmode).then(function() {
+                // NOW we should be able to reloadTputNow with fresh new mode #s
+                $scope.reloadTputNow( newmode );
+                // and continue faking
+                $scope.kickGenerator();
+              });
+            } else {
+              // after delay, start getting the data again in new mode
+            */
               $scope.reloadTputNow( newmode );
-              // and continue faking
-              $scope.kickGenerator();
-            });
-          } else {
-            // after delay, start getting the data again in new mode
-            $scope.reloadTputNow( newmode );
-          }
-          
-          $scope.switchsuon = newmode === 'su';
-          $scope.switchmuon = newmode === 'mu';
-          //$scope.switchtbon = newmode === 'tb';
-        }, qwait );
+            //}
+            $rootScope.loading = false;
+            $rootScope.mode = newmode;
+            $scope.switchsuon = newmode === 'su';
+            $scope.switchmuon = newmode === 'mu';
+          }, qwait );
+        }
       } else {
         // LB Demo : for now, just switch first
         $rootScope.mode = newmode;
@@ -372,12 +377,14 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
         }, qwait );
       }
       
-      // and call our mode-change scripts?
-      mimoScripts.modeChange( newmode ).then(function(results) {
-        $scope.maybeLog('pl script triggered?');
-      }, function() {
-        $scope.maybeLog('switch script call failed?');
-      });
+      if ( newmode != '' ) {
+        // call our mode-change scripts?
+        mimoScripts.modeChange( newmode ).then(function(results) {
+          $scope.maybeLog('pl script triggered?');
+        }, function() {
+          $scope.maybeLog('switch script call failed?');
+        });
+      }
     } else {
       $scope.maybeLog( 'Switch already in progress, please wait..' );
     }
@@ -397,13 +404,16 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $scope.switchModeToggle = function( m ) {
     //$scope.maybeLog('switchModeToggle : '+ m);
     if ( $rootScope.loading === false ) {
-      if ( $rootScope.mode === m ) {
-        $rootScope.nextmode = 'su';
+      var modetoa;
+      // means a switch was clicked to toggle 1 way or the other
+      if ( $rootScope.mode == m ) {
+        // if we are currently in this mode, then just switch off
+        modeto = '';
       } else {
-        $rootScope.nextmode = m;
+        // otherwise switch to the new mode
+        modeto = m;
       }
-      // init switch
-      $scope.switchMode();
+      $scope.switchModeTo( modeto );
     }
   };
   $scope.switchTBMode = function ( m ) {
@@ -430,7 +440,8 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     //$scope.maybeLog('showDemo : onscreen = ' + m + ', prevscreen = ' + $rootScope.prevscreen);
     return false;
   };
-  // action(s) to take to switch between demos
+  
+  // action(s) to take to switch between MU/SU & LB demos
   $scope.switchDemo = function() {
     //$scope.maybeLog('switchDemo');
     // make sure we are not already in the process of switching
@@ -496,15 +507,16 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     }
   };
   
-  // #todo : wrap these in the event we want to start in LB instead of MG?
-  //$scope.maybeLog('calling initial scope reloadTput');
-  $scope.reloadTput();
-  $scope.reloadTBTput();
+  // initial load ("reload") the datas..
   // if we actually want to actually fake the numbers?
   if ( simulate === true ) {
     //$scope.maybeLog('FAKE_DEMO = true, calling initial kickGenerator too');
     $scope.kickGenerator();
   }
+  //$scope.maybeLog('calling initial scope reloadTput');
+  $scope.reloadTput();
+  $scope.reloadTBTput();
+  
   // wipe "Legacy Data" that may have been previously loaded
   $scope.wipeLegacyData = function() {
     //$scope.maybeLog('and then? wiping initial/previous Legacy tputs');
@@ -528,21 +540,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
       }
     });
   };
-  /*
-  // toggle between blinking / alternating lines (old MG demo GUI)
-  $scope.lineClasses = function( devicenum ) {
-    var classes = 'su-line-'+ devicenum;
-    switch ( $scope.mode ) {
-      case 'mu':
-        classes += ' blink';
-        break;
-      case 'su':
-        classes += ' alt';
-        break;
-    }
-    return classes;
-  };
-  */
+  
   $scope.toggleNumbers = function() {
     $rootScope.shownumbers = !$rootScope.shownumbers;
   };
@@ -575,12 +573,10 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   
   /* set $on( $destroy ) to wipe some timeouts */
   $scope.$on( '$destroy', function( event ) {
-    // be polite : cancel $timeout(s)?
+    // be polite : cancel $timeout(s)
     $timeout.cancel( tputTimer );
     $timeout.cancel( tbputTimer );
     $timeout.cancel( homebtntimer );
-    if ( simulate === true ) {
-      $timeout.cancel( tputGenTimer );
-    }
+    $timeout.cancel( tputGenTimer );
   });
 }
