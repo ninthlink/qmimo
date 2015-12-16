@@ -103,7 +103,7 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
    * initial Promises for data to populate Devices' 11AC (SU/MU) tput data
    */
   o.get11acTput = function( newmode ) {
-    //console.log('ggag get11acTput gagg');
+    //console.log('CCCCCC get11acTput CCCCCC');
     if ( newmode ) {
       mode = newmode;
     } else {
@@ -122,7 +122,7 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
     var tputPromises = [];
     var tputModeNum = ( mode === 'su' ? 2 : ( mode === 'tb' ? 3 : 1 ) );
     for ( i = 0; i < numberOfDevices; i = i + 1 ) {
-      // set up "Promises" array for 11AC "SU/MU" so we can use $q.all
+      // set up "Promises" array for 11AC "SU/MU" to $q.all complete
       if ( i < n_11ac ) {
         var fname = tput_files_11ac[i];
         tputPromises[i] = o.loadTput( i, tputModeNum, fname );
@@ -157,7 +157,7 @@ function tputFactory( $rootScope, $http, $q, $timeout ) {
    * initial Promises for data to populate Devices' 11AD (TB) tput data
    */
   o.get11adTput = function() {
-    //console.log('ggg get11adTput ggg');
+    //console.log('DDD DDD get11adTput DDD DDD');
     n_11ac = tput_files_11ac.length;
     n_11ad = tput_files_11ad.length;
     numberOfDevices = n_11ad > n_11ac ? n_11ad : n_11ac; // max of both
