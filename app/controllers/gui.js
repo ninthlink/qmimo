@@ -143,10 +143,18 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   
   // re calculate TB Gain
   $scope.calcTBgain = function() {
-    if ( $rootScope.mode == 'su' ) {
-      $scope.tb_gain = ( $scope.su_total > 0 ) ? $scope.tb_total / $scope.su_total : 0;
-    } else {
-      $scope.tb_gain = ( $scope.mu_total > 0 ) ? $scope.tb_total / $scope.mu_total : 0;
+    switch ( $rootScope.mode ) {
+      case 'su':
+        $scope.tb_gain = ( $scope.su_total > 0 ) ? $scope.tb_total / $scope.su_total : 0;
+        break;
+    
+      case 'mu':
+        $scope.tb_gain = ( $scope.mu_total > 0 ) ? $scope.tb_total / $scope.mu_total : 0;
+        break;
+      
+      default: // both off
+        $scope.tb_gain = ( $scope.mu_total > 0 ) ? $scope.tb_total / $scope.mu_total : ( ( $scope.su_total > 0 ) ? $scope.tb_total / $scope.su_total : 0 );
+        break;
     }
   }
   $scope.calcTBgain();
@@ -190,7 +198,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
     if ( $scope.showtotals == false ) {
       $scope.su_total = 0;
       $scope.mu_total = 0;
-      $scope.tb_total = 0;
+      //$scope.tb_total = 0;
     }
   };
   // (re)total for the initial data..
@@ -407,7 +415,7 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $scope.switchModeToggle = function( m ) {
     //$scope.maybeLog('switchModeToggle : '+ m);
     if ( $rootScope.loading === false ) {
-      var modetoa;
+      var modeto;
       // means a switch was clicked to toggle 1 way or the other
       if ( $rootScope.mode == m ) {
         // if we are currently in this mode, then just switch off
