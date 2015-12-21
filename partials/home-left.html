@@ -74,8 +74,8 @@
           <div class="mode">TRI-BAND</div>
           <div class="desc">60GHz</div>
           <div class="tot">
-            <div class="t" ng-show="tbmode"><span ng-show="tb_total > 0">{{ tb_total | number: roundtotals }}</span></div>
-            <small ng-show="tbmode && ( tb_total > 0 )">MBPS</small>
+            <div class="t" ng-show="tbmode"><span ng-show="tb_total > 0 && showadtotals">{{ tb_total | number: roundtotals }}</span></div>
+            <small ng-show="tbmode && ( tb_total > 0 ) && showadtotals">MBPS</small>
             <div class="fx"></div>
           </div>
         </div>
@@ -104,7 +104,10 @@
     <div class="inner">
       <a class="arrow" ng-click="toggleDeviceNumbers()"><span class="arr"></span></a>
       Devices
-      <label for="toggletotes" ng-show="collapseNumbers"><input type="checkbox" ng-checked="showtotals" ng-click="toggleTotals()" name="toggletotes" id="toggletotes"> show totals</label>
+      <div class="chex" ng-show="collapseNumbers">
+        <label for="toggletotes"><input type="checkbox" ng-checked="showtotals" ng-click="toggleTotals()" name="toggletotes" id="toggletotes"> show 11ac totals</label>
+        <label for="toggleadtotes"><input type="checkbox" ng-checked="showadtotals" ng-click="toggleADTotals()" name="toggleadtotes" id="toggleadtotes"> show 11ad total</label>
+      </div>
     </div>
   </div>
   <div class="mg devices" ng-class="{ 'nolb' : hideLB }">

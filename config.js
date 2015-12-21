@@ -41,7 +41,8 @@ var QMIMO_11AD_TPUT_FILES = [
 ];
 
 // whether to start with the home Devices numbers collapsed (or not)
-var QMIMO_COLLAPSE_DEVICE_NUMBERS = false;
+var QMIMO_COLLAPSE_AC_DEVICE_NUMBERS = false;
+var QMIMO_COLLAPSE_AD_DEVICE_NUMBERS = true;
 
 // whether to hide tput numbers when collapsed
 var QMIMO_COLLAPSE_TOTALS = true;

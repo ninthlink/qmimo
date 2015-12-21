@@ -544,9 +544,12 @@ body.mu-mode .col.mu .gain {
   margin: -10px;
 }
 /* extra collapser checkbox? */
+.collapser .chex,
 .collapser label {
   font-size: 15px;
   line-height: 1;
+}
+.collapser .chex {
   position: absolute;
   top: 8px;
   right: 10px;
