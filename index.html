@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="includes/gui.css" rel="stylesheet">
 	</head>
-	<body ng-class="{ 'mg-demo' : demo === 'mg', 'lb-demo' : demo === 'lb', 'mu-mode' : mode === 'mu', 'su-mode' : mode === 'su', 'tb-mode' : tbmode, 'loading' : loading, 'collapse-numbers' : collapseNumbers }">
+	<body ng-class="{ 'mg-demo' : demo === 'mg', 'lb-demo' : demo === 'lb', 'mu-mode' : bodymumode, 'su-mode' : bodysumode, 'tb-mode' : tbmode, 'loading' : loading, 'collapse-numbers' : collapseNumbers }">
 		<ui-view></ui-view>
 		<!-- load all the javascripts -->
 		<script src="includes/angular.min.js"></script>
