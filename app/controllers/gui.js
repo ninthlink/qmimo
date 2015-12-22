@@ -108,6 +108,8 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
   $scope.switchsuon = ( $rootScope.mode === 'su' );
   $scope.switchmuon = ( $rootScope.mode === 'mu' );
   $rootScope.tbmode = QMIMO_INITIAL_11AD; //( $rootScope.mode === 'tb' );
+  $rootScope.bodymumode = QMIMO_INITIAL_11AC == 'mu';
+  $rootScope.bodysumode = QMIMO_INITIAL_11AC == 'su';
   $rootScope.nextmode = '';
   $scope.demoleft = ( $rootScope.demo === 'mg' );
   //$scope.maybeLog('initial values :: tputs = ');
@@ -332,8 +334,10 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
       var newmode = $rootScope.nextmode;
       if ( $rootScope.nextmode === '' ) {
         if ( QMIMO_AUTO_11AC_SWITCH ) {
-          // in this case will we actually toggle automatically?
+          // in this case we actually toggle automatically
           newmode = ( qprev === 'mu' ? 'su' : 'mu' );
+          $rootScope.bodymumode = false;
+          $rootScope.bodysumode = false;
         }
       } else {
         //$scope.maybeLog('rootScope.nextmode was set to '+ newmode);
@@ -356,6 +360,8 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
           // in this case, we just turned it off, so
           $rootScope.loading = false;
         } else {
+          $rootScope.bodymumode = false;
+          $rootScope.bodysumode = false;
           // after "qwait" delay, re-poll tputs & reactivate GUI
           $timeout(function() {
             /*
@@ -378,6 +384,8 @@ function guiCtrl( $scope, $rootScope, $timeout, tputFactory, mimoGen, mimoScript
             $rootScope.mode = newmode;
             $scope.switchsuon = newmode === 'su';
             $scope.switchmuon = newmode === 'mu';
+            $rootScope.bodymumode = newmode === 'mu';
+            $rootScope.bodysumode = newmode === 'su';
           }, qwait );
         }
       } else {
